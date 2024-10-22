@@ -1,11 +1,12 @@
-import { Button, Navbar, Drawer } from "flowbite-react";
+import { Navbar, Drawer } from "flowbite-react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signoutUser } from "../features/user/userSlice.js";
 import { useState } from "react";
-import CartDrawer from "./CartDrawer.jsx";
+// import CartDrawer from "./CartDrawer.jsx";
 import CartDrawerContent from "./CartDrawerContent.jsx";
 import Logo from "../assets/logo.png";
+import CartBtn from "./CartBtn.jsx";
 
 export default function NavbarComponent() {
     const currentUser = useSelector((state) => state.user);
@@ -71,7 +72,7 @@ export default function NavbarComponent() {
                             </button>
                         </>
                     ) : null}
-
+                    <div className="ml-2 mr-2 hidden md:block md:mr-0" onClick={()=>setIsOpen(true)}><CartBtn /></div>
                     <Navbar.Toggle />
                 </div>
                 <Navbar.Collapse>
@@ -114,22 +115,7 @@ export default function NavbarComponent() {
                             Our Story
                         </NavLink>
                     </Navbar.Link>
-                    <Navbar.Link onClick={() => setIsOpen(true)}>
-                        {" "}
-                        {/* <NavLink
-                            className={
-                                ({ isActive }) =>
-                                    isActive
-                                        ? "text-blue-600 font-bold" // Active link styling
-                                        : "text-gray-600 font-extrabold" // Inactive link styling
-                            }
-                            // to="/user/cart"
-                            onClick={() => setIsOpen(true)}
-                        >
-                            My Cart
-                            <CartDrawer isOpen={isOpen} handleClose={handleClose}  />
-                        </NavLink>
-                         */}
+                    <Navbar.Link onClick={() => setIsOpen(true)} style={{ display: 'flex', alignItems: 'center' }}>
                         <span
                             className={`
                                 ${
@@ -137,9 +123,12 @@ export default function NavbarComponent() {
                                         ? "text-blue-600 font-bold"
                                         : "text-gray-600 font-extrabold"
                                 } cursor-pointer`}
+                            style={{ marginRight: '8px' }} // Adjust the margin as needed
                         >
                             My Cart
-                            {/* <CartDrawer isOpen={isOpen} handleClose={handleClose}  /> */}
+                        </span>
+                        <span className="ml-2 mr-2 md:hidden md:mr-0">
+                            <CartBtn />
                         </span>
                     </Navbar.Link>
                     <Navbar.Link onClick={()=>navigate('/user/orders')}>
@@ -187,7 +176,7 @@ export default function NavbarComponent() {
                     )}
 
                     <Navbar.Link className="md:hidden">
-                        {" "}
+                        {" "}                    
                         {currentUser.user ? (
                             <>
                                 {" "}
