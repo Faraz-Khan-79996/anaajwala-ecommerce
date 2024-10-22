@@ -4,7 +4,7 @@ import { FaShoppingCart } from "react-icons/fa"; // Importing a cart icon from r
 
 function CartBtn() {
     const cart = useSelector((state) => state.cart);
-    console.log(cart);
+    // console.log(cart);
 
     const { finalPrice } = calculateCost(cart, "");
 
