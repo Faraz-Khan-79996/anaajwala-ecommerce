@@ -1,0 +1,35 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "dist/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api",
+        "dest": "index.js"
+      },
+      {
+        "handle": "filesystem"
+      },
+      {
+        "src": "/api/(.*)",
+        "dest": "index.js"
+      },
+      {
+        "src": "/",
+        "dest": "dist/index.html"
+      },
+      { "src": "/[^.]+", "dest": "/", "status": 200 },
+      {
+        "src": "/(.+)",
+        "dest": "dist/$1"
+      }
+    ]
+  }
