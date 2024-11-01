@@ -1,16 +1,16 @@
-import React from "react";
-import NavbarComponent from "../../components/NavbarComponent";
-import { Carousel } from "flowbite-react";
+// import React from "react";
+// import NavbarComponent from "../../components/NavbarComponent";
+// import { Carousel } from "flowbite-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import ProductCard from "./components/ProductCard";
 import axios from "axios";
-import image1 from "../../assets/image1.jpg";
-import banner2 from "../../assets/banner2.jpg";
-import banner3 from "../../assets/banner3.jpg";
-import banner4 from "../../assets/banner4.jpg";
+// import image1 from "../../assets/image1.jpg";
+// import banner2 from "../../assets/banner2.jpg";
+// import banner3 from "../../assets/banner3.jpg";
+// import banner4 from "../../assets/banner4.jpg";
 import Chooseus from "./components/Chooseus";
-import Harsh1 from "../../assets/Harsh1.jpg"
+// import Harsh1 from "../../assets/Harsh1.jpg"
 import Testimonial from "./components/Testimonial";
 import HeroGrid from "./components/HeroGrid";
 import Loader from "../../components/Loader";
@@ -89,14 +89,13 @@ function LandingPage() {
   */}
       <section className="bg-white py-8">
         <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-          <nav id="store" className="w-full z-30 top-0 px-6 py-1">
+          <nav id="store" className="w-full  top-0 px-6 py-1">
             <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
-              <a
+              <span
                 className="italic tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
-                href="#"
               >
                 Delivering freshness to your doorstep
-              </a>
+              </span>
               <div className="flex items-center" id="store-nav-content">
                 {/* <a
                   className="pl-3 inline-block no-underline hover:text-black"

@@ -1,10 +1,11 @@
-import Harsh from '../assets/Harsh1.jpg'
+// import Harsh from '../assets/Harsh1.jpg'
 import faraz from '../assets/team/faraz.jpg'
 import manasvi from '../assets/team/manasvi.jpg'
 import subhan from '../assets/team/subhan.jpg'
 import isha from '../assets/team/isha.jpeg'
 import shruti from '../assets/team/shruti.jpg'
-import jayaMam from '../assets/team/jayaMam.jpg'
+// import jayaMam from '../assets/team/jayaMam.jpg'
+import mayur from '../assets/team/mayur.jpg'
 import lalitSir from '../assets/mentor-image/lalitSir.jpg'
 import ashishSir from '../assets/mentor-image/ashishSir.jpg'
 import PriyankRana from '../assets/mentor-image/priyankRana.jpg'
@@ -14,10 +15,10 @@ const useTeamData = ()=>{
 
     const teamData =[
         {
-            image : jayaMam,
-            name : "Jaya Singh Chouhan",
-            profile : "Co. Founder",
-            description : "Jaya Singh Chauhan, our Co-Founder, has played a crucial role as a mentor in web development. Her technical expertise and innovative mindset have been instrumental in guiding our project and shaping its success.",
+            image : mayur,
+            name : "Mayur Chouhan",
+            profile : "CTO",
+            description : "Mayur Chouhan, our CTO, has played a crucial role as a mentor in development. Her technical expertise and innovative mindset have been instrumental in guiding our project and shaping its success.",
             github : "https://github.com/Faraz-Khan-79996",
             linkdin : "https://www.linkedin.com/in/faraz-khan-b2a42028a/"
         },

@@ -18,7 +18,7 @@ export default function NavbarComponent() {
     const handleClose = () => setIsOpen(false);
 
     return (
-        <div className="">
+        <div className="sticky top-0 z-20 bg-white shadow-md">
             <Navbar fluid rounded>
                 <Navbar.Brand>
                     {/* <img
