@@ -11,11 +11,10 @@ function ProductCard({ item }) {
   const dispatch = useDispatch()
   
 
-  const notify = () => toast.success("Added to cart!" , {autoClose : 3000 , position: "bottom-right",theme: "dark",});
+  const notify = () => toast.success("Added to cart!" , {autoClose : 800 , position: "bottom-right",theme: "dark",});
   const handleAddToCart = ()=>{
 
     try {
-      console.log("happepend");
       
       dispatch(addToCart({
         id : item._id,

@@ -78,7 +78,7 @@ function ProductPage() {
 
     const notify = () =>
         toast.success("Added to cart!", {
-            autoClose: 3000,
+            autoClose: 800,
             position: "bottom-right",
             theme: "dark",
         });

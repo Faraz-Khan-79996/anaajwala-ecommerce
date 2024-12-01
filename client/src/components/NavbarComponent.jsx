@@ -3,19 +3,19 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signoutUser } from "../features/user/userSlice.js";
 import { useState } from "react";
-// import CartDrawer from "./CartDrawer.jsx";
-import CartDrawerContent from "./CartDrawerContent.jsx";
+import CartDrawer from "./CartDrawer.jsx";
+// import CartDrawerContent from "./CartDrawerContent.jsx";
 import Logo from "../assets/logo.png";
 import CartBtn from "./CartBtn.jsx";
+
+import { useCartContext } from "../context/CartContext.jsx";
 
 export default function NavbarComponent() {
     const currentUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleClose = () => setIsOpen(false);
+    const {isOpen, setIsOpen} = useCartContext();
 
     return (
         <div className="sticky top-0 z-20 bg-white shadow-md">
@@ -219,12 +219,13 @@ export default function NavbarComponent() {
                 </Drawer.Items>
             </Drawer> */}
 
-            <Drawer open={isOpen} onClose={handleClose} position="right">
+            {/* <Drawer open={isOpen} onClose={handleClose} position="right">
                 <Drawer.Header title="Drawer" />
                 <Drawer.Items>
                     <CartDrawerContent handleClose={handleClose} />
                 </Drawer.Items>
-            </Drawer>
+            </Drawer> */}
+            <CartDrawer isOpen={isOpen} setIsOpen={setIsOpen}/>
         </div>
     );
 }
