@@ -89,7 +89,7 @@ const BottomNavBar = () => {
                                     : "text-gray-500 hover:text-purple-600"
                             }`}
                             onClick={() => {
-                                if (tab.id === "cart") setIsOpen(!isOpen);
+                                if (tab.id === "cart") setIsOpen(false);
                                 else{
                                     setIsOpen(!isOpen);
                                     navigate(tab.link);
