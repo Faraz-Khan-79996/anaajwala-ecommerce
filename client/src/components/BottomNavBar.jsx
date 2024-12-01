@@ -90,7 +90,10 @@ const BottomNavBar = () => {
                             }`}
                             onClick={() => {
                                 if (tab.id === "cart") setIsOpen(!isOpen);
-                                else navigate(tab.link);
+                                else{
+                                    setIsOpen(!isOpen);
+                                    navigate(tab.link);
+                                } 
                             }}
                         >
                             {tab.icon}
