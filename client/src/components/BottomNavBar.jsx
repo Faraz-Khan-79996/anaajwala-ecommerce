@@ -17,20 +17,20 @@ const BottomNavBar = () => {
     const cartItemCount = cart.length;
 
     // Handle scroll direction
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY) {
-            setShowNav(false); // Scrolling down
-        } else {
-            setShowNav(true); // Scrolling up
-        }
-        setLastScrollY(currentScrollY);
-    };
+    // const handleScroll = () => {
+    //     const currentScrollY = window.scrollY;
+    //     if (currentScrollY > lastScrollY) {
+    //         setShowNav(false); // Scrolling down
+    //     } else {
+    //         setShowNav(true); // Scrolling up
+    //     }
+    //     setLastScrollY(currentScrollY);
+    // };
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [lastScrollY]);
+    // useEffect(() => {
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, [lastScrollY]);
 
     // Navigation tabs with links
     const tabs = [
