@@ -64,6 +64,14 @@ const BottomNavBar = () => {
     const activeTab =
         tabs.find((tab) => tab.link === location.pathname)?.id || null;
 
+    function handleNavigate(tab) {
+            if (tab.id === "cart") setIsOpen(!isOpen);
+            else{
+                setIsOpen(false);
+                navigate(tab.link);
+            } 
+    }
+
     return (
         <div
             className={`fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full bg-white shadow-lg border rounded-t-xl z-50 transition-transform duration-300 md:hidden ${
@@ -83,21 +91,21 @@ const BottomNavBar = () => {
                             </Badge>
                         )}
                         <button
-                            className={`flex flex-col items-center p-2 rounded-lg ${
+                            className={`flex flex-col items-center p-2 pb-1 rounded-lg ${
                                 activeTab === tab.id
-                                    ? "text-purple-600 bg-purple-600/10"
+                                    ? "text-purple-600"
                                     : "text-gray-500 hover:text-purple-600"
                             }`}
-                            onClick={() => {
-                                if (tab.id === "cart") setIsOpen(!isOpen);
-                                else{
-                                    setIsOpen(false);
-                                    navigate(tab.link);
-                                } 
-                            }}
+                            onClick={()=> handleNavigate(tab)}
                         >
                             {tab.icon}
                         </button>
+                        <div className={`text-[10px] font-varela font-semibold mt-0 ${
+                                activeTab === tab.id
+                                    ? "text-purple-600"
+                                    : "text-gray-500 "
+                            }`}
+                            onClick={()=> handleNavigate(tab)}>{tab.label}</div>
                     </div>
                 ))}
             </div>
