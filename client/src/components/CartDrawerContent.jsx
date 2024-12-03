@@ -72,9 +72,9 @@ function CartDrawerContent({ handleClose }) {
                                                 </div>
                                                 <div className="ml-4 flex flex-1 flex-col">
                                                     <div>
-                                                        <div className="flex justify-between text-base font-medium text-gray-900">
+                                                        <div className="flex justify-between text-sm font-medium text-gray-900">
                                                             <h3>
-                                                                <a href="#">
+                                                                <a href="#" className="text-sm">
                                                                     {
                                                                         item
                                                                             .product
@@ -82,7 +82,7 @@ function CartDrawerContent({ handleClose }) {
                                                                     }
                                                                 </a>
                                                             </h3>
-                                                            <p className="ml-4">
+                                                            <p className="ml-4 text-sm">
                                                                 ₹
                                                                 {
                                                                     item.product
@@ -102,7 +102,7 @@ function CartDrawerContent({ handleClose }) {
                                                         <div className="flex">
                                                             <button
                                                                 type="button"
-                                                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                                                className="font-medium text-red-600 hover:text-indigo-500"
                                                                 onClick={() =>
                                                                     dispatch(
                                                                         removeFromCart(
