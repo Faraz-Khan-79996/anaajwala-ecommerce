@@ -186,7 +186,7 @@ function Footer() {
                                     className="font-Inter text-[14px] font-medium text-[#fff]"
                                 >
                                     Start Up Cell Idea Lab , Sgsits, Park Road
-                                    ,Indore (M.P)
+                                    ,Indore (M.P)
                                 </a>
                                 <p className="font-Inter text-[12px] font-medium text-white">
                                     Address
