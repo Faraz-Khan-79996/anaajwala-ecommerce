@@ -31,6 +31,7 @@ import ReturnRefund from "./pages/Policy-pages/ReturnRefund.jsx";
 import BillingTerms from "./pages/Policy-pages/BillingTerms.jsx";
 import Loader from "./components/Loader.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import AddContactNumberPage from "./pages/signup/AddContactNumberPage.jsx";
 
 function App() {
 
@@ -75,6 +76,7 @@ function App() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/add-contact-number" element={<AddContactNumberPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:username/:id/:token" element={<ResetPassword />} />
 

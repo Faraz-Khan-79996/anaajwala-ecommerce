@@ -41,6 +41,20 @@ const loginUser = createAsyncThunk('user/loginUser', async (credentials, { rejec
   }
 });
 
+const googleLogin = createAsyncThunk('user/googleLogin' , async(credentials , {rejectWithValue})=>{
+    try {
+      const response = await axios.post('api/auth/google?auth=login', credentials, { withCredentials: true });
+      return response.data;      
+    } catch (error) {
+      if (error.response && error.response.data) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }      
+    }
+})
+
+
 /**
  * Logs out the user.
  */
@@ -123,6 +137,21 @@ const userSlice = createSlice({
     });
 
 
+
+    builder.addCase(googleLogin.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(googleLogin.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+      state.error = '';
+    });
+    builder.addCase(googleLogin.rejected, (state, action) => {
+      state.loading = false;
+      state.user = null;
+      state.error = action.payload || 'Login failed';
+    });
+
   }
 });
 
@@ -132,6 +161,7 @@ export {
   loginUser,
   signoutUser,
   fetchUser,
+  googleLogin
 }
 export const {
   addUser,

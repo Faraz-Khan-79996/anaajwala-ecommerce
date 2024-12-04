@@ -19,10 +19,10 @@ const signup = async (req, res, next) => {
     // console.log(req.body);
     
     const hashedPassword = bcryptjs.hashSync(password, 10)
-    const maxAge = 3 * 24 * 60 * 60
+    const maxAge = 31 * 24 * 60 * 60
 
     try {
-        const newUser = new User({ username : username.toLowerCase().trim(), email,phone_no, password: hashedPassword , saved:[] , orders:[]})
+        const newUser = new User({ username : username.toLowerCase().trim(), email: email.toLowerCase().trim(),phone_no:phone_no.trim(), password: hashedPassword , saved:[] , orders:[]})
         const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET , {expiresIn : maxAge })
         await newUser.save()
         res
@@ -37,7 +37,7 @@ const signup = async (req, res, next) => {
 
 const signin = async (req, res, next) => {
     const { username, password } = req.body;
-    const maxAge = 3 * 24 * 60 * 60
+    const maxAge = 31 * 24 * 60 * 60
 
     try {
         const validUser = await User.findOne({ username : username.toLowerCase().trim() })
@@ -63,48 +63,68 @@ const signin = async (req, res, next) => {
 }
 
 
-/**
- * @class
- * @ignore
- */
+
 const google = async (req, res, next) => {
     try {
 
-        // if (req.body.idToken) {
-        //     // Verify the ID token provided by the client
-        //     //will throw error if wrong or incorrect idToken
-        //     const decodedToken = await admin.auth().verifyIdToken(req.body.idToken);
-        // } else {
-        //     next(errorhandler(404, "idToken missing"))
-        // }
+        if (!req.body.idToken) {
+            // Verify the ID token provided by the client
+            //will throw error if wrong or incorrect idToken
+            next(errorhandler(404, "idToken missing"))
+        } else {
+            // const decodedToken = await admin.auth().verifyIdToken(req.body.idToken);
+            console.log("req came");
+        }
 
-        const user = await User.findOne({ username: req.body.email });
+        const user = await User.findOne({ email: req.body.email.toLowerCase().trim() });
+        const maxAge = 31 * 24 * 60 * 60
+
+        // console.log(req.body);
+        // console.log(user);
+        
+        const { auth } = req.query
+        console.log(auth);
+        console.log(req.body);
+        
 
         if (user) {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+            if(auth == "signup"){
+                next(errorhandler(409, "Given email Id already Exists!" , "signup Failure"))
+                return;
+            }
+
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn : maxAge});
             const { password: pass, ...rest } = user._doc;
             res
-                .cookie('access_token', token, { httpOnly: true })
+                .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000 })
                 .status(200)
                 .json(rest);
         } else {
+            if(auth == "login"){
+                next(errorhandler(409, "Given email Id Does NOT exists!" , "signup Failure"))
+                return;                
+            }            
             const generatedPassword =
                 Math.random().toString(36).slice(-8) +
                 Math.random().toString(36).slice(-8);
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
             const newUser = new User({
                 username:
-                    req.body.name.split(' ').join('').toLowerCase() +
+                    req.body.name.toLowerCase() +
                     Math.random().toString(36).slice(-4),
-                email: req.body.email,
+                email: req.body.email.toLowerCase().trim(),
                 password: hashedPassword,
-                avatar: req.body.photo,
+                phone_no : req.body.phone_no.toLowerCase().trim(),
+                // avatar: req.body.photo,
+                saved:[] ,
+                orders:[]
             });
             await newUser.save();
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {expiresIn : maxAge});
             const { password: pass, ...rest } = newUser._doc;
             res
-                .cookie('access_token', token, { httpOnly: true })
+                .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000})
                 .status(200)
                 .json(rest);
         }
