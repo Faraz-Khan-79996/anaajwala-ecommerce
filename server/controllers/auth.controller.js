@@ -13,31 +13,65 @@ const client = require('../utils/twilio.js')
 //     credential: admin.credential.cert(serviceAccount),
 // });
 
-const signup = async (req, res, next) => {
 
-    const { username, email, password , phone_no} = req.body;
-    // console.log(req.body);
-    
-    const hashedPassword = bcryptjs.hashSync(password, 10)
-    const maxAge = 31 * 24 * 60 * 60
+const signup = async (req, res, next) => {
+    const { username, email, password, phone_no } = req.body;
+
+    // Validation
+    if (!username || !email || !password || !phone_no) {
+        return next(errorHandler(400, 'All fields are required.', 'Validation Error'));
+    }
+
+    if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
+        return next(errorHandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+    }
+
+    if (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
+        return next(errorHandler(400, 'Invalid email format.', 'Validation Error'));
+    }
+
+    if (typeof password !== 'string' || password.length < 6) {
+        return next(errorHandler(400, 'Password must be at least 6 characters long.', 'Validation Error'));
+    }
+
+    if (typeof username !== 'string' || username.trim().length === 0) {
+        return next(errorHandler(400, 'Username cannot be empty.', 'Validation Error'));
+    }
+
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const maxAge = 31 * 24 * 60 * 60; // Token expiry time (31 days)
 
     try {
-        const newUser = new User({ username : username.toLowerCase().trim(), email: email.toLowerCase().trim(),phone_no:phone_no.trim(), password: hashedPassword , saved:[] , orders:[]})
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET , {expiresIn : maxAge })
-        await newUser.save()
+        const newUser = new User({
+            username: username.toLowerCase().trim(),
+            email: email.toLowerCase().trim(),
+            phone_no: phone_no.trim(),
+            password: hashedPassword,
+            saved: [],
+            orders: []
+        });
+
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: maxAge });
+        await newUser.save();
+
         res
-            .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000 })
-            .status(201).json(newUser)
+            .cookie('access_token', token, { httpOnly: true, maxAge: maxAge * 1000 })
+            .status(201)
+            .json(newUser); // Directly send the user object
     } catch (error) {
-        next(error)
-        console.log(error);
-        
+        next(errorHandler(500, 'An error occurred while creating the user.', 'Database Error'));
     }
-}
+};
+
 
 const signin = async (req, res, next) => {
     const { username, password } = req.body;
     const maxAge = 31 * 24 * 60 * 60
+
+    if (!username || !email || !password || !phone_no) {
+        return next(errorHandler(400, 'All fields are required.', 'Validation Error'));
+    }
+
 
     try {
         const validUser = await User.findOne({ username : username.toLowerCase().trim() })
@@ -83,8 +117,8 @@ const google = async (req, res, next) => {
         // console.log(user);
         
         const { auth } = req.query
-        console.log(auth);
-        console.log(req.body);
+        // console.log(auth);
+        // console.log(req.body);
         
 
         if (user) {

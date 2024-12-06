@@ -23,6 +23,8 @@ async function main() {
   
 }
 
+const cors = require('cors');
+
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.json())
 app.use(cookieParser())
