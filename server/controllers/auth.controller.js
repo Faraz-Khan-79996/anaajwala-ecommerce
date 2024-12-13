@@ -13,30 +13,51 @@ const client = require('../utils/twilio.js')
 //     credential: admin.credential.cert(serviceAccount),
 // });
 
-
+/**
+ * Handles user signup by validating input, creating a new user, and returning a JWT token.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The body of the request containing user details.
+ * @param {string} req.body.username - The username of the new user.
+ * @param {string} req.body.email - The email of the new user.
+ * @param {string} req.body.password - The password of the new user.
+ * @param {string} req.body.phone_no - The phone number of the new user.
+ * @param {Object} res - Responds with the user document along with jwt token and cookie.
+ * @param {Function} next - The next middleware function.
+ *
+ * @returns {void}
+ *
+ * @throws {Error} Throws an error if validation fails or if there is a database error.
+ */
 const signup = async (req, res, next) => {
     const { username, email, password, phone_no } = req.body;
 
     // Validation
     if (!username || !email || !password || !phone_no) {
-        return next(errorHandler(400, 'All fields are required.', 'Validation Error'));
+        return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
     }
 
     if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
-        return next(errorHandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+        return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
     }
 
     if (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
-        return next(errorHandler(400, 'Invalid email format.', 'Validation Error'));
+        return next(errorhandler(400, 'Invalid email format.', 'Validation Error'));
     }
 
     if (typeof password !== 'string' || password.length < 6) {
-        return next(errorHandler(400, 'Password must be at least 6 characters long.', 'Validation Error'));
+        return next(errorhandler(400, 'Password must be at least 6 characters long.', 'Validation Error'));
     }
 
     if (typeof username !== 'string' || username.trim().length === 0) {
-        return next(errorHandler(400, 'Username cannot be empty.', 'Validation Error'));
+        return next(errorhandler(400, 'Username cannot be empty.', 'Validation Error'));
     }
+
+    const user = await User.findOne({ username : username.toLowerCase().trim() });
+    if (user) {
+        return next(errorhandler(400, 'User already exists', 'Conflict'));
+    }
+    
 
     const hashedPassword = bcryptjs.hashSync(password, 10);
     const maxAge = 31 * 24 * 60 * 60; // Token expiry time (31 days)
@@ -59,17 +80,30 @@ const signup = async (req, res, next) => {
             .status(201)
             .json(newUser); // Directly send the user object
     } catch (error) {
-        next(errorHandler(500, 'An error occurred while creating the user.', 'Database Error'));
+        next(errorhandler(500, error.message, 'Database Error'));
     }
 };
 
-
+/**
+ * Handles user sign-in by validating input, checking credentials, and returning a JWT token.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The body of the request containing user credentials.
+ * @param {string} req.body.username - The username of the user attempting to sign in.
+ * @param {string} req.body.password - The password of the user attempting to sign in.
+ * @param {Object} res - Responds with user document along with jwt token and cookie.
+ * @param {Function} next - The next middleware function.
+ *
+ * @returns {void}
+ *
+ * @throws {Error} Throws an error if validation fails, user is not found, or if the password is incorrect.
+ */
 const signin = async (req, res, next) => {
     const { username, password } = req.body;
     const maxAge = 31 * 24 * 60 * 60
 
-    if (!username || !email || !password || !phone_no) {
-        return next(errorHandler(400, 'All fields are required.', 'Validation Error'));
+    if (!username || !password ) {
+        return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
     }
 
 
@@ -97,7 +131,24 @@ const signin = async (req, res, next) => {
 }
 
 
-
+/**
+ * Handles user authentication via Google by verifying the ID token, checking user existence, and managing login or signup.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The body of the request containing user credentials.
+ * @param {string} req.body.idToken - The ID token provided by the client for verification.
+ * @param {string} req.body.email - The email of the user attempting to sign in or sign up.
+ * @param {string} req.body.name - The name of the user attempting to sign up.
+ * @param {string} req.body.phone_no - The phone number of the user attempting to sign up.
+ * @param {Object} req.query - The query parameters of the request.
+ * @param {string} req.query.auth - The authentication type, either 'login' or 'signup'.
+ * @param {Object} res - Responds with userDoc along with JWT token and cookie.
+ * @param {Function} next - The next middleware function.
+ *
+ * @returns {void}
+ *
+ * @throws {Error} Throws an error if the ID token is missing, if the email already exists during signup, or if the email does not exist during login.
+ */
 const google = async (req, res, next) => {
     try {
 

@@ -37,9 +37,9 @@ function ProductCard({ item }) {
     }
 
     return (
-<>
+<> 
       <div className="rounded overflow-hidden shadow-lg flex flex-col hidden sm:block">
-    <ToastContainer />
+      {/* <ToastContainer />  */}
         <a href="#" />
         <div className="relative">
           <Link to={`/product/${item._id}`}>
@@ -121,9 +121,12 @@ function ProductCard({ item }) {
           
         </div>
       </div>
-            {/* component */}
+
+
+
+            {/* component for mobile device*/}
             <div className="sm:hidden">
-                <ToastContainer />
+                {/* <ToastContainer /> */}
                 <div className="relative flex flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg max-w-lg  md:max-w-3xl mx-auto border border-white bg-white">
                     <div className="w-full md:w-1/3 bg-white grid place-items-center">
                         <Link to={`/product/${item._id}`}>

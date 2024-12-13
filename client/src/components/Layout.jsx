@@ -4,11 +4,13 @@ import Footer from "./Footer";
 import BottomNavBar from "./BottomNavBar";
 import { CartProvider } from "../context/CartContext";
 import CartDrawer from "./CartDrawer";
+import { ToastContainer, toast } from "react-toastify";
 
 function Layout() {
   return (
     <>
     <CartProvider>
+    <ToastContainer />
       <NavbarComponent />
       <CartDrawer />
       <Outlet />

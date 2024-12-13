@@ -61,6 +61,19 @@ const getOrders = async (req , res , next)=>{
 const updateUser = async (req, res, next) => {
     const { name, phone_no, password } = req.body;
 
+    // Validation
+    if (!name || !password || !phone_no) {
+        return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
+    }
+
+    if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
+        return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+    }
+
+    if (typeof name !== 'string' || name.trim().length === 0) {
+        return next(errorhandler(400, 'Username cannot be empty.', 'Validation Error'));
+    }
+
     try {
         const validUser = await User.findById(req.user.id); // Assuming you have a middleware that adds the user's ID to req.user
         if (!validUser) {

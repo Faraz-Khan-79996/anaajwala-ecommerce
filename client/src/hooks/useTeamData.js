@@ -1,7 +1,7 @@
 // import Harsh from '../assets/Harsh1.jpg'
 import faraz from '../assets/team/faraz.jpg'
 import manasvi from '../assets/team/manasvi.jpg'
-import subhan from '../assets/team/subhan.jpg'
+// import subhan from '../assets/team/subhan.jpg'
 import isha from '../assets/team/isha.jpeg'
 import shruti from '../assets/team/shruti.jpg'
 // import jayaMam from '../assets/team/jayaMam.jpg'
@@ -10,6 +10,7 @@ import lalitSir from '../assets/mentor-image/lalitSir.jpg'
 import ashishSir from '../assets/mentor-image/ashishSir.jpg'
 import PriyankRana from '../assets/mentor-image/priyankRana.jpg'
 import Dhakad from '../assets/mentor-image/Dhakad.jpg'
+import rajat from '../assets/team/rajat.jpeg'
 
 const useTeamData = ()=>{
 
@@ -55,12 +56,12 @@ const useTeamData = ()=>{
             linkdin : ""
         },
         {
-            image : subhan,
-            name : "Subhan Ahmed",
-            profile : "Lead Mechanical Engineer",
-            description : "Subhan Ahmed, a talented Lead Mechanical Engineer, designed and built the Effi-Cycle(GS Racers) for our project, focusing on efficiency and sustainability.",
+            image : rajat,
+            name : "Mr.Rajat Devgade",
+            profile : "Social Media & E commerce manager",
+            description : "Mr.Rajat Devgade, Social Media & E commerce manager at Anajwala, drives impactful digital strategies and enhances brand presence across platforms, ensuring our commitment to quality reaches every customer online.",
             github : "",
-            linkdin : "https://www.linkedin.com/in/subhan-ahmed-6595b1254/"
+            linkdin : ""
         },
         
     ]

@@ -139,7 +139,7 @@ function OrderRows({ orders, status, setOrders }) {
                       {order.customerName}
                     </td>
                     <td className="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">
-                      ${order.totalPrice}
+                    ₹{order.totalPrice}
                     </td>
                     {/* <td className="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">
                       {order.items.reduce(

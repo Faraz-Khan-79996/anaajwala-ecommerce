@@ -61,7 +61,7 @@ const OrderDetails = ({ order }) => {
                 <strong>Payment Status:</strong> {order.paymentStatus}
               </p>
               <p>
-                <strong>Total Price {"(After Discount)"}:</strong> ${order.totalPrice.toFixed(2)}
+                <strong>Total Price {"(After Discount)"}:</strong> ₹{order.totalPrice.toFixed(2)}
               </p>
               <p>
                 <strong>Delivery Date:</strong>{" "}
@@ -90,7 +90,7 @@ const OrderDetails = ({ order }) => {
                       <strong>Quantity:</strong> {item.quantity}
                     </p>
                     <p>
-                      <strong>Price {"(total)"}:</strong> ${item.price.toFixed(2)}
+                      <strong>Price {"(total)"}:</strong> ₹{item.price.toFixed(2)}
                     </p>
                   </li>
                 ))}
