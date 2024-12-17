@@ -172,7 +172,7 @@ function ProductCard({ item }) {
             and diversity. With 16 major islands, The Bahamas is an unmatched destination</p> */}
                         <p className="text-sm md:text-xl font-mono font-extralight italic text-gray-800">
                             <span className="ml-1 line-through font-mono text-sm mr-1">
-                                ${item.MRP}{" "}
+                            ₹{item.MRP}{" "}
                             </span>
                             {item.price}
                         </p>
