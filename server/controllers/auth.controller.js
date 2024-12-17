@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs")
 const { errorhandler } = require("../utils/error.js")
 const jwt = require("jsonwebtoken")
 const client = require('../utils/twilio.js')
-
+const OTP = require('../models/OTP');
 
 // import admin from 'firebase-admin'
 
@@ -12,6 +12,162 @@ const client = require('../utils/twilio.js')
 // admin.initializeApp({
 //     credential: admin.credential.cert(serviceAccount),
 // });
+
+
+
+
+const sendOTP = async (req, res, next) => {
+    const { phone_no } = req.body;
+    const {action} = req.query
+
+    if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
+        return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+    }
+
+    try {
+        // Generate a 5-digit random OTP
+        const otp = Math.floor(10000 + Math.random() * 90000).toString();
+
+        const userDoc = await User.findOne({phone_no})
+        if(action && action=="signup" && userDoc){
+            return next(errorhandler(400, 'This phone number is already in use', 'Duplicate Phone number'));
+        }
+        if(action && action=="signin" && !userDoc){
+            return next(errorhandler(400, 'This phone number is Not registered with us', 'Phone number not registered'));
+        }
+
+        // Upsert the OTP (insert if not exists, update if exists)
+        await OTP.findOneAndUpdate(
+            { phone_no },
+            { otp, createdAt: new Date() },
+            { upsert: true, new: true }
+        );
+
+        // // Send OTP via Twilio
+        // await twilioClient.messages.create({
+        //     body: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+        //     from: process.env.TWILIO_PHONE_NUMBER,
+        //     to: phone_no,
+        // });
+
+        const message = await client.messages.create({
+            body: `Your OTP is ${otp}. It will expire in 5 minutes.`,
+            from: `whatsapp:${process.env.TWILIO_NO}`, // Replace with your Twilio WhatsApp-enabled number
+            to: `whatsapp:+91${phone_no}`   // Replace with the recipient's WhatsApp number
+        });           
+
+        res.status(200).json({ message: 'OTP sent successfully.' });
+    } catch (error) {
+        next(errorhandler(500, error.message, 'OTP Generation Error'));
+    }
+};
+
+const verifyAndRegister = async (req, res, next) => {
+    const { username, phone_no, otp } = req.body;
+
+    if (!username || !phone_no || !otp) {
+        return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
+    }
+
+    if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
+        return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+    }
+
+    if (typeof username !== 'string' || username.trim().length === 0) {
+        return next(errorhandler(400, 'Username cannot be empty.', 'Validation Error'));
+    }
+
+    try {
+        // Find OTP document by phone number
+        const otpRecord = await OTP.findOne({ phone_no });
+        console.log({otpRecord , otp});
+        
+
+        if (!otpRecord || otpRecord.otp !== otp) {
+            return next(errorhandler(400, 'Invalid or expired OTP.'));
+        }
+
+        // Delete the OTP after verification
+        await OTP.deleteOne({ phone_no });
+
+        // Register the user
+        const newUser = new User({
+            username: username.toLowerCase().trim(),
+            phone_no: phone_no.trim(),
+            email:"",
+            password: "",
+            saved: [],
+            orders: []
+        });
+
+        const maxAge = 31 * 24 * 60 * 60; // Token expiry time (31 days)
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: maxAge });
+
+        await newUser.save();
+
+        res
+            .cookie('access_token', token, { httpOnly: true, maxAge: maxAge * 1000 })
+            .status(201)
+            .json(newUser);
+    } catch (error) {
+        next(errorhandler(500, error.message, 'Verification or Registration Error'));
+    }
+};
+
+const otpSignin = async (req, res, next) => {
+    const { phone_no, otp } = req.body;
+
+    if (!phone_no || !otp) {
+        return next(errorhandler(400, 'Phone number and OTP are required.', 'Validation Error'));
+    }
+
+    if (typeof phone_no !== 'string' || phone_no.trim().length !== 10 || !/^\d+$/.test(phone_no)) {
+        return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
+    }
+
+    try {
+
+        const userDoc = await User.findOne({phone_no})
+        if(!userDoc){
+            return next(errorhandler(400, 'This phone number is Not registered with us', 'Phone number not registered'));
+        }        
+
+        // Find OTP document by phone number
+        const otpRecord = await OTP.findOne({ phone_no });
+
+        if (!otpRecord) {
+            return next(errorhandler(400, 'OTP has not been sent for this phone number.'));
+        }
+
+        // Check if the OTP is valid
+        if (otpRecord.otp !== otp) {
+            return next(errorhandler(400, 'Invalid OTP.'));
+        }
+
+        // Delete the OTP after verification
+        await OTP.deleteOne({ phone_no });
+
+        // Find the user by phone number
+        const user = await User.findOne({ phone_no });
+
+        if (!user) {
+            return next(errorhandler(404, 'User not found.'));
+        }
+
+        // Generate a JWT token for the user
+        const maxAge = 31 * 24 * 60 * 60; // Token expiry time (31 days)
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: maxAge });
+
+        // Respond with the user data and the token
+        res
+            .cookie('access_token', token, { httpOnly: true, maxAge: maxAge * 1000 })
+            .status(200)
+            .json(user);
+    } catch (error) {
+        next(errorhandler(500, 'Error during OTP signin.', 'Internal Server Error'));
+    }
+};
+
 
 /**
  * Handles user signup by validating input, creating a new user, and returning a JWT token.
@@ -301,4 +457,7 @@ module.exports =  {
     signOut,
     applyForResetPassword,
     resetPassword,
+    sendOTP,
+    verifyAndRegister,
+    otpSignin
 }
