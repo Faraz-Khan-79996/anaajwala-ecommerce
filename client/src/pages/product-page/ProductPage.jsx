@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useParams, Link } from "react-router-dom";
-
+import { FaRegComment } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,16 +9,22 @@ import { useNavigate } from "react-router-dom";
 import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import axios from "axios";
-
 import { addToCart } from "../../features/cart/CartSlice";
 import { useDispatch } from "react-redux";
-
 import { Button } from "flowbite-react";
 import Loader from "../../components/Loader";
+import useFetchProducts from "../../hooks/useFetchProducts";
+import SuggestedProductCard from "../../components/SuggestedProductCard";
 
 function ProductPage() {
     let { id } = useParams();
     const dispatch = useDispatch();
+    const {
+        products: suggestedProducts,
+        loading: suggestedProductsLoading,
+        error: suggestedProductError,
+    } = useFetchProducts();
+    const currentUrl = window.location.href;
 
     const [product, setProduct] = useState(null);
     const [error, setError] = useState(null);
@@ -54,7 +60,7 @@ function ProductPage() {
     };
     useEffect(() => {
         fetchProduct();
-    }, []);
+    }, [currentUrl]);
 
     // const handleTypeChange = (ev) => {
     //   ev.preventDefault();
@@ -101,9 +107,7 @@ function ProductPage() {
     }
 
     if (loading) {
-        return (
-            <Loader />
-        );
+        return <Loader />;
     }
 
     return (
@@ -345,21 +349,29 @@ function ProductPage() {
                                         <Button
                                             color=""
                                             className="bg-black text-white"
-                                            onClick={()=>setQuantity(prev =>{
-                                              if(prev-1 >=1) return prev-1
-                                              return prev
-                                            })}
+                                            onClick={() =>
+                                                setQuantity((prev) => {
+                                                    if (prev - 1 >= 1)
+                                                        return prev - 1;
+                                                    return prev;
+                                                })
+                                            }
                                         >
                                             -
                                         </Button>
-                                        <Button color="" className="border">{quantity}</Button>
+                                        <Button color="" className="border">
+                                            {quantity}
+                                        </Button>
                                         <Button
                                             color=""
                                             className="bg-black  text-white"
-                                            onClick={()=>setQuantity(prev =>{
-                                              if(prev+1 <=5) return prev+1
-                                              return prev
-                                            })}
+                                            onClick={() =>
+                                                setQuantity((prev) => {
+                                                    if (prev + 1 <= 5)
+                                                        return prev + 1;
+                                                    return prev;
+                                                })
+                                            }
                                         >
                                             +
                                         </Button>
@@ -412,8 +424,7 @@ function ProductPage() {
                             <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
                                 <div className="flex items-end">
                                     <h1 className="text-3xl font-bold">
-                                        ₹
-                                        {product.price}
+                                        ₹{product.price}
                                         {/* <span className="text-red-600 text-lg"> ₹(-{discount[quantity]}) discount</span> */}
                                     </h1>
                                     {/* <span className="text-base">/Kg</span> */}
@@ -498,7 +509,9 @@ function ProductPage() {
                                         Reviews
                                         <span className="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100">
                                             {" "}
-                                            {product.ratings.numberOfReviews}{" "}
+                                            {
+                                                product.ratings.numberOfReviews
+                                            }{" "}
                                         </span>
                                     </a>
                                 </nav>
@@ -522,6 +535,22 @@ function ProductPage() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section className="container mx-auto">
+                <h2 className="font-semibold text-3xl">Suggested Products</h2>
+                <div className="mx-auto scrollable-container flex justify-start my-10 overflow-x-scroll whitespace-nowrap pb-10">
+                    {!suggestedProductsLoading &&
+                        suggestedProducts &&
+                        suggestedProducts.length > 0 &&
+                        suggestedProducts.map((product) => (
+                            <SuggestedProductCard
+                                key={product._id}
+                                product={product}
+                                index={product._id}
+                            />
+                        ))}
                 </div>
             </section>
         </div>
