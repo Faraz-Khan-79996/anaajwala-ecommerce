@@ -15,9 +15,11 @@ import { Button } from "flowbite-react";
 import Loader from "../../components/Loader";
 import useFetchProducts from "../../hooks/useFetchProducts";
 import SuggestedProductCard from "../../components/SuggestedProductCard";
+import useFetchProductById from '../../hooks/useFetchProductById'
 
 function ProductPage() {
     let { id } = useParams();
+    const {product , error , loading } = useFetchProductById(id)
     const dispatch = useDispatch();
     const {
         products: suggestedProducts,
@@ -26,9 +28,6 @@ function ProductPage() {
     } = useFetchProducts();
     const currentUrl = window.location.href;
 
-    const [product, setProduct] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     // const [type, setType] = useState("platinum");
@@ -40,26 +39,9 @@ function ProductPage() {
     //     20: 20,
     // };
 
-    const fetchProduct = async () => {
-        try {
-            // console.log("This happened");
 
-            setLoading((prev) => true);
-            const { data } = await axios.get(`/api/product/${id}`);
-            setProduct(data);
-        } catch (error) {
-            if (error.response && error.response.data) {
-                setError(error.response.data.message);
-            } else {
-                setError(error.message);
-            }
-            navigate("/not-found");
-        } finally {
-            setLoading((prev) => false);
-        }
-    };
     useEffect(() => {
-        fetchProduct();
+        // fetchProduct();
     }, [currentUrl]);
 
     // const handleTypeChange = (ev) => {

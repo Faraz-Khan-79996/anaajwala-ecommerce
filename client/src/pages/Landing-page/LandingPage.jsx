@@ -14,32 +14,11 @@ import Chooseus from "./components/Chooseus";
 import Testimonial from "./components/Testimonial";
 import HeroGrid from "./components/HeroGrid";
 import Loader from "../../components/Loader";
-
+import useFetchProducts from "../../hooks/useFetchProducts"
 
 function LandingPage() {
-  const [products, setProducts] = useState([]); //this will have array of products
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState([]);
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = async () => {
-    try {
-      setLoading((prev) => true);
-      const { data } = await axios.get("/api/product/products");
-      setProducts(data);
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.message);
-      } else {
-        setError(error.message);
-      }
-    } finally {
-      setLoading((prev) => false);
-    }
-  };
+  const {products , loading , error} = useFetchProducts()
 
   if (loading) {
     return (

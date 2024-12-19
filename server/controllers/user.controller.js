@@ -49,7 +49,15 @@ const getOrders = async (req , res , next)=>{
         // console.log("req came");
         
         //_id was there as well, therefore have to destructure
-        const {orders} = await User.findById(req.userId).populate('orders').select('orders');
+        const user = await User.findById(req.userId)
+                    .populate({
+                        path: 'orders',
+                        options: { sort: { createdAt: -1 } }, // Sort orders by createdAt in descending order
+                    })
+                    .select('orders');
+
+                    const { orders } = user; // Extract the sorted orders.
+
         res.json(orders);
 
     } catch (error) {
