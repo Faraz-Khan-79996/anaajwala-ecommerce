@@ -15,6 +15,7 @@ import Testimonial from "./components/Testimonial";
 import HeroGrid from "./components/HeroGrid";
 import Loader from "../../components/Loader";
 import useFetchProducts from "../../hooks/useFetchProducts"
+import { ToastContainer, toast } from "react-toastify";
 
 function LandingPage() {
 
@@ -28,7 +29,7 @@ function LandingPage() {
 
   return (
     <>
-      <div></div>
+      <div><ToastContainer /></div>
       {/* <div className="h-72 sm:h-80 xl:h-[30rem] 2xl:h-[36rem]">
         <Carousel slideInterval={3000}>
           <img src={image1} alt="..." />

@@ -10,9 +10,9 @@ function Layout() {
   return (
     <>
     <CartProvider>
-    <ToastContainer />
       <NavbarComponent />
       <CartDrawer />
+    <ToastContainer />
       <Outlet />
       <BottomNavBar />
       <Footer/>
