@@ -83,6 +83,7 @@ const updateProduct = async (req, res) => {
     category,
     ratings,
     discount,
+    size
   } = req.body; // Product fields from the request body
 
   try {
@@ -104,6 +105,7 @@ const updateProduct = async (req, res) => {
     product.category = category !== undefined ? category : product.category;
     product.ratings = ratings !== undefined ? ratings : product.ratings;
     product.discount = discount !== undefined ? discount : product.discount;
+    product.size = size !== undefined ? size : product.size;
 
     // Save the updated product
     const updatedProduct = await product.save();

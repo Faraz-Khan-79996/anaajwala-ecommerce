@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
  * @typedef {Object} ProductSchema
  * @property {string} name - The name of the product.
  * @property {string} type - The type of the product.
- * @property {number} price - The price of the product.
+ * @property {number} price - The selling price of the product.
+ * @property {number} MRP - The MRP of the product.
+ * @property {number} size - The MRP of the product.
  * @property {string} thumbnail - URL of the product thumbnail image.
  * @property {string[]} images - Array of URLs of product images (max 6).
  * @property {string} description - A detailed description of the product.
@@ -62,6 +64,7 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String,
+      enum : ['flour'],
       required: true,
     },
     ratings: {

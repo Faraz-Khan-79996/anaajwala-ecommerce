@@ -32,6 +32,12 @@ import BillingTerms from "./pages/Policy-pages/BillingTerms.jsx";
 import Loader from "./components/Loader.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import AddContactNumberPage from "./pages/signup/AddContactNumberPage.jsx";
+import EditProduct from "./admin-panel/components/sub-pages/EditProduct.jsx";
+import Page1 from "./admin-panel/Page1.jsx";
+import Page2 from "./admin-panel/Page2.jsx";
+import Page3 from "./admin-panel/Page3.jsx";
+import Home from "./admin-panel/Home.jsx";
+import CreateProduct from "./admin-panel/components/sub-pages/CreateProduct.jsx";
 
 function App() {
 
@@ -80,10 +86,20 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:username/:id/:token" element={<ResetPassword />} />
 
-        <Route path="/admin" element={<AdminRoute />}>
-          <Route index element={<Dashboard />} />
+      <Route path="/admin" element={<AdminRoute />}>
+        <Route path="" element={<Dashboard />}>
+          <Route path="" element={<Home />} />
+          <Route path="orders" element={<Page1 />} />
+          <Route path="customer-data-form" element={<Page2 />} />
+          <Route path="products" element={<Page3 />} />
+          <Route path="product/edit/:productId" element={<EditProduct />} />
+          <Route path="product/create" element={<CreateProduct />} />
         </Route>
+      </Route>
+
+
         <Route path="/not-found" element={<NotFoundPage/>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

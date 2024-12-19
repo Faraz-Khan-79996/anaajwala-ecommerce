@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { addToCart } from "../../../features/cart/CartSlice";
 import { useDispatch } from "react-redux";
@@ -7,9 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineInsertComment } from "react-icons/md";
 
-function ProductCard({ item }) {
+function ProductCard({ item, admin = false }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [url, setUrl] = useState(`/product/${item._id}`);
 
     const notify = () =>
         toast.success("Added to cart!", {
@@ -32,47 +33,51 @@ function ProductCard({ item }) {
         }
     };
 
+    useEffect(() => {
+        if (admin) {
+            setUrl(`/admin/product/edit/${item._id}`);
+        }
+    }, [admin, navigate, item]);
+
     function handleNavigate(item) {
-        navigate(`/product/${item._id}`);
+        navigate(url);
     }
 
     return (
-<> 
-      <div className="rounded overflow-hidden shadow-lg flex flex-col hidden sm:block">
-      {/* <ToastContainer />  */}
-        <a href="#" />
-        <div className="relative">
-          <Link to={`/product/${item._id}`}>
-            <img
-              className="w-full h-48 object-cover"
-              src={item.thumbnail}
-              alt=".."
-            />
-            <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
-          </Link>
-          <a href="#!">
-            <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-              {item.category}
-            </div>
-          </a>
-        </div>
-        <div className="px-6 py-4 mb-auto">
-          <Link
-            to={`/product/${item._id}`}
-            className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
-          >
-            {item.name}
-          </Link>
-          <p className="text-gray-500 text-sm">
-            {item.description}
-          </p>
-        </div>
-        <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
-          <span
-            href="#"
-            className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center"
-          >
-            {/* <svg
+        <>
+            <div className="rounded overflow-hidden shadow-lg flex flex-col hidden sm:block">
+                {/* <ToastContainer />  */}
+                <a href="#" />
+                <div className="relative">
+                    <Link to={url}>
+                        <img
+                            className="w-full h-48 object-cover"
+                            src={item.thumbnail}
+                            alt=".."
+                        />
+                        <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>
+                    </Link>
+                    <a href="#!">
+                        <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
+                            {item.category}
+                        </div>
+                    </a>
+                </div>
+                <div className="px-6 py-4 mb-auto">
+                    <Link
+                        to={url}
+                        className="font-medium !line-clamp-2 text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
+                    >
+                        {item.name}
+                    </Link>
+                    <p className="text-gray-500 text-sm">{item.description}</p>
+                </div>
+                <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
+                    <span
+                        href="#"
+                        className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center"
+                    >
+                        {/* <svg
               height="13px"
               width="13px"
               version="1.1"
@@ -91,10 +96,15 @@ function ProductCard({ item }) {
                 </g>
               </g>
             </svg> */}
-            <span className="ml-1 line-through font-semibold text-lg">₹{item.MRP}</span>
-            <span className="ml-3 font-semibold text-lg">₹{item.price} <span className="text-sm font-light"></span></span>
-          </span>
-          {/* <span
+                        <span className="ml-1 line-through font-semibold text-lg">
+                            ₹{item.MRP}
+                        </span>
+                        <span className="ml-3 font-semibold text-lg">
+                            ₹{item.price}{" "}
+                            <span className="text-sm font-light"></span>
+                        </span>
+                    </span>
+                    {/* <span
             href="#"
             className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center"
           >
@@ -113,23 +123,23 @@ function ProductCard({ item }) {
             </svg>
             <span className="ml-1">39 Comments</span>
           </span> */}
-          <button 
-            onClick={handleAddToCart}
-          className="px-6 py-2 min-w-[120px] text-center text-white bg-violet-600 border border-violet-600 rounded active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring">
-            Add 
-          </button>
-          
-        </div>
-      </div>
-
-
+                    {!admin && (
+                        <button
+                            onClick={handleAddToCart}
+                            className="px-6 py-2 min-w-[120px] text-center text-white bg-violet-600 border border-violet-600 rounded active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring"
+                        >
+                            Add
+                        </button>
+                    )}
+                </div>
+            </div>
 
             {/* component for mobile device*/}
             <div className="sm:hidden">
                 {/* <ToastContainer /> */}
                 <div className="relative flex flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg max-w-lg  md:max-w-3xl mx-auto border border-white bg-white">
                     <div className="w-full md:w-1/3 bg-white grid place-items-center">
-                        <Link to={`/product/${item._id}`}>
+                        <Link to={url}>
                             <img
                                 src={item.thumbnail}
                                 alt="tailwind logo"
@@ -148,8 +158,7 @@ function ProductCard({ item }) {
                                 <p className="text-gray-600 font-bold text-[10px] md:text-sm ml-1">
                                     {/* 4.96 */}
                                     <span className="text-gray-500 font-normal">
-                                        ({item.ratings.numberOfReviews}{" "}
-                                        reviews)
+                                        ({item.ratings.numberOfReviews} reviews)
                                     </span>
                                 </p>
                             </div>
@@ -172,16 +181,18 @@ function ProductCard({ item }) {
             and diversity. With 16 major islands, The Bahamas is an unmatched destination</p> */}
                         <p className="text-sm md:text-xl font-mono font-extralight italic text-gray-800">
                             <span className="ml-1 line-through font-mono text-sm mr-1">
-                            ₹{item.MRP}{" "}
+                                ₹{item.MRP}{" "}
                             </span>
                             {item.price}
                         </p>
-                        <button
-                            onClick={handleAddToCart}
-                            className="px-6 py-1 min-w-[120px] font-varela text-center text-sm text-white bg-violet-600 border border-violet-600 rounded active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring"
-                        >
-                            Add
-                        </button>
+                        {!admin && (
+                            <button
+                                onClick={handleAddToCart}
+                                className="px-6 py-1 min-w-[120px] font-varela text-center text-sm text-white bg-violet-600 border border-violet-600 rounded active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring"
+                            >
+                                Add
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

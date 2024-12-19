@@ -179,9 +179,9 @@ function LandingPage() {
               {products &&
                 products.length > 0 &&
                 products.map((item) => (
-                  <>
-                    <ProductCard key={item.id} item={item} />
-                  </>
+                  <div key={item._id}>
+                    <ProductCard item={item} />
+                  </div>
                 ))}
             </div>
           </div>

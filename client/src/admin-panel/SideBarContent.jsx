@@ -20,12 +20,13 @@ import { signoutUser } from "../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function SideBarContent({ isOpen, handleClose }) {
-  const { currentUser, loading, error } = useSelector((state) => state.user);
+  // const { currentUser, loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSignOut = async () => {
     dispatch(signoutUser())
+    navigate('/')
   };
 
   return (
@@ -53,16 +54,16 @@ function SideBarContent({ isOpen, handleClose }) {
                     <Link to="/admin">
                       <Sidebar.Item icon={HiInformationCircle}>Home</Sidebar.Item>
                     </Link>
-                    <Link to="/admin?tab=page1">
+                    <Link to="/admin/orders">
                       <Sidebar.Item icon={HiChartPie}>Order Tracker</Sidebar.Item>
                     </Link>
-                    <Link to="/admin?tab=page2">
+                    <Link to="/admin/customer-data-form">
                       <Sidebar.Item icon={HiShoppingBag}>
                         Customer Data Form
                       </Sidebar.Item>
                     </Link>
-                    <Link to="/admin?tab=page3">
-                      <Sidebar.Item icon={HiUsers}>Page3</Sidebar.Item>
+                    <Link to="/admin/products">
+                      <Sidebar.Item icon={HiUsers}>Products</Sidebar.Item>
                     </Link>
                     {/* <Sidebar.Item href="/authentication/sign-in" icon={HiLogin}>
                       Sign in
@@ -75,18 +76,18 @@ function SideBarContent({ isOpen, handleClose }) {
                     </Sidebar.Item> */}
                   </Sidebar.ItemGroup>
                   <Sidebar.ItemGroup>
-                    <Link to={``}>
+                    <Link to={`/admin/product/create`}>
                       <Sidebar.Item icon={HiClipboard}>
-                        My-Bookings
+                        Create Product
                       </Sidebar.Item>
                     </Link>
-                    <Link to={``}>
+                    {/* <Link to={``}>
                     <Sidebar.Item
                       icon={HiCollection}
                     >
                       Receieved Bookings
                     </Sidebar.Item>
-                    </Link>
+                    </Link> */}
                     <Button
                       onClick={handleSignOut}
                       className="w-full"
@@ -95,6 +96,14 @@ function SideBarContent({ isOpen, handleClose }) {
                       {" "}
                       <HiOutlineArrowLeft className="mr-2 h-5 w-5" /> Log Out
                     </Button>
+                    <Button
+                      onClick={()=>navigate('/')}
+                      className="w-full"
+                      gradientMonochrome="success"
+                    >
+                      {" "}
+                      <HiOutlineArrowLeft className="mr-2 h-5 w-5" /> Back
+                    </Button>                    
                   </Sidebar.ItemGroup>
                 </Sidebar.Items>
               </div>

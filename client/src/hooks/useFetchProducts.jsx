@@ -15,7 +15,11 @@ const useFetchProducts = () => {
                 const response = await axios.get('/api/product/products');
                 setProducts(response.data); // Update products state
             } catch (err) {
-                setError(err.message || 'Something went wrong!');
+                if (err.response && err.response.data) {
+                    setError(err.response.data.message);
+                } else {
+                    setError(err.message || "Something went wrong");
+                }
             } finally {
                 setLoading(false); // End loading
             }

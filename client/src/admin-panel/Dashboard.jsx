@@ -14,6 +14,9 @@ import Home from "./Home";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
+import EditProduct from "./components/sub-pages/EditProduct";
+
+import { Outlet } from "react-router-dom";
 
 function Dashboard() {
   const location = useLocation();
@@ -22,18 +25,18 @@ function Dashboard() {
   const handleClose = () => setIsOpen(false);
   const navigate = useNavigate()
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if(location.search == ''){
-        navigate('/admin?tab=home')
-    }
+  //   if(location.search == ''){
+  //       navigate('/admin?tab=home')
+  //   }
   
-    const urlParams = new URLSearchParams(location.search);
-    const tabFromUrl = urlParams.get("tab");
-    if (tabFromUrl) {
-      setTab(tabFromUrl);
-    }
-  }, [location.search]);
+  //   const urlParams = new URLSearchParams(location.search);
+  //   const tabFromUrl = urlParams.get("tab");
+  //   if (tabFromUrl) {
+  //     setTab(tabFromUrl);
+  //   }
+  // }, [location.search]);
   return (
     <div className="">
       <Button onClick={() => setIsOpen(true)} className="m-4 mb-0">
@@ -42,16 +45,17 @@ function Dashboard() {
       <SideBarContent isOpen={isOpen} handleClose={handleClose} />
 
       {/* profile... */}
-      {tab === "home" && <Home />}
-      {tab === "page1" && <Page1 />}
+      {/* {tab === "home" && <Home />} */}
+      {/* {tab === "page1" && <Page1 />} */}
       {/* posts... */}
-      {tab === "page2" && <Page2 />}
+      {/* {tab === "page2" && <Page2 />} */}
       {/* users */}
-      {tab === 'page3' && <Page3 />}
+      {/* {tab === 'page3' && <Page3 />} */}
       {/* user's bookings  */}
       {/* {tab === 'my-bookings' && <UserBookings />} */}
       {/* received bookings */}
       {/* {tab === 'received-bookings' && <ReceivedBooking />} */}
+      <Outlet/>
     </div>
   );
 }
