@@ -3,7 +3,21 @@ const Offer = require('../models/offer.model'); // Adjust the path based on your
 // CREATE an offer
 exports.createOffer = async (req, res) => {
     try {
-        const { name, description, category, status, discount, minPurchaseAmount, maxUsage, usageCount, isApplicableToAll, applicableProducts, validFrom, validTo } = req.body;
+        const {
+            name,
+            description,
+            category,
+            status,
+            discount,
+            minPurchaseAmount,
+            maxUsage,
+            usageCount,
+            isApplicableToAll,
+            applicableProducts,
+            validFrom,
+            validTo,
+            code,
+        } = req.body;
 
         const newOffer = new Offer({
             name,
@@ -17,13 +31,20 @@ exports.createOffer = async (req, res) => {
             isApplicableToAll,
             applicableProducts,
             validFrom,
-            validTo
+            validTo,
+            code, // Ensure the code is unique
         });
 
         const savedOffer = await newOffer.save();
         res.status(201).json({ success: true, data: savedOffer });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error creating offer', error: error.message });
+        if (error.code === 11000) { // Handle duplicate code error
+            return res.status(400).json({
+                success: false,
+                message: 'Offer code must be unique.',
+            });
+        }
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
@@ -52,35 +73,28 @@ exports.getOfferById = async (req, res) => {
 
 // UPDATE an offer
 exports.updateOffer = async (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+
     try {
-        const { name, description, category, status, discount, minPurchaseAmount, maxUsage, usageCount, isApplicableToAll, applicableProducts, validFrom, validTo } = req.body;
-
-        const updatedOffer = await Offer.findByIdAndUpdate(
-            req.params.id,
-            {
-                name,
-                description,
-                category,
-                status,
-                discount,
-                minPurchaseAmount,
-                maxUsage,
-                usageCount,
-                isApplicableToAll,
-                applicableProducts,
-                validFrom,
-                validTo
-            },
-            { new: true, runValidators: true }
-        );
-
-        if (!updatedOffer) {
-            return res.status(404).json({ success: false, message: 'Offer not found' });
+        // Check if the code is unique before updating
+        if (updates.code) {
+            const existingOffer = await Offer.findOne({ code: updates.code, _id: { $ne: id } });
+            if (existingOffer) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Offer code must be unique.',
+                });
+            }
         }
 
+        const updatedOffer = await Offer.findByIdAndUpdate(id, updates, { new: true });
+        if (!updatedOffer) {
+            return res.status(404).json({ success: false, message: 'Offer not found.' });
+        }
         res.status(200).json({ success: true, data: updatedOffer });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Error updating offer', error: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 

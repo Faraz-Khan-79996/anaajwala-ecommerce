@@ -1,63 +1,64 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-
 const offerSchema = new Schema({
-
-    name :{
-        type : String,
+    name: {
+        type: String,
         required: true,
     },
-    description : {
-        type : String, 
-        required : true
+    description: {
+        type: String,
+        required: true,
     },
-    category : {
-        type : String,
-        enum : ['flour']
+    category: {
+        type: String,
+        enum: ['flour'],
     },
     status: {
         type: String,
         enum: ['active', 'expired', 'upcoming'],
-        default: 'active'
-    },    
+        default: 'active',
+    },
     discount: {
         type: Number,
-        required: true
+        required: true,
     },
     minPurchaseAmount: {
         type: Number,
-        default: 1
+        default: 1,
     },
-    maxUsage: {// Maximum times the offer can be used
+    maxUsage: {
         type: Number,
-        default: 0
+        default: 0,
     },
     usageCount: {
-        type: Number, // Track how many times the offer has been used
-        default: 0
+        type: Number,
+        default: 0,
     },
-    isApplicableToAll:{
-        type : Boolean,
-        required : true,
-        default : true
+    isApplicableToAll: {
+        type: Boolean,
+        required: true,
+        default: true,
     },
     applicableProducts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product'
-        }
-    ],    
+            ref: 'Product',
+        },
+    ],
     validFrom: {
-        type: Date
+        type: Date,
     },
     validTo: {
-        type: Date
-    }
+        type: Date,
+    },
+    code: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+}, { timestamps: true });
 
-},{ timestamps: true });
+const Offer = mongoose.model('Offer', offerSchema);
 
-
-const Cart = mongoose.model('Offer', offerSchema);
-
-module.exports = Cart;
+module.exports = Offer;
