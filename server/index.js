@@ -8,6 +8,7 @@ const OrderRouter = require('./routes/order.route.js')
 const ProductRouter = require('./routes/product.route.js')
 const SiteRouter = require('./routes/site.route.js')
 const SurveyRouter = require('./routes/survey.route.js')
+const OfferRouter = require('./routes/offer.route.js')
 const path = require('path')
 require('dotenv').config()
 const app = express()
@@ -35,6 +36,7 @@ app.use('/api/order' , OrderRouter);
 app.use('/api/product' , ProductRouter);
 app.use('/api/site' , SiteRouter);
 app.use('/api/survey' , SurveyRouter)
+app.use('/api/offer' , OfferRouter)
 
 app.get('/test', (req, res) => {
   res.send('Hello World!')
