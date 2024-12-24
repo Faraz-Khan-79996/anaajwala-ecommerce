@@ -14,15 +14,24 @@ require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT || 3000;
 
-
+let connected = false
 
 async function main() {
   // await mongoose.connect('mongodb://127.0.0.1:27017/anaaj-wala');
-  await mongoose.connect(process.env.MONGO_STRING , { useNewUrlParser: true, useUnifiedTopology: true});
+  await mongoose.connect(process.env.MONGO_STRING , { useNewUrlParser: true});
   console.log("database connected");
+  connected = true
   
 }
 main().catch(err => console.log(err));
+
+app.use(async(req , res , next)=>{
+  if(!connected){
+    await new Promise(resolve => setTimeout(resolve, 4000));
+    console.log("happen");
+  }
+  next()
+})
 
 const cors = require('cors');
 
