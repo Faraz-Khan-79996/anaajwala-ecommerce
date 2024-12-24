@@ -15,14 +15,14 @@ const app = express()
 const PORT = process.env.PORT || 3000;
 
 
-main().catch(err => console.log(err));
 
 async function main() {
   // await mongoose.connect('mongodb://127.0.0.1:27017/anaaj-wala');
-  await mongoose.connect(process.env.MONGO_STRING);
+  await mongoose.connect(process.env.MONGO_STRING , { useNewUrlParser: true, useUnifiedTopology: true});
   console.log("database connected");
   
 }
+main().catch(err => console.log(err));
 
 const cors = require('cors');
 
