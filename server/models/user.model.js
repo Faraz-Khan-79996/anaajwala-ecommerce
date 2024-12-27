@@ -45,6 +45,17 @@ const userSchema = new mongoose.Schema(
       }],
       default: []
     },
+    coins : {
+      type : Number,
+      default : 0,
+      required : true
+    },
+    referralCount : {//number of referral user has done.
+      type : Number,
+      default : 0,
+      required : true
+    },
+    
     // userBookings: {
     //   type: [{
     //     type: mongoose.Schema.Types.ObjectId,

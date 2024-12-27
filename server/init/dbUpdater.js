@@ -46,6 +46,18 @@ const clearOrders = async ()=>{
     
 }
 
+const addFieldToUserCollection = async () => {
+    try {
+        // await User.updateMany({} , {$set : {coins : 0 , referralCount:0}})
+        console.log("fields added to user collection");
+        
+    } catch (error) {
+        console.log("Error happened" , error.message);
+        
+    }
+} 
+
 // addFieldToCollection()
-addFieldToProductCollection()
+// addFieldToProductCollection()
+addFieldToUserCollection()
 // clearOrders()

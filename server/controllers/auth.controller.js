@@ -31,6 +31,8 @@ const client = require('../utils/twilio.js')
  */
 const signup = async (req, res, next) => {
     const { username, email, password, phone_no } = req.body;
+    const {referralGiver} = req.query
+    let isReferralNumberCorrect = true
 
     // Validation
     if (!username || !email || !password || !phone_no) {
@@ -52,7 +54,9 @@ const signup = async (req, res, next) => {
     if (typeof username !== 'string' || username.trim().length === 0) {
         return next(errorhandler(400, 'Username cannot be empty.', 'Validation Error'));
     }
-
+    if (!referralGiver || typeof referralGiver !== 'string' || referralGiver.trim().length !== 10 || !/^\d+$/.test(referralGiver)) {
+        isReferralNumberCorrect=false
+    }
     const user = await User.findOne({ username : username.toLowerCase().trim() });
     if (user) {
         return next(errorhandler(400, 'User already exists', 'Conflict'));
@@ -79,6 +83,15 @@ const signup = async (req, res, next) => {
             .cookie('access_token', token, { httpOnly: true, maxAge: maxAge * 1000 })
             .status(201)
             .json(newUser); // Directly send the user object
+
+        if (isReferralNumberCorrect) {
+            const coinsToAdd = 200; // Specify the amount of coins to add
+            await User.findOneAndUpdate(
+                { phone_no: referralGiver },
+                { $inc: { coins: coinsToAdd } }
+            );
+        }
+            
     } catch (error) {
         next(errorhandler(500, error.message, 'Database Error'));
     }
