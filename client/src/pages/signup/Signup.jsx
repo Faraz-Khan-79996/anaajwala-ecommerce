@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,34 +11,62 @@ import { Alert } from "flowbite-react";
 import OAuthSignup from "../../components/OAuthSignup.jsx";
 
 const Signup = () => {
-
-  const user = useSelector(state => state.user)
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [otpLoading , setOtpLoading] = useState(false)
   const [error, setError] = useState(null);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
-
-  useEffect(()=>{
-    if(user.user){
-      navigate('/')
+  useEffect(() => {
+    if (user.user) {
+      navigate("/");
     }
-  } , [user])
+  }, [user, navigate]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     getValues,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    data.username = data.username.toLowerCase()
-    // console.log(data);
-    setLoading((prev) => true);
+  const sendOtp = async () => {
+    const phone_no = getValues("phone_no");
+    if (phone_no.length === 10) {
+      try {
+        setOtpLoading(true)
+        await axios.post("/api/auth/sendOTP?action=signup", { phone_no });
+        setOtpSent(true);
+      } catch (err) {
+        
+        if(err.response && err.response.data){
+          setError(err.response.data.message);
+        }
+        else{
+          setError("Failed to send OTP. Please try again.");
+        }
+      }
+      finally{
+        setOtpLoading(false)
+      }
+    } else {
+      setError("Please enter a valid 10-digit phone number.");
+    }
+  };
 
+  const onSubmit = async (data) => {
+    if (!otp) {
+      setError("Please enter the OTP.");
+      return;
+    }
+    data.username = data.username.toLowerCase();
+    setLoading(true);
     try {
-      const { data: user } = await axios.post("/api/auth/signup", data);
+      const { data: user } = await axios.post("/api/auth/signup", { ...data, otp });
       dispatch(addUser(user));
       navigate("/");
     } catch (error) {
@@ -48,7 +76,7 @@ const Signup = () => {
         setError(error.message);
       }
     } finally {
-      setLoading((prev) => false);
+      setLoading(false);
     }
   };
 
@@ -56,13 +84,11 @@ const Signup = () => {
     <>
       <section className="py-4 md:py-8 dark:bg-gray-800">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        {error ? (
-          <>
+          {error && (
             <Alert onDismiss={() => setError(null)} className="mb-4" color="failure" icon={HiInformationCircle}>
               <span className="font-medium">Error!</span> {error}
             </Alert>
-          </>
-        ) : null}
+          )}
           <Link
             to="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -79,22 +105,9 @@ const Signup = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Create your account
               </h1>
-              <form onSubmit={handleSubmit(onSubmit)}>
-
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <OAuthSignup />
-                
-              </form>
-              <div className="flex items-center">
-                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
-                {/* <div className="px-5 text-center text-gray-500 dark:text-gray-400">
-                  or
-                </div> */}
-                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
-              </div>
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 md:space-y-6"
-              >
+
                 <div>
                   <label
                     htmlFor="username"
@@ -112,6 +125,10 @@ const Signup = () => {
                     placeholder="eg. John Wick"
                     {...register("username", {
                       required: "Username is required",
+                      minLength: {
+                        value: 3,
+                        message: "Username must be at least 3 characters long",
+                      },
                     })}
                   />
                   {errors.username && (
@@ -120,6 +137,7 @@ const Signup = () => {
                     </p>
                   )}
                 </div>
+
                 <div>
                   <label
                     htmlFor="phone_no"
@@ -134,17 +152,16 @@ const Signup = () => {
                     className={`bg-gray-50 border ${
                       errors.phone_no ? "border-red-500" : "border-gray-300"
                     } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-                    placeholder=""
+                    placeholder="Enter phone number"
                     {...register("phone_no", {
-                      required: "Contact number is required",
+                      required: "Phone number is required",
                       maxLength: {
                         value: 10,
-                        message: "Contact number cannot exceed 10 characters",
+                        message: "Phone number cannot exceed 10 characters",
                       },
                       minLength: {
                         value: 10,
-                        message:
-                          "Contact number must be at least 10 characters",
+                        message: "Phone number must be at least 10 characters",
                       },
                     })}
                   />
@@ -154,134 +171,62 @@ const Signup = () => {
                     </p>
                   )}
                 </div>
-                <div>
-                  <label
-                    htmlFor="confirm_phone_no"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Confirm Contact number
-                  </label>
-                  <input
-                    type="text"
-                    name="confirm_phone_no"
-                    id="confirm_phone_no"
-                    className={`bg-gray-50 border ${
-                      errors.phone_no ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-                    placeholder="confirm you contact number"
-                    {...register("confirm_phone_no", {
-                      required: "Please confirm your contact number",
-                      validate: (value) =>
-                        value === getValues("phone_no") ||
-                        "Contact Number do not match.",
-                    })}
-                  />
-                  {errors.confirm_phone_no && (
-                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                      {errors.confirm_phone_no.message}
-                    </p>
-                  )}
-                </div>
 
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  <button
+                    type="button"
+                    onClick={sendOtp}
+                    disabled={otpLoading}
+                    className="w-full text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
                   >
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className={`bg-gray-50 border ${
-                      errors.email ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-                    placeholder="email@gmail.com"
-                    {...register("email", {
-                      required: "Email is required",
-                      pattern: {
-                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                        message: "Enter a valid email address",
-                      },
-                    })}
-                  />
-                  {errors.email && (
-                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                      {errors.email.message}
-                    </p>
+                    Generate OTP
+                    {otpLoading && (
+                    <Spinner
+                      className="ml-2"
+                      aria-label="Default status example"
+                    />
                   )}
+                  </button>
                 </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className={`bg-gray-50 border ${
-                      errors.password ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: {
-                        value: 6,
-                        message: "Password must be at least 6 characters long",
-                      },
-                    })}
-                  />
-                  {errors.password && (
-                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                      {errors.password.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Confirm password
-                  </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    placeholder="••••••••"
-                    className={`bg-gray-50 border ${
-                      errors.confirmPassword
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
-                    {...register("confirmPassword", {
-                      required: "Please confirm your password",
-                      validate: (value) =>
-                        value === getValues("password") ||
-                        "Passwords do not match",
-                    })}
-                  />
-                  {errors.confirmPassword && (
-                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-                      {errors.confirmPassword.message}
-                    </p>
-                  )}
-                </div>
+
+                {otpSent && (
+                  <div>
+                    <label
+                      htmlFor="otp"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Enter OTP
+                    </label>
+                    <input
+                      type="text"
+                      name="otp"
+                      id="otp"
+                      className={`bg-gray-50 border ${
+                        !otp ? "border-red-500" : "border-gray-300"
+                      } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    {!otp && (
+                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                        OTP is required
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   className="w-full text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800"
                 >
                   Create your account{" "}
-                  {loading ? (
+                  {loading && (
                     <Spinner
                       className="ml-2"
                       aria-label="Default status example"
                     />
-                  ) : null}
+                  )}
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}

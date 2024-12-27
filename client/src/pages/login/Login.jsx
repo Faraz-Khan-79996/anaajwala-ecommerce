@@ -1,29 +1,76 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser, clearUser } from "../../features/user/userSlice";
 import { Spinner } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import OAuth from "../../components/OAuth";
+import axios from "axios";
 
 function Login() {
-    // Initialize useForm hook
     const {
         register,
         handleSubmit,
         formState: { errors },
+        getValues
     } = useForm();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
     const navigate = useNavigate();
 
-    // Handle form submission
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [otp, setOtp] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertType, setAlertType] = useState("");
+
+    async function generateOTP() {
+        // Send OTP to the phone number
+        setIsLoading(true);
+        try {
+            const response = await axios.post(
+                "/api/auth/sendOTP?action=signin",
+                { phone_no : getValues().phone_no}
+            );
+
+            if (response.data.message) {
+                setIsOtpSent(true); // OTP sent successfully, now prompt for OTP
+                setAlertMessage("OTP has been sent to your phone number.");
+                setAlertType("success");
+            } else {
+                setAlertMessage("Error sending OTP. Please try again.");
+                setAlertType("failure");
+            }
+        } catch (error) {
+            if (error.response && error.response.data) {
+                setAlertMessage(error.response.data.message);
+                setAlertType("failure");
+            } else {
+                setAlertMessage("Error sending OTP. Please try again.");
+                setAlertType("failure");
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     const onSubmit = async (data) => {
-        data.username = data.username.toLowerCase();
-        dispatch(loginUser(data));
+        const phone_no = data.phone_no;
+        const otpEntered = otp; // Take OTP value from state
+
+        // Validate OTP and log in
+        setIsLoading(true);
+        try {
+            await dispatch(loginUser({ phone_no, otp: otpEntered }));
+        } catch (error) {
+            setAlertMessage("Error during login. Please check your OTP.");
+            setAlertType("failure");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -49,6 +96,19 @@ function Login() {
                             </Alert>
                         </>
                     ) : null}
+
+                    {/* Alert for OTP */}
+                    {alertMessage && (
+                        <Alert
+                            className="mb-4"
+                            color={alertType === "success" ? "success" : "failure"}
+                            icon={HiInformationCircle}
+                        >
+                            <span className="font-medium">{alertType === "success" ? "Success!" : "Error!"}</span>{" "}
+                            {alertMessage}
+                        </Alert>
+                    )}
+
                     <Link
                         to="/"
                         className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -70,80 +130,66 @@ function Login() {
                             </form>
                             <div className="flex items-center">
                                 <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
-                                {/* <div className="px-5 text-center text-gray-500 dark:text-gray-400">
-                                    or
-                                </div> */}
-                                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
                             </div>
+
                             <form
                                 className="space-y-4 md:space-y-6"
                                 onSubmit={handleSubmit(onSubmit)}
                             >
                                 <div>
                                     <label
-                                        htmlFor="username"
+                                        htmlFor="phone_no"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        Your username
+                                        Your Phone Number
                                     </label>
                                     <input
                                         type="text"
-                                        name="username"
-                                        id="username"
-                                        {...register("username", {
-                                            required: "Username is required",
+                                        name="phone_no"
+                                        id="phone_no"
+                                        {...register("phone_no", {
+                                            required: "Phone number is required",
                                         })}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="eg. John Wick"
+                                        placeholder="Enter phone number"
                                     />
-                                    {errors.username && (
+                                    {errors.phone_no && (
                                         <p className="text-red-500 text-xs mt-1">
-                                            {errors.username.message}
+                                            {errors.phone_no.message}
                                         </p>
                                     )}
                                 </div>
-                                <div>
-                                    <label
-                                        htmlFor="password"
-                                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    >
-                                        Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        {...register("password", {
-                                            required: "Password is required",
-                                        })}
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="••••••••"
-                                    />
-                                    {errors.password && (
-                                        <p className="text-red-500 text-xs mt-1">
-                                            {errors.password.message}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-start">
-                                        <div className="flex items-center h-5">
-                                            <input
-                                                id="remember"
-                                                aria-describedby="remember"
-                                                type="checkbox"
-                                                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-teal-600 dark:ring-offset-gray-800"
-                                            />
-                                        </div>
-                                        <div className="ml-3 text-sm">
-                                            <label
-                                                htmlFor="remember"
-                                                className="text-gray-500 dark:text-gray-300"
-                                            >
-                                                Remember me
-                                            </label>
-                                        </div>
+
+                                {/* {isOtpSent && ( */}
+                                    <div>
+                                        <label
+                                            htmlFor="otp"
+                                            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                        >
+                                            Enter OTP
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="otp"
+                                            id="otp"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="Enter OTP"
+                                        />
                                     </div>
+                                {/* )} */}
+
+                                <div className="flex items-center justify-between">
+                                    <button
+                                        type="button"
+                                        // onClick={handleSubmit(onSubmit)}
+                                        onClick={generateOTP}
+                                        className="text-teal-600 text-sm font-medium dark:text-teal-500"
+                                    >
+                                        {/* {isOtpSent ? "Resend OTP" : "Generate OTP"} */}
+                                        Generate OTP
+                                    </button>
                                     <Link
                                         to="/forgot-password"
                                         className="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500"
@@ -156,7 +202,7 @@ function Login() {
                                     className="text-white bg-teal-600 py-1.5 px-4 rounded font-bold w-full"
                                 >
                                     Sign in
-                                    {user.loading ? (
+                                    {isLoading ? (
                                         <Spinner
                                             className="ml-2"
                                             aria-label="Default status example"
