@@ -4,14 +4,13 @@ const { errorhandler } = require("../utils/error.js")
 const jwt = require("jsonwebtoken")
 const client = require('../utils/twilio.js')
 
+const admin = require('firebase-admin');
+const {serviceAccountJsonObject} = require('../firebase/firebaseServiceAccount.js')
 
-// import admin from 'firebase-admin'
-
-// import serviceAccount from '../firebase_service_account.json' assert { type: "json" }
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-// });
+// console.log(serviceAccountJsonObject)
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccountJsonObject),
+});
 
 /**
  * Handles user signup by validating input, creating a new user, and returning a JWT token.
@@ -30,12 +29,12 @@ const client = require('../utils/twilio.js')
  * @throws {Error} Throws an error if validation fails or if there is a database error.
  */
 const signup = async (req, res, next) => {
-    const { username, email, password, phone_no } = req.body;
+    const { username, phone_no } = req.body;
     const {referralGiver} = req.query
     let isReferralNumberCorrect = true
 
     // Validation
-    if (!username || !email || !password || !phone_no) {
+    if (!username || !phone_no) {
         return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
     }
 
@@ -43,13 +42,13 @@ const signup = async (req, res, next) => {
         return next(errorhandler(400, 'Phone number must be exactly 10 digits.', 'Validation Error'));
     }
 
-    if (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
-        return next(errorhandler(400, 'Invalid email format.', 'Validation Error'));
-    }
+    // if (typeof email !== 'string' || !/^\S+@\S+\.\S+$/.test(email)) {
+    //     return next(errorhandler(400, 'Invalid email format.', 'Validation Error'));
+    // }
 
-    if (typeof password !== 'string' || password.length < 6) {
-        return next(errorhandler(400, 'Password must be at least 6 characters long.', 'Validation Error'));
-    }
+    // if (typeof password !== 'string' || password.length < 6) {
+    //     return next(errorhandler(400, 'Password must be at least 6 characters long.', 'Validation Error'));
+    // }
 
     if (typeof username !== 'string' || username.trim().length === 0) {
         return next(errorhandler(400, 'Username cannot be empty.', 'Validation Error'));
@@ -57,21 +56,22 @@ const signup = async (req, res, next) => {
     if (!referralGiver || typeof referralGiver !== 'string' || referralGiver.trim().length !== 10 || !/^\d+$/.test(referralGiver)) {
         isReferralNumberCorrect=false
     }
-    const user = await User.findOne({ username : username.toLowerCase().trim() });
+    const user = await User.findOne({ phone_no : phone_no.trim() });
     if (user) {
         return next(errorhandler(400, 'User already exists', 'Conflict'));
     }
     
 
-    const hashedPassword = bcryptjs.hashSync(password, 10);
+    // const hashedPassword = bcryptjs.hashSync(password, 10);
     const maxAge = 31 * 24 * 60 * 60; // Token expiry time (31 days)
 
     try {
         const newUser = new User({
             username: username.toLowerCase().trim(),
-            email: email.toLowerCase().trim(),
+            // email: email.toLowerCase().trim(),
             phone_no: phone_no.trim(),
-            password: hashedPassword,
+            // password: hashedPassword,
+            coins : 500,
             saved: [],
             orders: []
         });
@@ -85,7 +85,7 @@ const signup = async (req, res, next) => {
             .json(newUser); // Directly send the user object
 
         if (isReferralNumberCorrect) {
-            const coinsToAdd = 200; // Specify the amount of coins to add
+            const coinsToAdd = 500; // Specify the amount of coins to add
             await User.findOneAndUpdate(
                 { phone_no: referralGiver },
                 { $inc: { coins: coinsToAdd } }
@@ -112,22 +112,29 @@ const signup = async (req, res, next) => {
  * @throws {Error} Throws an error if validation fails, user is not found, or if the password is incorrect.
  */
 const signin = async (req, res, next) => {
-    const { username, password } = req.body;
+    // const { phone_no } = req.params;
+    const { idToken } = req.body;
     const maxAge = 31 * 24 * 60 * 60
+    
 
-    if (!username || !password ) {
+    if (!idToken ) {
         return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
     }
 
-
     try {
-        const validUser = await User.findOne({ username : username.toLowerCase().trim() })
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const phoneNumber = decodedToken.phone_number.slice(3);
+
+        // console.log(phoneNumber);
+    
+
+        const validUser = await User.findOne({ phone_no : phoneNumber.trim() })
         if (!validUser) {
             return next(errorhandler(404, 'User not found'))
         }
 
-        const validPassword = bcryptjs.compareSync(password, validUser.password)
-        if (!validPassword) return next(errorhandler(401, "Wrong credentials"))
+        // const validPassword = bcryptjs.compareSync(password, validUser.password)
+        // if (!validPassword) return next(errorhandler(401, "Wrong credentials"))
 
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET , {expiresIn : maxAge})
         const { password: pass, ...rest } = validUser._doc;
@@ -294,6 +301,24 @@ const resetPassword = async(req , res , next)=>{
     }
 }
 
+const checkDuplicatePhoneNumber = async (req , res , next) => {
+    try {
+        const {phone_no} = req.params
+        const userDoc = await User.findOne({phone_no : phone_no.trim()})
+        console.log("req came");
+        
+
+        if(userDoc){
+            return res.json({success : "true" , isPhoneNumberDuplicate : true , message : "Given phone number already exists" })
+        }
+        else{
+            return res.json({success : "true" , isPhoneNumberDuplicate : false , message : "Phone number does not exists" })
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports =  {
     signup,
     signin,
@@ -301,4 +326,5 @@ module.exports =  {
     signOut,
     applyForResetPassword,
     resetPassword,
+    checkDuplicatePhoneNumber
 }
