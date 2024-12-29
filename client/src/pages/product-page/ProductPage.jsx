@@ -279,7 +279,7 @@ function ProductPage() {
                       texture == "fine" ? "bg-black text-white" : ""
                     } rounded-lg border border-black px-6 py-2 font-bold`}
                   >
-                    Fine
+                    Fine (महीन)
                   </p>
                 </label>
                 <label className="cursor-pointer">
@@ -296,7 +296,7 @@ function ProductPage() {
                         texture == "coarse" ? "bg-black text-white" : ""
                     } rounded-lg border border-black px-6 py-2 font-bold`}
                   >
-                    Coarse
+                    Coarse (दरदरा)
                   </p>
                 </label> 
                                 {/* <label className="cursor-pointer">
