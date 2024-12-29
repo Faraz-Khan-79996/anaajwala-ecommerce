@@ -30,7 +30,7 @@ function ProductPage() {
 
     const navigate = useNavigate();
 
-    // const [type, setType] = useState("platinum");
+    const [texture, setTexture] = useState("fine");
     const [quantity, setQuantity] = useState(1);
 
     // const discount = {
@@ -39,16 +39,17 @@ function ProductPage() {
     //     20: 20,
     // };
 
+    // const type = ['fine' , 'coarse']
 
     useEffect(() => {
         // fetchProduct();
     }, [currentUrl]);
 
-    // const handleTypeChange = (ev) => {
-    //   ev.preventDefault();
-    //   console.log(ev.target.value);
-    //   setType(ev.target.value);
-    // };
+    const handleTypeChange = (ev) => {
+      ev.preventDefault();
+      console.log(ev.target.value);
+      setTexture(ev.target.value);
+    };
     const handleQuantityChange = (event) => {
         setQuantity(event.target.value);
     };
@@ -59,6 +60,7 @@ function ProductPage() {
                 id: product._id,
                 product,
                 quantity,
+                texture
             })
         );
         notify();
@@ -260,44 +262,44 @@ function ProductPage() {
                                 </p>
                             </div>
                             <h2 className="mt-8 text-base text-gray-900">
-                                Variant
+                                Texture
                             </h2>
                             <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-                                {/* <label className="cursor-pointer">
+                                 <label className="cursor-pointer">
                   <input
                     type="radio"
                     name="type"
-                    value="gold"
+                    value="fine"
                     className="peer sr-only"
                     onChange={handleTypeChange}
-                    checked={type === "gold"}
+                    checked={texture === "fine"}
                   />
                   <p
                     className={`${
-                      type == "gold" ? "bg-black text-white" : ""
+                      texture == "fine" ? "bg-black text-white" : ""
                     } rounded-lg border border-black px-6 py-2 font-bold`}
                   >
-                    Gold
+                    Fine
                   </p>
                 </label>
                 <label className="cursor-pointer">
                   <input
                     type="radio"
                     name="type"
-                    value="platinum"
+                    value="coarse"
                     className="peer sr-only"
                     onChange={handleTypeChange}
-                    checked={type === "platinum"}
+                    checked={texture === "coarse"}
                   />
                   <p
                     className={`${
-                      type == "platinum" ? "bg-black text-white" : ""
+                        texture == "coarse" ? "bg-black text-white" : ""
                     } rounded-lg border border-black px-6 py-2 font-bold`}
                   >
-                    Platinum
+                    Coarse
                   </p>
-                </label> */}
-                                <label className="cursor-pointer">
+                </label> 
+                                {/* <label className="cursor-pointer">
                                     <input
                                         type="radio"
                                         name="type"
@@ -309,7 +311,7 @@ function ProductPage() {
                                     >
                                         {product.type}
                                     </p>
-                                </label>
+                                </label> */}
                             </div>
                             <h2 className="mt-8 text-base text-gray-900">
                                 Quantity

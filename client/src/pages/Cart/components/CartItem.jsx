@@ -24,29 +24,29 @@ function CartItem({item}) {
                 />
             </div>
             <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
-                <div className="w-full flex flex-col justify-start items-start space-y-8">
+                <div className="w-full flex flex-col justify-start items-start space-y-4">
                     <h3 className="text-sm dark:text-white xl:text-lg mr-2 font-semibold leading-6 text-gray-800">
                         {item.product.name}
                     </h3>
                     <div className="flex justify-start items-start flex-col space-y-2">
                         <p className="text-sm dark:text-white leading-none text-gray-800">
-                            <span className="dark:text-gray-400 text-gray-300">
+                            <span className="dark:text-gray-400 text-gray-800">
                                 Variant:{" "}
                             </span>{" "}
-                            {item.product.type}
+                            <span className="italic font-semibold">{item.product.type}</span>
+                        </p>
+                         <p className="text-sm dark:text-white leading-none text-gray-800">
+                            <span className="dark:text-gray-400 text-gray-800">
+                                Texture:{" "}
+                            </span>{" "}
+                            <span className="italic font-semibold">{item.texture}</span>
                         </p>
                         {/* <p className="text-sm dark:text-white leading-none text-gray-800">
-                            <span className="dark:text-gray-400 text-gray-300">
-                                Size:{" "}
-                            </span>{" "}
-                            Small
-                        </p>
-                        <p className="text-sm dark:text-white leading-none text-gray-800">
                             <span className="dark:text-gray-400 text-gray-300">
                                 Color:{" "}
                             </span>{" "}
                             Light Blue
-                        </p> */}
+                        </p>  */}
                     </div>
                 </div>
                 <div className="flex justify-between space-x-8 items-start w-full">

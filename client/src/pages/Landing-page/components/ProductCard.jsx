@@ -25,6 +25,7 @@ function ProductCard({ item, admin = false }) {
                     id: item._id,
                     product: item,
                     quantity: 1,
+                    texture : "fine"
                 })
             );
             notify();

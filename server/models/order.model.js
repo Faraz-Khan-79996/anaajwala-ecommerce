@@ -88,6 +88,12 @@ const orderSchema = new mongoose.Schema(
       },
       thumbnail : {
         type : String,
+      },
+      texture:{
+        type : String,
+        enum : ['fine' , 'coarse'],
+        required : true,
+        default : 'fine'
       }
     }],
   },

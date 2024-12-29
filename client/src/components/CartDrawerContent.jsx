@@ -91,7 +91,7 @@ function CartDrawerContent({ handleClose }) {
                                                             </p>
                                                         </div>
                                                         <p className="mt-1 text-sm text-gray-500">
-                                                            {item.product.type}
+                                                            texture : <span className="italic font-semibold">{item.texture}</span>
                                                         </p>
                                                     </div>
                                                     <div className="flex flex-1 items-end justify-between text-sm">
