@@ -28,6 +28,7 @@
     "react-spinners": "^0.14.1",
     "react-swipeable": "^7.0.1",
     "react-toastify": "^10.0.5",
+    "react-web-share": "^2.0.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^6.8.4"
   },

@@ -1,14 +1,14 @@
 // import React from "react";
 // import NavbarComponent from "../../components/NavbarComponent";
-// import { Carousel } from "flowbite-react";
+import { Carousel } from "flowbite-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import ProductCard from "./components/ProductCard";
 import axios from "axios";
-// import image1 from "../../assets/image1.jpg";
+import image1 from "../../assets/image1.jpg";
 // import banner2 from "../../assets/banner2.jpg";
-// import banner3 from "../../assets/banner3.jpg";
-// import banner4 from "../../assets/banner4.jpg";
+import banner3 from "../../assets/banner3.jpg";
+import banner4 from "../../assets/banner4.jpg";
 import Chooseus from "./components/Chooseus";
 // import Harsh1 from "../../assets/Harsh1.jpg"
 import Testimonial from "./components/Testimonial";
@@ -31,10 +31,10 @@ function LandingPage() {
   return (
     <>
       <div><ToastContainer /></div>
-      {/* <div className="h-72 sm:h-80 xl:h-[30rem] 2xl:h-[36rem]">
-        <Carousel slideInterval={3000}>
-          <img src={image1} alt="..." />
-          <img
+      <div className="xl:h-[30rem] 2xl:h-[36rem]">
+        <Carousel className="h-[500px] md:h-[600px]" slideInterval={3000}>
+          <img className="h-full" src={image1} alt="..." />
+          {/* <img
             
             src={banner4}
             alt="..."
@@ -42,12 +42,12 @@ function LandingPage() {
           <img
             src={banner3}
             alt="..."
-          />
+          /> */}
         </Carousel>
-      </div> */}
+      </div>
 
         {/* <HeroGrid /> */}
-        <div className="h-[80vh] bg-no-repeat bg-right" style={{ backgroundImage:`url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700355803.jpg)` }}>
+        {/* <div className="h-[80vh] bg-no-repeat bg-right" style={{ backgroundImage:`url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700355803.jpg)` }}>
           <div className="w-full h-full border-white flex items-center justify-center lg:justify-start">
             <div className="text-white mb-16 font-mono text-4xl md:ml-40  text-center lg:text-start">
               <h2 className="text-6xl font-mono italic mb-6 font-semibold">Anajwala Products</h2>
@@ -57,7 +57,7 @@ function LandingPage() {
             </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
       {/*	 
   

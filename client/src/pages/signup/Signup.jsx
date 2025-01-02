@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import OAuthSignup from "../../components/OAuthSignup.jsx";
+import { useSearchParams } from "react-router-dom";
+
 
 const Signup = () => {
 
@@ -16,9 +18,11 @@ const Signup = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-
+  // console.log(searchParams.get("referralGiver"));
+  
   useEffect(()=>{
     if(user.user){
       navigate('/')
@@ -38,7 +42,7 @@ const Signup = () => {
     setLoading((prev) => true);
 
     try {
-      const { data: user } = await axios.post("/api/auth/signup", data);
+      const { data: user } = await axios.post("/api/auth/signup", data , {params : {referralGiver : searchParams.get("referralGiver")}});
       dispatch(addUser(user));
       navigate("/");
     } catch (error) {

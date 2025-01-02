@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { googleLogin } from "../../features/user/userSlice";
@@ -20,7 +20,8 @@ function AddContactNumberPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [SignupError, setSignupError] = useState(null);
-
+  const [searchParams] = useSearchParams();
+  
   useEffect(()=>{
     if(user.user){
       navigate('/')
@@ -52,7 +53,12 @@ function AddContactNumberPage() {
     
     try {
         setLoading((prev) => true);
-        const { data: user } = await axios.post("/api/auth/google?auth=signup", {phone_no : confirmPhoneNumber, ...data});
+        const { data: user } = await axios.post(
+          `/api/auth/google`, 
+          { phone_no: confirmPhoneNumber, ...data },
+          { params: { auth: 'signup' , referralGiver : searchParams.get("referralGiver")} } // Query parameters go here
+        );
+        
         dispatch(addUser(user));
         navigate('/')
     } catch (error) {
