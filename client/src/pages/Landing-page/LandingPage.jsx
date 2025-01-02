@@ -16,6 +16,7 @@ import HeroGrid from "./components/HeroGrid";
 import Loader from "../../components/Loader";
 import useFetchProducts from "../../hooks/useFetchProducts"
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
 
@@ -45,8 +46,18 @@ function LandingPage() {
         </Carousel>
       </div> */}
 
-        <HeroGrid />
-
+        {/* <HeroGrid /> */}
+        <div className="h-[80vh] bg-no-repeat bg-right" style={{ backgroundImage:`url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700355803.jpg)` }}>
+          <div className="w-full h-full border-white flex items-center justify-center lg:justify-start">
+            <div className="text-white mb-16 font-mono text-4xl md:ml-40  text-center lg:text-start">
+              <h2 className="text-6xl font-mono italic mb-6 font-semibold">Anajwala Products</h2>
+              <p className="italic text-xl font-light">Delivering freshness to your doorstep</p>
+            <div className=" mt-10 text-lg">
+              <Link to={`/products`} className="hover:bg-white py-2 hover:text-black border rounded-full transition duration-300 italic font-extralight px-16"> Let's Shop!</Link>
+            </div>
+            </div>
+          </div>
+        </div>
 
       {/*	 
   
