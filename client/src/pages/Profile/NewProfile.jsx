@@ -66,7 +66,7 @@ function NewProfile() {
             <RWebShare
               data={{
                 title: "Join our E-commerce platform",
-                text: `Sign up and get rewards using my referral link: ${referralLink}`,
+                text: `Sign up and get rewards using my referral link.`,
                 url: referralLink,
               }}
               onClick={() => console.log("Referral link shared successfully")}
