@@ -31,9 +31,9 @@ function LandingPage() {
   return (
     <>
       <div><ToastContainer /></div>
-      <div className="xl:h-[30rem] 2xl:h-[36rem]">
-        <Carousel className="h-[500px] md:h-[600px]" slideInterval={3000}>
-          <img className="h-full" src={image1} alt="..." />
+      {/* <div className="xl:h-[30rem] 2xl:h-[36rem]"> */}
+        {/* <Carousel className="h-[500px] md:h-[600px]" slideInterval={3000}> */}
+          {/* <img className="h-full" src={image1} alt="..." /> */}
           {/* <img
             
             src={banner4}
@@ -43,10 +43,10 @@ function LandingPage() {
             src={banner3}
             alt="..."
           /> */}
-        </Carousel>
-      </div>
+        {/* </Carousel> */}
+      {/* </div> */}
 
-        {/* <HeroGrid /> */}
+        <HeroGrid />
         {/* <div className="h-[80vh] bg-no-repeat bg-right" style={{ backgroundImage:`url(https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700355803.jpg)` }}>
           <div className="w-full h-full border-white flex items-center justify-center lg:justify-start">
             <div className="text-white mb-16 font-mono text-4xl md:ml-40  text-center lg:text-start">
