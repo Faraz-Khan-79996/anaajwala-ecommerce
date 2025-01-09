@@ -5,7 +5,8 @@ import { signoutUser } from "../features/user/userSlice.js";
 import { useState } from "react";
 import CartDrawer from "./CartDrawer.jsx";
 // import CartDrawerContent from "./CartDrawerContent.jsx";
-import Logo from "../assets/logo.png";
+// import Logo from "../assets/logo.png";
+import Logo from "../assets/NavbarLogo2.jpeg"
 import CartBtn from "./CartBtn.jsx";
 
 import { useCartContext } from "../context/CartContext.jsx";
@@ -30,7 +31,7 @@ export default function NavbarComponent() {
                         {/* <span className="self-center whitespace-nowrap text-purple-600 text-2xl font-extrabold dark:text-white">
                             Anaajwala
                         </span> */}
-                        <img src={Logo} alt="" className="h-6" />
+                        <img src={Logo} alt="" className="h-10 rounded-md md:h-14 md:rounded-xl" />
                     </Link>
                 </Navbar.Brand>
 

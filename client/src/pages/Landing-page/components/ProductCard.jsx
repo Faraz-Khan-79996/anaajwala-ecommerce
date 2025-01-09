@@ -14,7 +14,7 @@ function ProductCard({ item, admin = false }) {
 
     const notify = () =>
         toast.success("Added to cart!", {
-            autoClose: 800,
+            autoClose: 1000,
             position: "bottom-right",
             theme: "dark",
         });
@@ -25,6 +25,7 @@ function ProductCard({ item, admin = false }) {
                     id: item._id,
                     product: item,
                     quantity: 1,
+                    texture : "fine"
                 })
             );
             notify();

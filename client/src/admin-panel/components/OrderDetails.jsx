@@ -84,8 +84,11 @@ const OrderDetails = ({ order }) => {
                       <strong>Product Name:</strong> {item.productName}
                     </p>
                     <p>
-                      <strong>Variant:</strong> {item.type}
+                      <strong>Texture:</strong> <span className="text-blue-700 font-mono italic font-semibold">{item.texture}</span>
                     </p>
+                    <p>
+                      <strong>Type:</strong> {item.type}
+                    </p>                    
                     <p>
                       <strong>Quantity:</strong> {item.quantity}
                     </p>

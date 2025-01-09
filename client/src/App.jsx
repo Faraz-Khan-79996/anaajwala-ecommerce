@@ -38,6 +38,7 @@ import Page2 from "./admin-panel/Page2.jsx";
 import Page3 from "./admin-panel/Page3.jsx";
 import Home from "./admin-panel/Home.jsx";
 import CreateProduct from "./admin-panel/components/sub-pages/CreateProduct.jsx";
+import NewProfile from "./pages/Profile/NewProfile.jsx";
 
 function App() {
 
@@ -72,7 +73,7 @@ function App() {
           <Route path="/user/orders" element={<Orders/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/about-us" element={<AboutUs/>} />
-          <Route path="/user/profile" element={<Profile/>} />
+          <Route path="/user/profile" element={<NewProfile/>} />
           <Route path="/contact-us" element={<ContactUs/>} />
           <Route path="/privacy-policy" element={<Privacy/>} />
           <Route path="/terms-and-condition" element={<TermsOfUse/>} />
