@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../features/user/userSlice.js";
 import axios from "axios";
 import { Spinner } from "flowbite-react";
+import { useSearchParams } from "react-router-dom";
 
 
 function CreateAccount({ error, setError , phoneNumber }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
+    const [searchParams] = useSearchParams();
 
     const {
         register,
@@ -25,8 +27,9 @@ function CreateAccount({ error, setError , phoneNumber }) {
             const {data : user} = await axios.post('/api/auth/signup' , {
                 username : data.username.toLowerCase().trim(),
                 phone_no : phoneNumber.trim(),
-            })
-
+            } ,
+            {params : {referralGiver : searchParams.get("referralGiver")}}
+        )
             dispatch(addUser(user))
         } catch (error) {
             if (error.response && error.response.data.message) {
