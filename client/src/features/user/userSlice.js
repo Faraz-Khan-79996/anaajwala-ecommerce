@@ -44,7 +44,7 @@ const loginUser = createAsyncThunk('user/loginUser', async (credentials, { rejec
 const googleLogin = createAsyncThunk('user/googleLogin' , async(credentials , {rejectWithValue})=>{
     try {
       const response = await axios.post('api/auth/google?auth=login', credentials, { withCredentials: true });
-      return response.data;      
+      return response.data.user;      
     } catch (error) {
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data.message);

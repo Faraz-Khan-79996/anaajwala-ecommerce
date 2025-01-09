@@ -8,13 +8,16 @@ import CartDrawer from "./CartDrawer.jsx";
 // import Logo from "../assets/logo.png";
 import Logo from "../assets/NavbarLogo2.jpeg"
 import CartBtn from "./CartBtn.jsx";
-
+import { Avatar } from "flowbite-react";
 import { useCartContext } from "../context/CartContext.jsx";
 
 export default function NavbarComponent() {
     const currentUser = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate()
+
+    // console.log(currentUser);
+    
 
     const {isOpen, setIsOpen} = useCartContext();
 
@@ -38,9 +41,10 @@ export default function NavbarComponent() {
                 <div className="flex md:order-2">
                     {currentUser.user ? (
                         <Link to="/user/profile">
-                            <h4 className="text-xl font-bold italic mr-6">
+                            {/* <h4 className="text-xl font-bold italic mr-6">
                                 @{currentUser.user.username}
-                            </h4>
+                            </h4> */}
+                             <Avatar img={currentUser.user.avatar} alt="avatar of user" className="mr-4" size={"md"} rounded />
                         </Link>
                     ) : (
                         <>
@@ -156,7 +160,7 @@ export default function NavbarComponent() {
                             }
                             to="/contact-us"
                         >
-                            Contact-us
+                            Customer support
                         </NavLink>
                     </Navbar.Link>
 

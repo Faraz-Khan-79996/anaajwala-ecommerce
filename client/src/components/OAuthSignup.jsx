@@ -2,13 +2,17 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useSelector , useDispatch } from "react-redux";
 // import { signInSuccess } from '../redux/user/userSlice';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { loginUser , clearUser  , googleLogin} from "../features/user/userSlice";
+
 
 function OAuthSignup() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    //preserve the search params
     
     const handleGoogleClick = async () => {
         try {
@@ -33,11 +37,11 @@ function OAuthSignup() {
             const data = {
                 name: result.user.displayName.toLowerCase(),
                 email: result.user.email.toLowerCase(),
-                // photo: result.user.photoURL,
+                avatar: result.user.photoURL,
                 idToken: await result.user.getIdToken(),
             }
             // dispatch(googleLogin(data))
-            navigate("/add-contact-number/" , {state : data});
+            navigate(`/add-contact-number?${searchParams.toString()}` , {state : data});
         } catch (error) {
             console.log("could not sign up with google", error);
             alert(error.message)

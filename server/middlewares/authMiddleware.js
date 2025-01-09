@@ -20,9 +20,12 @@ const User = require('../models/user.model.js')
 
 
 const isLoggedIn = async (req, res, next) => {
-    const token = req.cookies.access_token;
     
-    if (!token) {
+    // Extract token from cookies or Authorization header
+    const token = req.cookies.access_token || 
+    (req.headers.authorization && req.headers.authorization.split(" ")[1]);
+    
+    if (!token || req.headers.authorization == "Bearer null") {
         return next(errorhandler(401, 'Unauthorized'));
     }
 

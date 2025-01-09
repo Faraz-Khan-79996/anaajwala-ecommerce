@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../features/user/userSlice.js";
 import axios from "axios";
 import { Spinner, Tooltip } from "flowbite-react";
 import { useNavigate } from "react-router-dom";

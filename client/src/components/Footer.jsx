@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import FooterLogo from "../assets/footerLogo.png";
 import youtube from '../assets/youtube.jpg'
 import playstore from '../assets/playstore.webp'
+import Logo from '../assets/NavbarLogo.jpeg'
 
 function Footer() {
     return (
@@ -13,7 +14,7 @@ function Footer() {
                     <div className="md:w-[316px]">
                         <p className="text-[18px] font-medium text-white"></p>
                         <h1 className="text-white font-extrabold">
-                            <img src={FooterLogo} className="h-20" alt="..." />
+                            <img src={Logo} className="h-20 rounded-xl" alt="..." />
                         </h1>
                         <p />
                         <p className="mt-[18px] text-[15px] font-normal text-lg text-white/[80%]">

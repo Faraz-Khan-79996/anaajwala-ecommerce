@@ -24,13 +24,13 @@ function CreateAccount({ error, setError , phoneNumber }) {
         setLoading(true);
 
         try {
-            const {data : user} = await axios.post('/api/auth/signup' , {
+            const {data : response} = await axios.post('/api/auth/signup' , {
                 username : data.username.toLowerCase().trim(),
                 phone_no : phoneNumber.trim(),
             } ,
             {params : {referralGiver : searchParams.get("referralGiver")}}
         )
-            dispatch(addUser(user))
+            dispatch(addUser(response.user))
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);

@@ -85,12 +85,12 @@ function Login() {
             const userCredential = await verificationResult.confirm(otp);
             const idToken = await userCredential.user.getIdToken();
 
-            const { data: user } = await axios.post(`/api/auth/signin`, {
+            const { data } = await axios.post(`/api/auth/signin`, {
                 idToken,
             });
 
             // console.log(user);
-            dispatch(addUser(user));
+            dispatch(addUser(data.user));
         } catch (error) {
             console.error("Error verifying OTP:", error);
             setError("OTP INCORRECT!");

@@ -12,6 +12,9 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccountJsonObject),
 });
 
+const coinsToAdd = 500;
+//specify number of coins to add when the user joins with referral
+
 /**
  * Handles user signup by validating input, creating a new user, and returning a JWT token.
  *
@@ -76,20 +79,27 @@ const signup = async (req, res, next) => {
             orders: []
         });
 
-        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: maxAge });
+        const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
         await newUser.save();
+
+        // console.log({user : newUser._doc , access_token : token});
+        const { password: pass, ...rest } = newUser._doc;
+        
 
         res
             .cookie('access_token', token, { httpOnly: true, maxAge: maxAge * 1000 })
             .status(201)
-            .json(newUser); // Directly send the user object
+            .json({user:rest , access_token : token}); // Directly send the user object
 
-        if (isReferralNumberCorrect) {
-            const coinsToAdd = 500; // Specify the amount of coins to add
-            await User.findOneAndUpdate(
-                { phone_no: referralGiver },
-                { $inc: { coins: coinsToAdd } }
-            );
+        try {
+            if (isReferralNumberCorrect) {
+                await User.findOneAndUpdate(
+                    { phone_no: referralGiver },
+                    { $inc: { coins: coinsToAdd } }
+                );
+            }            
+        } catch (error) {
+            console.log(error);
         }
             
     } catch (error) {
@@ -118,7 +128,7 @@ const signin = async (req, res, next) => {
     
 
     if (!idToken ) {
-        return next(errorhandler(400, 'All fields are required.', 'Validation Error'));
+        return next(errorhandler(400, 'idToken from firebase missing', 'Validation Error'));
     }
 
     try {
@@ -136,14 +146,14 @@ const signin = async (req, res, next) => {
         // const validPassword = bcryptjs.compareSync(password, validUser.password)
         // if (!validPassword) return next(errorhandler(401, "Wrong credentials"))
 
-        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET , {expiresIn : maxAge})
+        const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET )
         const { password: pass, ...rest } = validUser._doc;
         //rest is the entire document except the password
-
+        
         res
             .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000 })
             .status(200)
-            .json(rest)
+            .json({user : rest , access_token : token })
 
     } catch (error) {
         next(error)
@@ -187,10 +197,14 @@ const google = async (req, res, next) => {
         // console.log(req.body);
         // console.log(user);
         
-        const { auth } = req.query
+        const { auth , referralGiver } = req.query
+        let isReferralNumberCorrect = true
         // console.log(auth);
         // console.log(req.body);
         
+        if (!referralGiver || typeof referralGiver !== 'string' || referralGiver.trim().length !== 10 || !/^\d+$/.test(referralGiver)) {
+            isReferralNumberCorrect=false
+        }        
 
         if (user) {
 
@@ -199,12 +213,12 @@ const google = async (req, res, next) => {
                 return;
             }
 
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {expiresIn : maxAge});
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user._doc;
             res
                 .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000 })
                 .status(200)
-                .json(rest);
+                .json({user : rest , access_token : token});
         } else {
             if(auth == "login"){
                 next(errorhandler(409, "Given email Id Does NOT exists!" , "signup Failure"))
@@ -216,22 +230,35 @@ const google = async (req, res, next) => {
             const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
             const newUser = new User({
                 username:
-                    req.body.name.toLowerCase() +
-                    Math.random().toString(36).slice(-4),
+                    req.body.name.toLowerCase(),
                 email: req.body.email.toLowerCase().trim(),
                 password: hashedPassword,
                 phone_no : req.body.phone_no.toLowerCase().trim(),
-                // avatar: req.body.photo,
+                avatar: req.body.avatar || "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=",
+                coins : 500,
                 saved:[] ,
                 orders:[]
             });
             await newUser.save();
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {expiresIn : maxAge});
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = newUser._doc;
             res
                 .cookie('access_token', token, { httpOnly: true , maxAge : maxAge*1000})
                 .status(200)
-                .json(rest);
+                .json({user : rest , access_token : token});
+            
+            try {
+                if (isReferralNumberCorrect) {
+                    await User.findOneAndUpdate(
+                        { phone_no: referralGiver },
+                        { $inc: { coins: coinsToAdd } }
+                    );
+                }                 
+            } catch (error) {
+                console.log(error.message);
+                
+            }                
+                
         }
     } catch (error) {
         next(error);

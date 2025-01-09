@@ -9,7 +9,7 @@ function CartBtn() {
     const { finalPrice } = calculateCost(cart, "");
 
     return (
-        <button className="flex items-center py-1 px-3 bg-violet-500 hover:bg-violet-600 text-xs text-white font-bold rounded-lg transition duration-200">
+        <button className="flex items-center py-1 px-3 h-10 bg-violet-500 hover:bg-violet-600 text-xs text-white font-bold rounded-lg transition duration-200">
             <FaShoppingCart className="mr-2 text-xl" /> {/* Cart icon */}
             <div className="leading-tight">
                 <div>₹{finalPrice} </div>

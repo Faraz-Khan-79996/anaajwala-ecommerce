@@ -13,7 +13,7 @@ function AddContactNumberPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user)
-  console.log(data);
+  // console.log(data);
   
   const [phoneNumber, setPhoneNumber] = useState("");
   const [confirmPhoneNumber, setConfirmPhoneNumber] = useState("");
@@ -53,13 +53,13 @@ function AddContactNumberPage() {
     
     try {
         setLoading((prev) => true);
-        const { data: user } = await axios.post(
+        const { data: response } = await axios.post(
           `/api/auth/google`, 
           { phone_no: confirmPhoneNumber, ...data },
           { params: { auth: 'signup' , referralGiver : searchParams.get("referralGiver")} } // Query parameters go here
         );
         
-        dispatch(addUser(user));
+        dispatch(addUser(response.user));
         navigate('/')
     } catch (error) {
         if (error.response && error.response.data.message) {
