@@ -29,6 +29,9 @@ const isLoggedIn = async (req, res, next) => {
         return next(errorhandler(401, 'Unauthorized'));
     }
 
+    console.log(req.headers.authorization);
+    
+
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id);

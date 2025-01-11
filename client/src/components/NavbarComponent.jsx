@@ -120,7 +120,7 @@ export default function NavbarComponent() {
                             Our Story
                         </NavLink>
                     </Navbar.Link>
-                    <Navbar.Link onClick={() => setIsOpen(true)} style={{ display: 'flex', alignItems: 'center' }}>
+                    {/* <Navbar.Link onClick={() => setIsOpen(true)} style={{ display: 'flex', alignItems: 'center' }}>
                         <span
                             className={`
                                 ${
@@ -135,7 +135,7 @@ export default function NavbarComponent() {
                         <span className="ml-2 mr-2 md:hidden md:mr-0">
                             <CartBtn />
                         </span>
-                    </Navbar.Link>
+                    </Navbar.Link> */}
                     <Navbar.Link onClick={()=>navigate('/user/orders')}>
                         {" "}
                         <NavLink
@@ -178,7 +178,7 @@ export default function NavbarComponent() {
                         </NavLink>
                     </Navbar.Link>
 
-                    {currentUser.user && (
+                    {/* {currentUser.user && (
                         <Navbar.Link>
                             <NavLink
                                 className={
@@ -192,7 +192,7 @@ export default function NavbarComponent() {
                                 Update-Profile
                             </NavLink>
                         </Navbar.Link>
-                    )}
+                    )} */}
 
                     <Navbar.Link className="md:hidden">
                         {" "}                    

@@ -83,9 +83,9 @@ function LandingPage() {
           <nav id="store" className="w-full  top-0 px-6 py-1">
             <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
               <span
-                className="italic tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+                className="italic tracking-wide no-underline hover:no-underline font-bold text-gray-800 md:text-xl text-md "
               >
-                Delivering freshness to your doorstep
+                India's First Leading Freshly Milled flours, Spices , Oiles & kitchen Essentials Delivery Platform
               </span>
               <div className="flex items-center" id="store-nav-content">
                 {/* <a
