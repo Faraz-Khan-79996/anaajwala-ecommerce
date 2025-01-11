@@ -150,6 +150,20 @@ export default function NavbarComponent() {
                             My Orders
                         </NavLink>
                     </Navbar.Link>
+                    <Navbar.Link onClick={()=>navigate('/bulk-order')}>
+                        {" "}
+                        <NavLink
+                            className={
+                                ({ isActive }) =>
+                                    isActive
+                                        ? "text-blue-600 font-bold" // Active link styling
+                                        : "text-gray-600 font-extrabold" // Inactive link styling
+                            }
+                            to="/bulk-order"
+                        >
+                            Bulk-orders
+                        </NavLink>
+                    </Navbar.Link>                    
                     <Navbar.Link onClick={()=>navigate('/contact-us')}>
                         <NavLink
                             className={

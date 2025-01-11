@@ -39,6 +39,7 @@ import Page3 from "./admin-panel/Page3.jsx";
 import Home from "./admin-panel/Home.jsx";
 import CreateProduct from "./admin-panel/components/sub-pages/CreateProduct.jsx";
 import NewProfile from "./pages/Profile/NewProfile.jsx";
+import BulkOrdersPage from "./pages/bulkorder-page/BulkOrdersPage.jsx";
 
 function App() {
 
@@ -79,6 +80,7 @@ function App() {
           <Route path="/terms-and-condition" element={<TermsOfUse/>} />
           <Route path="/return-refund" element={<ReturnRefund/>} />
           <Route path="/billing-policy" element={<BillingTerms/>} />
+          <Route path="/bulk-order" element={<BulkOrdersPage/>} />
         </Route>
 
         <Route path="/login" element={<Login />} />
