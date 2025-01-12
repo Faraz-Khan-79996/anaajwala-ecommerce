@@ -20,6 +20,11 @@ const mongoose = require('mongoose');
  */
 const orderSchema = new mongoose.Schema(
   {
+    orderThrough: {
+      type: String,
+      required: true,
+      enum : ["app" , "website" , "unknown"]
+    },
     customerName: {
       type: String,
       required: true,

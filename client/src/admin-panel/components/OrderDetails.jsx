@@ -19,6 +19,9 @@ const OrderDetails = ({ order }) => {
             <div className="mb-4">
               <h3 className="text-xl font-semibold">Customer Information</h3>
               <p>
+                <strong>Order Through:</strong> <span className="border py-1 px-2 rounded-lg bg-blue-100">{order.orderThrough ? order.orderThrough : "website"}</span>
+              </p>
+              <p>
                 <strong>Name:</strong> {order.customerName}
               </p>
               <p>

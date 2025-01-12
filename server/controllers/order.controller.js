@@ -20,8 +20,33 @@ const createOrder = async (req, res , next) => {
     orderNotes,
     totalPrice
   } = req.body;
-  // console.log("order req ");
-  
+
+  const referer = req.headers.referer || req.headers.origin;
+
+  // List of URLs to classify as website
+  const websiteURLs = [
+    'http://localhost:5173',
+    'https://anaajwala-ecommerce.vercel.app',
+    'https://anaajwala-ecommerce-daqc.vercel.app',
+    'https://www.anajwala.com'
+  ];
+
+  // Determine the order source based on the Referer or Origin
+  let orderThrough = 'unknown'; // Default source
+  if (referer) {
+    if (websiteURLs.some(url => referer.startsWith(url))) {
+      orderThrough = 'website';
+    } else if (referer.includes('app.example.com')) {
+      orderThrough = 'app'; // Replace with your app's actual domain if needed
+    }
+    else{
+      orderThrough = 'app';
+    }
+  }
+
+  // Log the orderThrough value for debugging
+  // console.log(`Order placed through: ${orderThrough}`);
+
   try {
     // Validate the items array
     if (!Array.isArray(items) || items.length === 0) {
@@ -33,6 +58,7 @@ const createOrder = async (req, res , next) => {
 
     // Create a new order object
     const newOrder = new Order({
+      orderThrough,
       customerName,
       customer_phone_no: customer_phone_no,
       address,
