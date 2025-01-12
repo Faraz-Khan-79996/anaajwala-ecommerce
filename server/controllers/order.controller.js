@@ -32,7 +32,7 @@ const createOrder = async (req, res , next) => {
   ];
 
   // Determine the order source based on the Referer or Origin
-  let orderThrough = 'unknown'; // Default source
+  let orderThrough = 'app'; // Default source
   if (referer) {
     if (websiteURLs.some(url => referer.startsWith(url))) {
       orderThrough = 'website';
