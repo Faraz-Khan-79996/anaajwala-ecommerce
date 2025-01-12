@@ -9,7 +9,7 @@ const client = require('../utils/twilio.js')
  * @param {Object} req - The request object
  * @param {Object} res - The response object
  */
-const createOrder = async (req, res) => {
+const createOrder = async (req, res , next) => {
   const {
     customerName,
     customer_phone_no,
@@ -84,7 +84,7 @@ The Anajwala Team
   console.log('Message SID:', message.sid);
   } catch (error) {
     console.error('Error creating order:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    next(error)
   }
 };
 
