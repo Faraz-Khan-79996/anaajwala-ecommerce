@@ -26,7 +26,7 @@ function HeroGrid() {
     </h1> */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     {/* Large item */}
-                    <div className="md:col-span-2 col-span-1 md:row-span-2 relative overflow-hidden rounded-2xl group">
+                    <div className="md:col-span-2 col-span-1 md:row-span-2 relative overflow-hidden rounded-2xl shadow-lg group">
                         {/* <img
                             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxuYXR1cmV8ZW58MHwwfHx8MTcyMTA0MjYwMXww&ixlib=rb-4.0.3&q=80&w=1080"
                             alt="Nature"
@@ -35,7 +35,7 @@ function HeroGrid() {
                          */}
 
                         <div className="h-64 md:h-full">
-                        {/* <Carousel slideInterval={3000} className="w-full h-full border-2 border-red-600"> */}
+                        <Carousel slideInterval={3000} className="w-full h-full">
                             {/* <img src={image1} alt="..." /> */}
                             <img
                                 // src={banner4}
@@ -64,7 +64,7 @@ function HeroGrid() {
                                 }
                                 alt="..."
                             /> */}
-                        {/* </Carousel> */}
+                        </Carousel>
                         </div>                          
                         {/* <div className="absolute inset-0 bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div className="absolute bottom-0 left-0 right-0 p-4">

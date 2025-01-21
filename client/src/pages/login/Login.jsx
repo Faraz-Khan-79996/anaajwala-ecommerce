@@ -99,20 +99,18 @@ function Login() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
-      <section className="dark:bg-gray-800 h-screen font-fredoka">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          {error ? (
-            <>
-              <Alert
-                onDismiss={() => setError("")}
-                className="mb-4"
-                color="failure"
-                icon={HiInformationCircle}
-              >
-                <span className="font-medium">Error!</span> {error}
-              </Alert>
-            </>
-          ) : null}
+      <section className="dark:bg-gray-800 min-h-screen font-fredoka">
+        <div className="flex flex-col items-center justify-center px-4 py-8 mx-auto min-h-screen">
+          {error && (
+            <Alert
+              onDismiss={() => setError("")}
+              className="mb-4 w-full max-w-sm md:max-w-md"
+              color="failure"
+              icon={HiInformationCircle}
+            >
+              <span className="font-medium">Error!</span> {error}
+            </Alert>
+          )}
           <Link
             to="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -124,42 +122,39 @@ function Login() {
             />
             Anaj wala
           </Link>
-          <div className="w-[120vh] bg-white shadow-gray-400 shadow-lg dark:border md:mt-0 dark:bg-gray-800 box-border flex rounded-3xl">
-            <div className="w-[50%] bg-[url('./assets/farm.webp')] bg-cover rounded-l-3xl"></div>
-            <div className="w-[50%] p-6 space-y-4 md:space-y-6 sm:p-8 flex flex-col justify-center items-center">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <div className="max-w-md w-full bg-white shadow-lg dark:border dark:bg-gray-800 rounded-3xl md:max-w-3xl lg:max-w-[120vh] shadow-gray-400 flex h-[70vh]">
+            <div className="hidden md:block md:w-1/2 bg-cover bg-[url('./assets/farm.webp')] rounded-l-3xl"></div>
+            <div className="w-full md:w-1/2 p-6 space-y-4 sm:space-y-6 sm:p-8 flex flex-col justify-center items-center bg-white dark:bg-gray-800 rounded-3xl">
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                 Sign in to your account
               </h1>
               <OAuth />
-              <div className="flex items-center">
-                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
+              <div className="w-full flex items-center">
+                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700"></div>
                 <div className="px-5 text-center text-gray-500 dark:text-gray-400">
                   or
                 </div>
-                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
+                <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700"></div>
               </div>
-              <div className="space-y-4 md:space-y-6 w-full flex flex-col items-center">
-                <div>
-                  
+              <div className="w-full flex flex-col items-center space-y-4">
+                <div className="w-full">
                   <input
-                  placeholder="Enter your phone number"
+                    placeholder="Enter your phone number"
                     type="text"
                     name="phone_no"
                     id="phone_no"
-                    //   disabled={otpSent}
                     className={`bg-gray-50 border ${
                       errors.phone_no ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-[23.5vw] p-2.5 mb-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
                     {...register("phone_no", {
                       required: "Contact number is required",
                       maxLength: {
                         value: 10,
-                        message: "Contact number cannot exceed 10 characters",
+                        message: "Cannot exceed 10 characters",
                       },
                       minLength: {
                         value: 10,
-                        message:
-                          "Contact number must be at least 10 characters",
+                        message: "Must be at least 10 characters",
                       },
                     })}
                   />
@@ -172,7 +167,7 @@ function Login() {
                 {!otpSent && <div id="recaptcha"></div>}
                 {otpSent && (
                   <OTPInput
-                    className={`otp-container`}
+                    className="otp-container"
                     value={otp}
                     onChange={setOtp}
                     autoFocus
@@ -181,63 +176,43 @@ function Login() {
                     disabled={false}
                   />
                 )}
-
-                <div className="flex items-center justify-evenly">
+                <div className="flex flex-wrap items-center justify-between w-full">
                   <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input
-                        id="remember"
-                        aria-describedby="remember"
-                        type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-teal-600 dark:ring-offset-gray-800"
-                      />
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label
-                        htmlFor="remember"
-                        className="text-gray-500 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
-                    </div>
+                    <input
+                      id="remember"
+                      type="checkbox"
+                      className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-teal-600"
+                    />
+                    <label
+                      htmlFor="remember"
+                      className="ml-2 text-sm text-gray-500 dark:text-gray-300"
+                    >
+                      Remember me
+                    </label>
                   </div>
                   <Link
                     to="/forgot-password"
-                    className="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500 ml-5"
+                    className="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500"
                   >
                     Forgot password?
                   </Link>
                 </div>
-
                 {otpSent ? (
-                  <button
-                    onClick={login}
-                    className="text-white bg-teal-600 py-1.5 px-4 rounded font-bold w-full"
-                  >
+                  <button className="w-full py-2 px-4 text-white bg-teal-600 rounded-lg font-bold">
                     Login
-                    {loading ? (
-                      <Spinner
-                        className="ml-2"
-                        aria-label="Default status example"
-                      />
-                    ) : null}
+                    {loading && <Spinner className="ml-2" />}
                   </button>
                 ) : (
                   <button
                     onClick={handleGenerateOtp}
-                    className="text-white bg-teal-600 py-1.5 px-10 rounded w-full"
+                    className="w-full py-2 px-4 text-white bg-teal-600 rounded-lg font-bold"
                   >
-                    Send Otp
-                    {loading ? (
-                      <Spinner
-                        className="ml-2"
-                        aria-label="Default status example"
-                      />
-                    ) : null}
+                    Send OTP
+                    {loading && <Spinner className="ml-2" />}
                   </button>
                 )}
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don&apos;t have an account yet?{" "}
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Don’t have an account?{" "}
                   <Link
                     to="/signup"
                     className="font-medium text-teal-600 hover:underline dark:text-teal-500"

@@ -88,14 +88,14 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
     return (
         <>
             <Toaster position="top-center" reverseOrder={false} />
-            <div>
+            <div className="w-full">
                 <input
                     placeholder="Enter your phone number"
                     type="text"
                     name="phone_no"
                     id="phone_no"
                     disabled={otpSent}
-                    className={`bg-gray-50 w-[23.5vw] inline-flex items-center justify-center py-2.5 px-5 ${
+                    className={`bg-gray-50 w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 ${
                         errors.phone_no ? "border-red-500" : "border-gray-300"
                     } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                     {...register("phone_no", {
