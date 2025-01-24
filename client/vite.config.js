@@ -10,8 +10,8 @@ export default defineConfig({
         secure: false,
       },
     },
-    host: '127.0.0.1', // Use 127.0.0.1 instead of localhost
-    port: 5173, // Optional: specify a port    
+    // host: '127.0.0.1', // Use 127.0.0.1 instead of localhost
+    // port: 5173, // Optional: specify a port    
   },  
   plugins: [react()],
   
