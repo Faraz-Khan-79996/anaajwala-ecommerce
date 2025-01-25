@@ -1,15 +1,16 @@
 const Order = require('../models/order.model.js')
 const User = require('../models/user.model.js')
-const {Product} = require('../models/product.model.js')
-const {errorhandler} = require('../utils/error.js')
+const { Product } = require('../models/product.model.js')
+const { errorhandler } = require('../utils/error.js')
 const client = require('../utils/twilio.js')
+const sendOrderEmail = require('../utils/sendEmail.js')
 
 /**
  * Controller method to create a new order
  * @param {Object} req - The request object
  * @param {Object} res - The response object
  */
-const createOrder = async (req, res , next) => {
+const createOrder = async (req, res, next) => {
   const {
     customerName,
     customer_phone_no,
@@ -26,6 +27,7 @@ const createOrder = async (req, res , next) => {
   // List of URLs to classify as website
   const websiteURLs = [
     'http://localhost:5173',
+    'http://127.0.0.1:5173',
     'https://anaajwala-ecommerce.vercel.app',
     'https://anaajwala-ecommerce-daqc.vercel.app',
     'https://www.anajwala.com'
@@ -39,7 +41,7 @@ const createOrder = async (req, res , next) => {
     } else if (referer.includes('app.example.com')) {
       orderThrough = 'app'; // Replace with your app's actual domain if needed
     }
-    else{
+    else {
       orderThrough = 'app';
     }
   }
@@ -75,39 +77,47 @@ const createOrder = async (req, res , next) => {
 
     // Save the order to the database
     const savedOrder = await newOrder.save();
-    await User.findByIdAndUpdate(req.userId , {$addToSet :{orders : savedOrder._id}})
+    await User.findByIdAndUpdate(req.userId, { $addToSet: { orders: savedOrder._id } })
 
     res.status(201).json({ message: 'Order created successfully', order: savedOrder });
 
-    const message = await client.messages.create({
-      body: `Hello ${savedOrder.customerName}! 👋
+    try {
 
-Thank you for shopping with Anajwala. We're excited to let you know that your order has been successfully placed!
+      const message = await client.messages.create({
+        body: `Hello ${savedOrder.customerName}! 👋
 
-🛒 *Order Details:*
-- *Order ID:* ${savedOrder._id}
-- *Total Amount:* ₹${savedOrder.totalPrice}
+    Thank you for shopping with Anajwala. We're excited to let you know that your order has been successfully placed!
 
-🏡 *Delivery Address:*
-${savedOrder.address}
-${savedOrder.pincode}
+    🛒 *Order Details:*
+    - *Order ID:* ${savedOrder._id}
+    - *Total Amount:* ₹${savedOrder.totalPrice}
 
-📞 *Contact Information:*
-- *Phone Number:* +91 ${savedOrder.customer_phone_no}
+    🏡 *Delivery Address:*
+    ${savedOrder.address}
+    ${savedOrder.pincode}
 
-If you have any questions or need to make changes to your order, feel free to reach out to us.
+    📞 *Contact Information:*
+    - *Phone Number:* +91 ${savedOrder.customer_phone_no}
 
-Thank you once again for choosing Anajwala. We hope you enjoy your purchase!
+    If you have any questions or need to make changes to your order, feel free to reach out to us.
 
-Best regards,
-The Anajwala Team
-📧 support@anajwala.com | ☎ +91 88889990358
-🌐 www.anajwala.com
-`,
-      from: `whatsapp:${process.env.TWILIO_NO}`, // Replace with your Twilio WhatsApp-enabled number
-      to: `whatsapp:+91${customer_phone_no}`   // Replace with the recipient's WhatsApp number
-  });
-  console.log('Message SID:', message.sid);
+    Thank you once again for choosing Anajwala. We hope you enjoy your purchase!
+
+    Best regards,
+    The Anajwala Team
+    📧 support@anajwala.com | ☎ +91 88889990358
+    🌐 www.anajwala.com
+    `,
+        from: `whatsapp:${process.env.TWILIO_NO}`, // Replace with your Twilio WhatsApp-enabled number
+        to: `whatsapp:+91${customer_phone_no}`   // Replace with the recipient's WhatsApp number
+      });
+      console.log('Message SID:', message.sid);
+      // await sendOrderEmail(customerName, address, customer_phone_no, items)
+    } catch (error) {
+      console.log(error.message);
+    }
+
+
   } catch (error) {
     console.error('Error creating order:', error);
     next(error)
@@ -117,9 +127,9 @@ The Anajwala Team
 /**
  * returns array of all orders
  */
-const getOrder = async (req , res , next)=>{
+const getOrder = async (req, res, next) => {
   try {
-    
+
     const orders = await Order.find();
     res.json(orders)
 
@@ -133,22 +143,22 @@ const getOrder = async (req , res , next)=>{
  */
 const updateOrder = async (req, res, next) => {
   try {
-    const {id} = req.params
-    const { newStatus , newPaymentStatus} = req.body;
+    const { id } = req.params
+    const { newStatus, newPaymentStatus } = req.body;
 
     // Ensure that id and newStatus are provided
-    if (!id && !newStatus && !newPaymentStatus ) {
-      return next(errorhandler(400 ,"Missing required fields: id and newStatus" , "update failure" ))
+    if (!id && !newStatus && !newPaymentStatus) {
+      return next(errorhandler(400, "Missing required fields: id and newStatus", "update failure"))
     }
-    
+
     const orderDoc = await Order.findById(id);
     if (!orderDoc) {
-      return next(errorhandler(400 ,"Order not found" , "update failure" ))
+      return next(errorhandler(400, "Order not found", "update failure"))
     }
-    if(newPaymentStatus){
-        orderDoc.paymentStatus = newPaymentStatus
+    if (newPaymentStatus) {
+      orderDoc.paymentStatus = newPaymentStatus
     }
-    if(newStatus){
+    if (newStatus) {
       orderDoc.status = newStatus
     }
 

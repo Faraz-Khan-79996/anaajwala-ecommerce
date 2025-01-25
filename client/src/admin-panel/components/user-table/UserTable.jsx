@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "flowbite-react";
+import { DeleteModal } from "../DeleteModal";
+
+
 
 function UserTable({ users }) {
+
+
     return (
         <div className="overflow-x-auto p-40 pt-0">
             <Table hoverable>
@@ -25,14 +30,10 @@ function UserTable({ users }) {
                                 <Table.Cell>{user.phone_no}</Table.Cell>
                                 <Table.Cell>{user.email}</Table.Cell>
                                 <Table.Cell>{user.orders.length}</Table.Cell>
-                                {/* <Table.Cell>
-                                    <a
-                                        href="#"
-                                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                                    >
-                                        Edit
-                                    </a>
-                                </Table.Cell> */}
+                                <Table.Cell>
+                                {/* <Button  onClick={setOpenModal(true)}  color="failure"><MdDelete size={20}/></Button> */}
+                                <DeleteModal userId={user._id} />
+                                </Table.Cell>
                             </Table.Row>
                         ))}
                 </Table.Body>

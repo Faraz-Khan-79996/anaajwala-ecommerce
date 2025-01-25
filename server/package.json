@@ -19,6 +19,7 @@
     "jsdoc": "^4.0.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.2",
+    "nodemailer": "^6.10.0",
     "twilio": "^5.2.2"
   }
 }

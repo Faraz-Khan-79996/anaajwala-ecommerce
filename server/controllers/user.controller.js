@@ -1,3 +1,4 @@
+const Order = require("../models/order.model.js");
 const User = require("../models/user.model.js")
 const { errorhandler } =  require("../utils/error.js")
 const bcryptjs = require('bcryptjs')
@@ -113,9 +114,41 @@ const updateUser = async (req, res, next) => {
         next(error);
     }
 };
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const { userId, password } = req.body;
+        
+        
+
+        // Find the user by ID
+        const user = await User.findById(userId);
+        if (!user) {
+            return next(errorhandler(404, 'User not found', 'Deletion Error'));
+        }
+
+        // Verify the provided password
+        if (password != process.env.ADMIN_PASSWORD) {
+            return next(errorhandler(401, 'Incorrect password', 'Authentication Error'));
+        }
+
+        // Delete all orders associated with the user
+        await Order.deleteMany({ _id: { $in: user.orders } });
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+
+        res.status(200).json({ success :true, message: 'User and associated orders deleted successfully' });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getUser,
     profile,
     getOrders,
-    updateUser
+    updateUser,
+    deleteUser
 }
