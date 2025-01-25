@@ -134,7 +134,6 @@ const deleteUser = async (req, res, next) => {
 
         // Delete all orders associated with the user
         await Order.deleteMany({ _id: { $in: user.orders } });
-        await new Promise(resolve => setTimeout(resolve, 2000));
 
         // Delete the user
         await User.findByIdAndDelete(userId);
