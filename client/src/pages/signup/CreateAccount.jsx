@@ -46,7 +46,7 @@ function CreateAccount({ error, setError , phoneNumber }) {
         <>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 md:space-y-6"
+                className="space-y-4 md:space-y-6 w-full"
             >
                 <div>
                     <label
@@ -63,10 +63,11 @@ function CreateAccount({ error, setError , phoneNumber }) {
                             errors.username
                                 ? "border-red-500"
                                 : "border-gray-300"
-                        } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                        } text-gray-900 sm:text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                         placeholder="eg. John Wick"
                         {...register("username", {
                             required: "Username is required",
+                            min:5
                         })}
                     />
                     {errors.username && (
@@ -78,7 +79,7 @@ function CreateAccount({ error, setError , phoneNumber }) {
                 <button
                     type="submit"
                     // disabled={!otpVerified}
-                    className={`w-full text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800`}
+                    className={`w-full text-white bg-violet-700 hover:bg-violet-600 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-700 dark:hover:bg-violet-700 dark:focus:ring-teal-800`}
                 >
                     Create your account
                     {loading ? (

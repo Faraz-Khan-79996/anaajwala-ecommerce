@@ -10,7 +10,7 @@ import Logo from "../assets/NavbarLogo2.jpeg";
 import CartBtn from "./CartBtn.jsx";
 import { Avatar } from "flowbite-react";
 import { useCartContext } from "../context/CartContext.jsx";
-import { HiOutlineUser } from "react-icons/hi2";
+import { FaRegUserCircle } from "react-icons/fa";
 // import { CiShoppingCart } from "react-icons/ci";
 import {motion} from "framer-motion";
 import "@fontsource/fredoka"; // Defaults to weight 400
@@ -64,10 +64,11 @@ export default function NavbarComponent() {
                 alt=""
                 className="h-10 rounded-md md:h-14 md:rounded-xl"
               />
+              
             </Link>
           </Navbar.Brand>
 
-          <div className="flex md:order-2">
+          <div className="flex md:order-2 items-center space-x-3">
             {currentUser.user ? (
               <Link to="/user/profile">
                 {/* <h4 className="text-xl font-bold italic mr-6">
@@ -76,7 +77,7 @@ export default function NavbarComponent() {
                 <Avatar
                   img={currentUser.user.avatar}
                   alt="avatar of user"
-                  className="mr-4"
+                  className=""
                   size={"md"}
                   rounded
                 />
@@ -89,10 +90,17 @@ export default function NavbarComponent() {
                   </span>
                 </Link> */}
                 <Link to="/signup">
-                  <span className="hidden lg:inline-block p-2 text-white font-bold transition duration-200 rounded-full bg-gray-200">
-                    <HiOutlineUser className="text-black text-2xl text-bold" />
+                  <span className="">
+                    <FaRegUserCircle className="text-black text-3xl" />
                   </span>
                 </Link>
+                {/* <Avatar
+                  img={currentUser.user.avatar}
+                  alt="avatar of user"
+                  className="mr-4"
+                  size={"md"}
+                  rounded
+                /> */}
               </>
             )}
             {currentUser.user ? (
@@ -105,7 +113,7 @@ export default function NavbarComponent() {
                             </Button> */}
 
                 <button
-                  className="hidden lg:inline-block py-2 px-1 bg-red-500 hover:bg-red-700 text-sm text-white font-bold rounded-xl transition duration-200"
+                  className="hidden lg:inline-block py-2 px-4 bg-red-500 hover:bg-red-700 text-sm text-white font-bold rounded-xl transition duration-200"
                   onClick={() => dispatch(signoutUser())}
                 >
                   Sign Out

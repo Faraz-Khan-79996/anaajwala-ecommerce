@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import OAuthSignup from "../../components/OAuthSignup.jsx";
-
+import Logo from '../../assets/NavbarLogo2.jpeg'
 import OtpComponent from "./OtpComponent.jsx";
 import CreateAccount from "./CreateAccount.jsx";
 
@@ -42,12 +42,11 @@ const Signup = () => {
             to="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://www.svgrepo.com/show/335276/oldelectrum-logo.svg"
-              alt="osher.ai logo"
-            />
-            Anaj wala
+              <img
+                src={Logo}
+                alt=""
+                className="h-14 rounded-md md:h-16 md:rounded-xl"
+              />
           </Link>
 
           <div className="max-w-md w-full bg-white shadow-lg dark:border dark:bg-gray-800 rounded-3xl md:max-w-3xl lg:max-w-[120vh] shadow-gray-400">
@@ -85,7 +84,7 @@ const Signup = () => {
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="font-medium text-teal-600 hover:underline dark:text-teal-500"
+                    className="font-medium text-violet-600 hover:underline dark:text-teal-500"
                   >
                     Login here
                   </Link>

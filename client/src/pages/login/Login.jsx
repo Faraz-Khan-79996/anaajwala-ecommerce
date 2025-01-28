@@ -13,6 +13,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase.js"; // Ensure you configure Firebase auth in a separate file
 import { toast, Toaster } from "react-hot-toast"; // Import toast
 import axios from "axios";
+import Logo from '../../assets/NavbarLogo2.jpeg'
 function Login() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
@@ -115,12 +116,11 @@ function Login() {
             to="/"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://www.svgrepo.com/show/335276/oldelectrum-logo.svg"
-              alt="osher.ai logo"
-            />
-            Anaj wala
+              <img
+                src={Logo}
+                alt=""
+                className="h-14 rounded-md md:h-16 md:rounded-xl"
+              />
           </Link>
           <div className="max-w-md w-full bg-white shadow-lg dark:border dark:bg-gray-800 rounded-3xl md:max-w-3xl lg:max-w-[120vh] shadow-gray-400 flex h-[70vh]">
             <div className="hidden md:block md:w-1/2 bg-cover bg-[url('./assets/farm.webp')] rounded-l-3xl"></div>
@@ -145,7 +145,7 @@ function Login() {
                     id="phone_no"
                     className={`bg-gray-50 border ${
                       errors.phone_no ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
+                    } text-gray-900 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
                     {...register("phone_no", {
                       required: "Contact number is required",
                       maxLength: {
@@ -181,7 +181,7 @@ function Login() {
                     <input
                       id="remember"
                       type="checkbox"
-                      className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-teal-600"
+                      className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-teal-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-violet-600"
                     />
                     <label
                       htmlFor="remember"
@@ -192,20 +192,20 @@ function Login() {
                   </div>
                   <Link
                     to="/forgot-password"
-                    className="text-sm font-medium text-teal-600 hover:underline dark:text-teal-500"
+                    className="text-sm font-medium text-violet-600 hover:underline dark:text-teal-500"
                   >
                     Forgot password?
                   </Link>
                 </div>
                 {otpSent ? (
-                  <button className="w-full py-2 px-4 text-white bg-teal-600 rounded-lg font-bold">
+                  <button onClick={login} className="w-full py-2 px-4 text-white bg-violet-600 rounded-lg font-bold">
                     Login
                     {loading && <Spinner className="ml-2" />}
                   </button>
                 ) : (
                   <button
                     onClick={handleGenerateOtp}
-                    className="w-full py-2 px-4 text-white bg-teal-600 rounded-lg font-bold"
+                    className="w-full py-2 px-4 text-white bg-violet-600 hover:bg-violet-500 rounded-lg font-bold"
                   >
                     Send OTP
                     {loading && <Spinner className="ml-2" />}
@@ -215,7 +215,7 @@ function Login() {
                   Don’t have an account?{" "}
                   <Link
                     to="/signup"
-                    className="font-medium text-teal-600 hover:underline dark:text-teal-500"
+                    className="font-medium text-violet-600 hover:underline dark:text-teal-500"
                   >
                     Sign up
                   </Link>
