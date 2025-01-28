@@ -8,7 +8,7 @@ import Logo from '../assets/NavbarLogo.jpeg'
 
 function Footer() {
     return (
-        <div className=" bg-slate-700 pt-9 mb-14 md:mb-0">
+        <div className=" bg-slate-700 pt-9 mb-14 md:mb-0 font-fredoka">
             <div className="mx-auto w-full max-w-[1166px] px-4 xl:px-0">
                 <div className="flex flex-col justify-between sm:px-[18px] md:flex-row md:px-10">
                     <div className="md:w-[316px]">
@@ -18,7 +18,7 @@ function Footer() {
                         </h1>
                         <p />
                         <p className="mt-[18px] text-[15px] font-normal text-lg text-white/[80%]">
-                            Delivering Freshness At Door Step.
+                            Delivering Freshness At Doorstep
                         </p>
                         <div className="mt-[18px] flex gap-4">
                             <Link
@@ -85,27 +85,10 @@ function Footer() {
                                     src="https://static.vecteezy.com/system/resources/thumbnails/016/716/480/small/whatsapp-icon-free-png.png"
                                 />
                             </Link>
-                            <a
-                                className="hover:scale-110"
-                                target="_blank"
-                                href="https://www.youtube.com/"
-                            >
-                                <img
-                                    alt="youtube icon"
-                                    loading="lazy"
-                                    width={36}
-                                    height={36}
-                                    decoding="async"
-                                    data-nimg={1}
-                                    style={{ color: "transparent" }}
-                                    src="https://static-00.iconduck.com/assets.00/youtube-icon-1024x1024-t3zo1lo4.png"
-                                    className="rounded-lg"
-                                />
-                            </a>
                         </div>
                     </div>
                     <div className="md:w-[316px]">
-                        <div className="mt-[23px] flex">
+                        <div className="mt-[10px] flex">
                             <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[75%]">
                                 <svg
                                     width={24}
@@ -166,7 +149,7 @@ function Footer() {
                                 </p>
                             </div>
                         </div>
-                        <div className="mt-[23px] flex">
+                        <div className="mt-[23px] ml-2 flex">
                             <div className="flex h-[38px] w-[38px] items-center justify-center rounded-[75%]">
                                 <svg
                                     width={18}
@@ -181,13 +164,13 @@ function Footer() {
                                     />
                                 </svg>
                             </div>
-                            <div className="ml-[18px]">
+                            <div className="ml-6">
                                 <a
                                     href="mailto:help@lorem.com"
                                     className="font-Inter text-[14px] font-medium text-[#fff]"
                                 >
-                                    Start Up Cell Idea Lab , Sgsits, Park Road
-                                    ,Indore (M.P)
+                                    Start Up Cell Idea Lab, SGSITS, Park Road,
+                                    Indore, Madhya Pradesh
                                 </a>
                                 <p className="font-Inter text-[12px] font-medium text-white">
                                     Address
@@ -197,13 +180,10 @@ function Footer() {
                     </div>
                     <div className="mt-6 flex w-full flex-col justify-between text-white sm:flex-row md:mt-0 md:max-w-[341px]">
                         <div className="">
-                            <p className="text-deutziawhite font-inter text-[18px] font-medium leading-normal">
-                                Pages
-                            </p>
                             <ul>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="/contact-us"
                                     >
                                         Contact Us
@@ -211,7 +191,7 @@ function Footer() {
                                 </li>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="/privacy-policy"
                                     >
                                         Privacy Policy
@@ -219,7 +199,7 @@ function Footer() {
                                 </li>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="/terms-and-condition"
                                     >
                                         Terms of Use
@@ -227,7 +207,7 @@ function Footer() {
                                 </li>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="/return-refund"
                                     >
                                         Returns, Refund, Cancellation
@@ -235,7 +215,7 @@ function Footer() {
                                 </li>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="/billing-policy"
                                     >
                                         Billing Terms and Conditions
@@ -243,7 +223,7 @@ function Footer() {
                                 </li>
                                 <li className="mt-2">
                                     <Link
-                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                        className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:border-b-white hover:border-b-2"
                                         to="mailto:harshnikhilesh@gmail.com"
                                     >
                                         Careers
@@ -267,9 +247,10 @@ function Footer() {
                                         data-nimg={1}
                                         style={{ color: "transparent" }}
                                         src={playstore}
+                                        className="text-white"
                                     />
                                 </a>
-                                <a target="_blank" href="#">
+                                {/* <a target="_blank" href="#">
                                     <img
                                         alt="facebook icon"
                                         loading="lazy"
@@ -281,7 +262,7 @@ function Footer() {
                                         src={youtube}
                                         className=" rounded-2xl h-12 border object-cover"
                                     />
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                     </div>

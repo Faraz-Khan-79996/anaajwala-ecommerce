@@ -51,7 +51,7 @@ function Page2() {
     };
 
     return (
-<div className="max-w-4xl mx-auto my-10 p-8 bg-white shadow-lg rounded-lg">
+<div className="max-w-4xl mx-10 p-8 bg-[#e4e6ea] rounded-3xl font-fredoka">
   <ToastContainer />
   <h2 className="text-2xl font-bold mb-6">Customer Survey Form</h2>
   <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -60,7 +60,7 @@ function Page2() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Your Beautiful Name
+          Name
         </label>
         <input
           type="text"
@@ -100,7 +100,7 @@ function Page2() {
         )}
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700">Total Family Number</label>
+        <label className="block text-sm font-medium text-gray-700">Total Family Members</label>
         <input
           type="number"
           {...register("familyNumber", { required: "Family number is required" })}
