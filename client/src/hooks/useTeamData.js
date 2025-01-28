@@ -19,7 +19,7 @@ const useTeamData = ()=>{
             image : mayur,
             name : "Mayur Chouhan",
             profile : "CTO",
-            description : "Mayur Chouhan, our CTO, has played a crucial role as a mentor in development. Her technical expertise and innovative mindset have been instrumental in guiding our project and shaping its success.",
+            description : "Mayur Chouhan, our CTO, has played a crucial role as a mentor in development. His technical expertise and innovative mindset have been instrumental in guiding our project and shaping its success.",
             github : "https://github.com/Faraz-Khan-79996",
             linkdin : "https://www.linkedin.com/in/faraz-khan-b2a42028a/"
         },

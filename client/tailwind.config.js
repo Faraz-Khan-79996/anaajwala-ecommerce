@@ -13,7 +13,8 @@ export default {
         edu: ['"Edu VIC WA NT Beginner"', 'sans-serif'],
         lilita: ['"Lilita One"', 'sans-serif'],
         oswald: ['"Oswald"', 'sans-serif'],
-        varela : ['"Varela Round"' , 'sans-serif']
+        varela : ['"Varela Round"' , 'sans-serif'],
+        fredoka: ['Fredoka']
       },
 
       colors: {

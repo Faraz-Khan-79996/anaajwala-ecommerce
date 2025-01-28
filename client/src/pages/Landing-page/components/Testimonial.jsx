@@ -3,13 +3,13 @@ import React from "react";
 function Testimonial() {
     return (
         <div
-            className="text-gray-600 dark:text-gray-300 pt-8 mb-10 dark:bg-gray-900"
+            className="text-gray-600 dark:text-gray-300 pt-8 mb-10 dark:bg-gray-900 font-fredoka"
             id="reviews"
         >
             <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
                 <div className="mb-10 space-y-4 px-6 md:px-0">
                     <h2 className="text-center text-2xl font-bold text-gray-800 dark:text-white md:text-4xl">
-                        We have some fans.
+                        Testimonials
                     </h2>
                 </div>
                 <div className="md:columns-2 lg:columns-3 gap-8 space-y-8">
@@ -126,7 +126,7 @@ function Testimonial() {
                                 </h6>
                             </div>
                         </div>
-                        <p className="mt-8">
+                        <p className="mt-8 mb-6">
                             {" "}
                             After switching to Anaajwala’s Diamond Ataa, I’ve
                             noticed a big difference in the quality of my

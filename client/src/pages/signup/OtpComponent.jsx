@@ -88,21 +88,16 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
     return (
         <>
             <Toaster position="top-center" reverseOrder={false} />
-            <div>
-                <label
-                    htmlFor="phone_no"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                    Contact number
-                </label>
+            <div className="w-full">
                 <input
+                    placeholder="Enter your phone number"
                     type="text"
                     name="phone_no"
                     id="phone_no"
                     disabled={otpSent}
-                    className={`bg-gray-50 border ${
+                    className={`bg-gray-50 w-full inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 ${
                         errors.phone_no ? "border-red-500" : "border-gray-300"
-                    } text-gray-900 sm:text-sm rounded-lg focus:ring-teal-600 focus:border-teal-600 block w-full p-2.5 mb-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
+                    } text-gray-900 sm:text-sm rounded-lg focus:ring-violet-600 focus:border-violet-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`}
                     {...register("phone_no", {
                         required: "Contact number is required",
                         maxLength: {
@@ -127,7 +122,7 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
 
             <div
                 onClick={handleGenerateOtp}
-                className="text-teal-600 text-center cursor-pointer"
+                className="text-violet-600 text-center cursor-pointer"
             >
                 Click to generate Otp
                 {loading ? (
@@ -155,7 +150,7 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
                 disabled={!otpSent}
                 className={`w-full text-white ${
                     !otpSent ? "cursor-not-allowed" : ""
-                } bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800`}
+                } bg-violet-600 hover:bg-violet-700 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-teal-800`}
             >
                 Verify OTP
                 {loading ? (
