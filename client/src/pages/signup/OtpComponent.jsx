@@ -32,12 +32,12 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
             const recaptchaVerifier = new RecaptchaVerifier(
                 auth,
                 "recaptcha",
-                {}
+                {},
             );
             const confirmationResult = await signInWithPhoneNumber(
                 auth,
                 `+91${getValues("phone_no")}`,
-                recaptchaVerifier
+                recaptchaVerifier,
             );
             setVerificationResult(confirmationResult);
             toast.success("OTP sent successfully", { duration: 4000 });
@@ -47,7 +47,9 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
         } catch (error) {
             console.error("Error sending OTP:", error);
             setError(error.message);
-            toast.error("Error sending OTP, Refresh and try again!" , {duration:10000}); // Show error toast
+            toast.error("Error sending OTP, Refresh and try again!", {
+                duration: 10000,
+            }); // Show error toast
         }
     };
 
@@ -70,7 +72,7 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
         setLoading(() => true);
         try {
             const { data } = await axios.get(
-                `/api/auth/duplicate-phone/${getValues("phone_no").trim()}`
+                `/api/auth/duplicate-phone/${getValues("phone_no").trim()}`,
             );
 
             if (data.isPhoneNumberDuplicate) {

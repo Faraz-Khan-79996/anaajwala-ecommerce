@@ -1,10 +1,8 @@
 import React from "react";
 import { useAboutUsContent } from "../../../hooks/useAboutUsContent";
 
-
 function SecondSection() {
-
-    const content = useAboutUsContent()
+    const content = useAboutUsContent();
 
     return (
         <div className="2xl:container 2xl:mx-auto lg:py-6 lg:px-20 md:py-6 md:px-6 py-9 px-4">
@@ -127,9 +125,12 @@ function SecondSection() {
 
                     {/* important */}
                     <div className=" h-60 md:h-full w-full bg-slate-200 mt-5 mb-36 md:mb-10">
-                        <img src="https://thumbs.dreamstime.com/b/sift-flour-homemade-dough-closeup-hands-woman-who-juggles-to-sift-flour-dough-preparation-138760826.jpg" alt="" srcset="" />
+                        <img
+                            src="https://thumbs.dreamstime.com/b/sift-flour-homemade-dough-closeup-hands-woman-who-juggles-to-sift-flour-dough-preparation-138760826.jpg"
+                            alt=""
+                            srcset=""
+                        />
                     </div>
-
                 </div>
                 <div className="w-full lg:w-6/12">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 lg:gap-12 gap-10">
@@ -169,7 +170,7 @@ function SecondSection() {
                             </div> */}
                             <div className="ml-6">
                                 <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-gray-800 dark:text-white">
-                                Quality Assurance
+                                    Quality Assurance
                                 </p>
                                 <p className="mt-2 font-normal text-base leading-6 text-gray-600 dark:text-gray-200">
                                     {content.quality_assurance}
@@ -186,7 +187,7 @@ function SecondSection() {
                             </div> */}
                             <div className="ml-6">
                                 <p className="font-semibold lg:text-2xl text-xl lg:leading-6 leading-5 text-gray-800 dark:text-white">
-                                Customer-Centric Service
+                                    Customer-Centric Service
                                 </p>
                                 <p className="mt-2 font-normal text-base leading-6 text-gray-600 dark:text-gray-200">
                                     {content.your_satisfaction_our_priority}

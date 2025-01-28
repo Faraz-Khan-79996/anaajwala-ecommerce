@@ -65,11 +65,11 @@ const BottomNavBar = () => {
         tabs.find((tab) => tab.link === location.pathname)?.id || null;
 
     function handleNavigate(tab) {
-            if (tab.id === "cart") setIsOpen(!isOpen);
-            else{
-                setIsOpen(false);
-                navigate(tab.link);
-            } 
+        if (tab.id === "cart") setIsOpen(!isOpen);
+        else {
+            setIsOpen(false);
+            navigate(tab.link);
+        }
     }
 
     return (
@@ -96,16 +96,20 @@ const BottomNavBar = () => {
                                     ? "text-purple-600"
                                     : "text-gray-500 hover:text-purple-600"
                             }`}
-                            onClick={()=> handleNavigate(tab)}
+                            onClick={() => handleNavigate(tab)}
                         >
                             {tab.icon}
                         </button>
-                        <div className={`text-[10px] font-varela font-semibold mt-0 ${
+                        <div
+                            className={`text-[10px] font-varela font-semibold mt-0 ${
                                 activeTab === tab.id
                                     ? "text-purple-600"
                                     : "text-gray-500 "
                             }`}
-                            onClick={()=> handleNavigate(tab)}>{tab.label}</div>
+                            onClick={() => handleNavigate(tab)}
+                        >
+                            {tab.label}
+                        </div>
                     </div>
                 ))}
             </div>

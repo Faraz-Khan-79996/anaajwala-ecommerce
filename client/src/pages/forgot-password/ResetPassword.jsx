@@ -14,7 +14,7 @@ function ResetPassword() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const {id, token , username} = useParams()
+    const { id, token, username } = useParams();
     const navigate = useNavigate();
 
     const {
@@ -35,7 +35,10 @@ function ResetPassword() {
         setLoading((prev) => true);
 
         try {
-            const { data: user } = await axios.post(`/api/auth/reset-password/${id}/${token}`, data);
+            const { data: user } = await axios.post(
+                `/api/auth/reset-password/${id}/${token}`,
+                data,
+            );
             navigate("/");
         } catch (error) {
             if (error.response && error.response.data.message) {
@@ -79,7 +82,8 @@ function ResetPassword() {
                     <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Hi {username}! <br />Reset Your password
+                                Hi {username}! <br />
+                                Reset Your password
                             </h1>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 {/* <button

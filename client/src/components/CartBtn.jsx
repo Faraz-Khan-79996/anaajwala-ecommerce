@@ -10,7 +10,8 @@ function CartBtn() {
 
     return (
         <button className="flex items-center py-1 px-1 h-10 bg-transparent text-xs text-white font-bold rounded-lg transition duration-200 font-fredoka">
-            <IoCartOutline className="mr-2 text-3xl text-black" /> {/* Cart icon */}
+            <IoCartOutline className="mr-2 text-3xl text-black" />{" "}
+            {/* Cart icon */}
             <div className="leading-tight flex flex-col items-start text-black">
                 {/* <div>₹{finalPrice} </div> */}
                 <div className="relative -top-3 -left-3 rounded-full bg-red-600 px-[6px] py-[2px] text-white">

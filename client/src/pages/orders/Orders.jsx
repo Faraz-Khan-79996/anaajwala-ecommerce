@@ -5,7 +5,7 @@ import { MdDashboard } from "react-icons/md";
 import Order from "./components/Order";
 import axios from "axios";
 import { format } from "date-fns";
-import emptyImage from '../../assets/empty-order.png'
+import emptyImage from "../../assets/empty-order.png";
 import Loader from "../../components/Loader";
 
 function Orders() {
@@ -25,11 +25,12 @@ function Orders() {
 
             const completedOrders = data.filter(
                 (order) =>
-                    order.status === "delivered" || order.status === "cancelled"
+                    order.status === "delivered" ||
+                    order.status === "cancelled",
             );
             const pendingOrders = data.filter(
                 (order) =>
-                    order.status === "pending" || order.status === "shipped"
+                    order.status === "pending" || order.status === "shipped",
             );
 
             setCompletedOrders(completedOrders);
@@ -46,9 +47,7 @@ function Orders() {
     };
 
     if (loading) {
-        return (
-            <Loader />
-        );
+        return <Loader />;
     }
 
     if (!pendingOrders.length && !completedOrders.length) {
@@ -72,7 +71,7 @@ function Orders() {
                                 <Accordion.Title>
                                     {format(
                                         new Date(order.createdAt),
-                                        "dd MMMM yyyy, h:mm:ss a"
+                                        "dd MMMM yyyy, h:mm:ss a",
                                     )}
                                 </Accordion.Title>
                                 <Accordion.Content className="p-1">
@@ -89,7 +88,7 @@ function Orders() {
                                 <Accordion.Title>
                                     {format(
                                         new Date(order.createdAt),
-                                        "dd MMMM yyyy, h:mm:ss a"
+                                        "dd MMMM yyyy, h:mm:ss a",
                                     )}
                                 </Accordion.Title>
                                 <Accordion.Content>

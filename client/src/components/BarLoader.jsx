@@ -1,13 +1,11 @@
 import FadeLoader from "react-spinners/FadeLoader";
 
-export default function BarLoader({color="green"}) {
-
+export default function BarLoader({ color = "green" }) {
     const override = {
         display: "block",
         margin: "0 auto",
         borderColor: "red",
-    };    
-  
+    };
 
     return (
         <>
@@ -22,5 +20,5 @@ export default function BarLoader({color="green"}) {
                 />
             </div>
         </>
-    )
+    );
 }

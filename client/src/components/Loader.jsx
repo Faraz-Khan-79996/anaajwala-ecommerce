@@ -1,13 +1,11 @@
 import CircleLoader from "react-spinners/CircleLoader";
 
-export default function Loader({color="violet"}) {
-
+export default function Loader({ color = "violet" }) {
     const override = {
         display: "block",
         margin: "0 auto",
         borderColor: "red",
-    };    
-  
+    };
 
     return (
         <>
@@ -22,5 +20,5 @@ export default function Loader({color="violet"}) {
                 />
             </div>
         </>
-    )
+    );
 }

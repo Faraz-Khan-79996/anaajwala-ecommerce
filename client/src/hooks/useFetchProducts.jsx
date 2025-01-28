@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const useFetchProducts = () => {
     const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ const useFetchProducts = () => {
                 setLoading(true); // Start loading
                 setError(null); // Reset error state
 
-                const response = await axios.get('/api/product/products');
+                const response = await axios.get("/api/product/products");
                 setProducts(response.data); // Update products state
             } catch (err) {
                 if (err.response && err.response.data) {

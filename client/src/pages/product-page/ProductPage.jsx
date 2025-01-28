@@ -15,11 +15,11 @@ import { Button } from "flowbite-react";
 import Loader from "../../components/Loader";
 import useFetchProducts from "../../hooks/useFetchProducts";
 import SuggestedProductCard from "../../components/SuggestedProductCard";
-import useFetchProductById from '../../hooks/useFetchProductById'
+import useFetchProductById from "../../hooks/useFetchProductById";
 
 function ProductPage() {
     let { id } = useParams();
-    const {product , error , loading } = useFetchProductById(id)
+    const { product, error, loading } = useFetchProductById(id);
     const dispatch = useDispatch();
     const {
         products: suggestedProducts,
@@ -46,9 +46,9 @@ function ProductPage() {
     }, [currentUrl]);
 
     const handleTypeChange = (ev) => {
-      ev.preventDefault();
-      console.log(ev.target.value);
-      setTexture(ev.target.value);
+        ev.preventDefault();
+        console.log(ev.target.value);
+        setTexture(ev.target.value);
     };
     const handleQuantityChange = (event) => {
         setQuantity(event.target.value);
@@ -60,8 +60,8 @@ function ProductPage() {
                 id: product._id,
                 product,
                 quantity,
-                texture
-            })
+                texture,
+            }),
         );
         notify();
     };
@@ -265,40 +265,44 @@ function ProductPage() {
                                 Texture
                             </h2>
                             <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-                                 <label className="cursor-pointer">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="fine"
-                    className="peer sr-only"
-                    onChange={handleTypeChange}
-                    checked={texture === "fine"}
-                  />
-                  <p
-                    className={`${
-                      texture == "fine" ? "bg-black text-white" : ""
-                    } rounded-lg border border-black px-6 py-2 font-bold`}
-                  >
-                    Fine (महीन)
-                  </p>
-                </label>
-                <label className="cursor-pointer">
-                  <input
-                    type="radio"
-                    name="type"
-                    value="coarse"
-                    className="peer sr-only"
-                    onChange={handleTypeChange}
-                    checked={texture === "coarse"}
-                  />
-                  <p
-                    className={`${
-                        texture == "coarse" ? "bg-black text-white" : ""
-                    } rounded-lg border border-black px-6 py-2 font-bold`}
-                  >
-                    Coarse (दरदरा)
-                  </p>
-                </label> 
+                                <label className="cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="fine"
+                                        className="peer sr-only"
+                                        onChange={handleTypeChange}
+                                        checked={texture === "fine"}
+                                    />
+                                    <p
+                                        className={`${
+                                            texture == "fine"
+                                                ? "bg-black text-white"
+                                                : ""
+                                        } rounded-lg border border-black px-6 py-2 font-bold`}
+                                    >
+                                        Fine (महीन)
+                                    </p>
+                                </label>
+                                <label className="cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="type"
+                                        value="coarse"
+                                        className="peer sr-only"
+                                        onChange={handleTypeChange}
+                                        checked={texture === "coarse"}
+                                    />
+                                    <p
+                                        className={`${
+                                            texture == "coarse"
+                                                ? "bg-black text-white"
+                                                : ""
+                                        } rounded-lg border border-black px-6 py-2 font-bold`}
+                                    >
+                                        Coarse (दरदरा)
+                                    </p>
+                                </label>
                                 {/* <label className="cursor-pointer">
                                     <input
                                         type="radio"

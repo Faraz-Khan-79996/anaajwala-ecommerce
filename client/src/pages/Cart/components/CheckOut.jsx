@@ -3,10 +3,10 @@ import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Spinner } from "flowbite-react";
 
-function CheckOut({loading}) {
+function CheckOut({ loading }) {
     const { handleSubmit } = useFormContext();
-    const {user} = useSelector(state => state.user)
-    const cart = useSelector(state =>state.cart)
+    const { user } = useSelector((state) => state.user);
+    const cart = useSelector((state) => state.cart);
 
     return (
         <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">

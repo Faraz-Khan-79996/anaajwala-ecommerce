@@ -1,15 +1,23 @@
-const useInfo = (data)=>{
-    
-    const {orders , products , users} = data
+const useInfo = (data) => {
+    const { orders, products, users } = data;
     // console.log({orders , products , users});
-    
+
     const userCount = users.length;
     const orderCount = orders.length;
     const productCount = products.length;
 
-    const deliveredOrders = orders.reduce((acc, order) => order.status === 'delivered' ? acc + 1 : acc, 0);
-    const cancelledOrders = orders.reduce((acc, order) => order.status==='cancelled' ? acc + 1 : acc, 0);
-    const pendingOrders = orders.reduce((acc, order) => order.status==='pending' ? acc + 1 : acc, 0);
+    const deliveredOrders = orders.reduce(
+        (acc, order) => (order.status === "delivered" ? acc + 1 : acc),
+        0,
+    );
+    const cancelledOrders = orders.reduce(
+        (acc, order) => (order.status === "cancelled" ? acc + 1 : acc),
+        0,
+    );
+    const pendingOrders = orders.reduce(
+        (acc, order) => (order.status === "pending" ? acc + 1 : acc),
+        0,
+    );
 
     const response = {
         userCount,
@@ -20,13 +28,11 @@ const useInfo = (data)=>{
         pendingOrders,
         orders,
         users,
-        products
-    }     
+        products,
+    };
 
     // console.log(data);
-    return response
-}
+    return response;
+};
 
-export {
-    useInfo,
-}
+export { useInfo };
