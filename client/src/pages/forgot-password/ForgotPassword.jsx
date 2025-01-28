@@ -9,15 +9,17 @@ import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import axios from "axios";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ForgotPassword() {
-
-
-    const [loading , setLoading] = useState(false)
-    const[error , setError] = useState('')
-    const notify = () => toast.success("Reset Link was sent to your registered whatsapp number to this platform number" , {autoClose : 10000 , position: "top-right",});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const notify = () =>
+        toast.success(
+            "Reset Link was sent to your registered whatsapp number to this platform number",
+            { autoClose: 10000, position: "top-right" },
+        );
 
     // Initialize useForm hook
     const {
@@ -34,25 +36,23 @@ function ForgotPassword() {
         // console.log(data);
         // dispatch(loginUser(data))
         // console.log(data)
-        setLoading(prev=>true)
+        setLoading((prev) => true);
         try {
             const { data: res } = await axios.post(
                 "/api/auth/forgot-password",
-                { username: data.username.toLowerCase() }
+                { username: data.username.toLowerCase() },
             );
             console.log(res);
-            notify()
+            notify();
         } catch (error) {
             console.log(error);
-            if(error.response && error.response.data){
-                setError(error.response.data.message)
+            if (error.response && error.response.data) {
+                setError(error.response.data.message);
+            } else {
+                setError(error.message);
             }
-            else{
-                setError(error.message)
-            }
-        }
-        finally{
-            setLoading(prev=>false)
+        } finally {
+            setLoading((prev) => false);
         }
     };
 
@@ -62,7 +62,6 @@ function ForgotPassword() {
         }
     }, [user]);
 
-
     return (
         <section className="py-4 md:py-8 dark:bg-gray-800">
             <ToastContainer />
@@ -70,13 +69,12 @@ function ForgotPassword() {
                 {error ? (
                     <>
                         <Alert
-                            onDismiss={() => setError('')}
+                            onDismiss={() => setError("")}
                             className="mb-4"
                             color="failure"
                             icon={HiInformationCircle}
                         >
-                            <span className="font-medium">Error!</span>{" "}
-                            {error}
+                            <span className="font-medium">Error!</span> {error}
                         </Alert>
                     </>
                 ) : null}
@@ -142,7 +140,7 @@ function ForgotPassword() {
                         <div className="flex items-center">
                             <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
                             {/* <div className="px-5 text-center text-gray-500 dark:text-gray-400"> */}
-                                {/* or */}
+                            {/* or */}
                             {/* </div> */}
                             <div className="w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
                         </div>

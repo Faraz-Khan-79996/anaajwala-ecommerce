@@ -6,8 +6,7 @@ import axios from "axios";
 import { Spinner } from "flowbite-react";
 import { useSearchParams } from "react-router-dom";
 
-
-function CreateAccount({ error, setError , phoneNumber }) {
+function CreateAccount({ error, setError, phoneNumber }) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [searchParams] = useSearchParams();
@@ -19,18 +18,23 @@ function CreateAccount({ error, setError , phoneNumber }) {
     } = useForm();
 
     const onSubmit = async (data) => {
-
         console.log(data);
         setLoading(true);
 
         try {
-            const {data : response} = await axios.post('/api/auth/signup' , {
-                username : data.username.toLowerCase().trim(),
-                phone_no : phoneNumber.trim(),
-            } ,
-            {params : {referralGiver : searchParams.get("referralGiver")}}
-        )
-            dispatch(addUser(response.user))
+            const { data: response } = await axios.post(
+                "/api/auth/signup",
+                {
+                    username: data.username.toLowerCase().trim(),
+                    phone_no: phoneNumber.trim(),
+                },
+                {
+                    params: {
+                        referralGiver: searchParams.get("referralGiver"),
+                    },
+                },
+            );
+            dispatch(addUser(response.user));
         } catch (error) {
             if (error.response && error.response.data.message) {
                 setError(error.response.data.message);
@@ -67,7 +71,7 @@ function CreateAccount({ error, setError , phoneNumber }) {
                         placeholder="eg. John Wick"
                         {...register("username", {
                             required: "Username is required",
-                            min:5
+                            min: 5,
                         })}
                     />
                     {errors.username && (

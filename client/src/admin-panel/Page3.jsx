@@ -25,7 +25,11 @@ function Page3() {
                     products.length > 0 &&
                     products.map((item) => (
                         <>
-                            <ProductCard admin={true} key={item.id} item={item} />
+                            <ProductCard
+                                admin={true}
+                                key={item.id}
+                                item={item}
+                            />
                         </>
                     ))}
             </div>

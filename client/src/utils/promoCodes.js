@@ -1,7 +1,3 @@
-const promoCodes =[
-    'AWGS10'
-]
+const promoCodes = ["AWGS10"];
 
-export {
-    promoCodes
-}
+export { promoCodes };

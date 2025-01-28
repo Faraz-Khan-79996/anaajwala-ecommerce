@@ -7,18 +7,18 @@ import CartDrawer from "./CartDrawer";
 import { ToastContainer, toast } from "react-toastify";
 
 function Layout() {
-  return (
-    <>
-    <CartProvider>
-      <NavbarComponent />
-      <CartDrawer />
-    <ToastContainer />
-      <Outlet />
-      <BottomNavBar />
-      <Footer/>
-    </CartProvider>
-    </>
-  );
+    return (
+        <>
+            <CartProvider>
+                <NavbarComponent />
+                <CartDrawer />
+                <ToastContainer />
+                <Outlet />
+                <BottomNavBar />
+                <Footer />
+            </CartProvider>
+        </>
+    );
 }
 
 export default Layout;

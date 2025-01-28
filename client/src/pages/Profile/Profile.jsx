@@ -11,24 +11,24 @@ import { Spinner } from "flowbite-react";
 import axios from "axios";
 import { Alert } from "flowbite-react";
 import { HiInformationCircle } from "react-icons/hi";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Profile() {
     const { user: currentUser } = useSelector((state) => state.user);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     const notify = () => toast("👍 Credentials changed!");
 
-    useEffect(()=>{
-        if(!currentUser){
-            navigate('/')
+    useEffect(() => {
+        if (!currentUser) {
+            navigate("/");
         }
-    } , [currentUser])
+    }, [currentUser]);
 
     const {
         register,
@@ -44,24 +44,23 @@ function Profile() {
     const onSubmit = async (data) => {
         // console.log("Updated Profile Data:", data);
         try {
-            setLoading(prev=> true)
-            const { data : response } = await axios.post(
+            setLoading((prev) => true);
+            const { data: response } = await axios.post(
                 "/api/user/profile/update",
                 data,
-                { withCredentials: true }
+                { withCredentials: true },
             );
 
-            dispatch(addUser(response))
-            notify()
+            dispatch(addUser(response));
+            notify();
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(error.response.data.message);
             } else {
                 setError(error.message);
             }
-        }
-        finally{
-            setLoading(prev=> false)
+        } finally {
+            setLoading((prev) => false);
         }
     };
 
@@ -69,18 +68,18 @@ function Profile() {
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <ToastContainer />
             <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
-            {error ? (
-                <>
-                    <Alert
-                        onDismiss={() => setError("")}
-                        className="mb-4"
-                        color="failure"
-                        icon={HiInformationCircle}
-                    >
-                        <span className="font-medium">Error!</span> {error}
-                    </Alert>
-                </>
-            ) : null}
+                {error ? (
+                    <>
+                        <Alert
+                            onDismiss={() => setError("")}
+                            className="mb-4"
+                            color="failure"
+                            icon={HiInformationCircle}
+                        >
+                            <span className="font-medium">Error!</span> {error}
+                        </Alert>
+                    </>
+                ) : null}
                 <h2 className="text-2xl font-bold text-center mb-6">
                     Profile Page
                 </h2>

@@ -2,11 +2,11 @@ import { Button, Modal, Spinner } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { MdDelete } from "react-icons/md";
-import useDeleteUser from "../../hooks/useDeleteUser"; 
+import useDeleteUser from "../../hooks/useDeleteUser";
 
 export function DeleteModal({ userId }) {
     const [openModal, setOpenModal] = useState(false);
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState("");
     const { loading, error, deleteUser } = useDeleteUser();
 
     const handleDelete = async () => {
@@ -19,7 +19,12 @@ export function DeleteModal({ userId }) {
             <Button onClick={() => setOpenModal(true)} color="failure">
                 <MdDelete size={20} />
             </Button>
-            <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+            <Modal
+                show={openModal}
+                size="md"
+                onClose={() => setOpenModal(false)}
+                popup
+            >
                 <Modal.Header />
                 <Modal.Body>
                     <div className="text-center">
@@ -35,12 +40,25 @@ export function DeleteModal({ userId }) {
                             className="mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200"
                         />
                         <div className="flex justify-center gap-4">
-                            <Button color="failure" onClick={handleDelete} disabled={loading}>
+                            <Button
+                                color="failure"
+                                onClick={handleDelete}
+                                disabled={loading}
+                            >
                                 {loading ? (
-                                    <Spinner size="sm" className="mr-2" aria-label="Loading" />
-                                ) : "Yes, I'm sure"}
+                                    <Spinner
+                                        size="sm"
+                                        className="mr-2"
+                                        aria-label="Loading"
+                                    />
+                                ) : (
+                                    "Yes, I'm sure"
+                                )}
                             </Button>
-                            <Button color="gray" onClick={() => setOpenModal(false)}>
+                            <Button
+                                color="gray"
+                                onClick={() => setOpenModal(false)}
+                            >
                                 No, cancel
                             </Button>
                         </div>
@@ -51,4 +69,3 @@ export function DeleteModal({ userId }) {
         </>
     );
 }
-

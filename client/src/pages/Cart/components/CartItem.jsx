@@ -1,13 +1,11 @@
 import React from "react";
 
-function CartItem({item}) {
-
+function CartItem({ item }) {
     const discount = {
-        5 : 0,
-        10 : 20,
-        20 : 20,
-      }
-    
+        5: 0,
+        10: 20,
+        20: 20,
+    };
 
     return (
         <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
@@ -33,13 +31,17 @@ function CartItem({item}) {
                             <span className="dark:text-gray-400 text-gray-800">
                                 Variant:{" "}
                             </span>{" "}
-                            <span className="italic font-semibold">{item.product.type}</span>
+                            <span className="italic font-semibold">
+                                {item.product.type}
+                            </span>
                         </p>
-                         <p className="text-sm dark:text-white leading-none text-gray-800">
+                        <p className="text-sm dark:text-white leading-none text-gray-800">
                             <span className="dark:text-gray-400 text-gray-800">
                                 Texture:{" "}
                             </span>{" "}
-                            <span className="italic font-semibold">{item.texture}</span>
+                            <span className="italic font-semibold">
+                                {item.texture}
+                            </span>
                         </p>
                         {/* <p className="text-sm dark:text-white leading-none text-gray-800">
                             <span className="dark:text-gray-400 text-gray-300">
@@ -52,15 +54,15 @@ function CartItem({item}) {
                 <div className="flex justify-between space-x-8 items-start w-full">
                     <p className="text-base dark:text-white xl:text-lg leading-6">
                         <span className="font-semibold font-mono">
-                            x{item.quantity} 
+                            x{item.quantity}
                         </span>
                     </p>
                     <p className="font-semibold font-mono text-base dark:text-white xl:text-lg leading-6 text-gray-800">
                         ₹{item.product.price}/pack
                     </p>
                     <p className="text-base dark:text-white xl:text-lg font-semibold leading-6 text-gray-800">
-                    ₹{item.product.price * item.quantity}
-                    {/* <span className="text-red-600 text-sm"> ₹(-{discount[item.quantity]}) discount</span> */}
+                        ₹{item.product.price * item.quantity}
+                        {/* <span className="text-red-600 text-sm"> ₹(-{discount[item.quantity]}) discount</span> */}
                     </p>
                 </div>
             </div>

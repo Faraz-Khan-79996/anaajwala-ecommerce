@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../features/cart/CartSlice";
 import { calculateCost } from "../hooks/cost";
 import { Link } from "react-router-dom";
-import emptyImage from '../assets/empty-order.png'
+import emptyImage from "../assets/empty-order.png";
 
 function CartDrawerContent({ handleClose }) {
     const dispatch = useDispatch();
@@ -74,7 +74,10 @@ function CartDrawerContent({ handleClose }) {
                                                     <div>
                                                         <div className="flex justify-between text-sm font-medium text-gray-900">
                                                             <h3>
-                                                                <a href="#" className="text-sm">
+                                                                <a
+                                                                    href="#"
+                                                                    className="text-sm"
+                                                                >
                                                                     {
                                                                         item
                                                                             .product
@@ -91,13 +94,15 @@ function CartDrawerContent({ handleClose }) {
                                                             </p>
                                                         </div>
                                                         <p className="mt-1 text-sm text-gray-500">
-                                                            texture : <span className="italic font-semibold">{item.texture}</span>
+                                                            texture :{" "}
+                                                            <span className="italic font-semibold">
+                                                                {item.texture}
+                                                            </span>
                                                         </p>
                                                     </div>
                                                     <div className="flex flex-1 items-end justify-between text-sm">
                                                         <p className="text-gray-500">
                                                             Qty {item.quantity}{" "}
-                                                            
                                                         </p>
                                                         <div className="flex">
                                                             <button
@@ -108,8 +113,8 @@ function CartDrawerContent({ handleClose }) {
                                                                         removeFromCart(
                                                                             {
                                                                                 index,
-                                                                            }
-                                                                        )
+                                                                            },
+                                                                        ),
                                                                     )
                                                                 }
                                                             >
@@ -120,9 +125,11 @@ function CartDrawerContent({ handleClose }) {
                                                 </div>
                                             </li>
                                         ))}
-                                        {cart && cart.length == 0 && (<>
+                                    {cart && cart.length == 0 && (
+                                        <>
                                             <img src={emptyImage} alt="" />
-                                        </>)}
+                                        </>
+                                    )}
                                 </ul>
                             </div>
                         </div>

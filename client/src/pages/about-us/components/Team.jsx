@@ -1,11 +1,11 @@
 import React from "react";
-import { useTeamData , useMentorData } from "../../../hooks/useTeamData";
+import { useTeamData, useMentorData } from "../../../hooks/useTeamData";
 import linkedinLogo from "../../../assets/linkedin.svg";
 import { FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 
 function Team() {
     const teamData = useTeamData();
-    const mentorData = useMentorData()
+    const mentorData = useMentorData();
 
     return (
         <>
@@ -29,29 +29,31 @@ function Team() {
                             <div className="flex flex-wrap">
                                 {/* Member #1 */}
 
-                                {mentorData && mentorData.length>0 && mentorData.map((mentor)=>(
-                                    <div className="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
-                                    <div className="flex flex-col">
-                                        {/* Avatar */}
-                                        <a href="#" className="mx-auto">
-                                            <img
-                                                className="rounded-2xl drop-shadow-md hover:drop-shadow-xl h-96 transition-all duration-200 delay-100"
-                                                src={mentor.image}
-                                                alt="Team Member 1"
-                                            />
-                                        </a>
-                                        {/* Details */}
-                                        <div className="text-center mt-6">
-                                            {/* Name */}
-                                            <h1 className="text-gray-900 text-xl font-bold mb-1">
-                                                {mentor.name}
-                                            </h1>
-                                            {/* Title */}
-                                            <div className="text-gray-700 font-light mb-2">
-                                                {mentor.role}
-                                            </div>
-                                            {/* Social Icons */}
-                                            {/* <div className="flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300">
+                                {mentorData &&
+                                    mentorData.length > 0 &&
+                                    mentorData.map((mentor) => (
+                                        <div className="w-full md:w-6/12 lg:w-3/12 mb-6 px-6 sm:px-6 lg:px-4">
+                                            <div className="flex flex-col">
+                                                {/* Avatar */}
+                                                <a href="#" className="mx-auto">
+                                                    <img
+                                                        className="rounded-2xl drop-shadow-md hover:drop-shadow-xl h-96 transition-all duration-200 delay-100"
+                                                        src={mentor.image}
+                                                        alt="Team Member 1"
+                                                    />
+                                                </a>
+                                                {/* Details */}
+                                                <div className="text-center mt-6">
+                                                    {/* Name */}
+                                                    <h1 className="text-gray-900 text-xl font-bold mb-1">
+                                                        {mentor.name}
+                                                    </h1>
+                                                    {/* Title */}
+                                                    <div className="text-gray-700 font-light mb-2">
+                                                        {mentor.role}
+                                                    </div>
+                                                    {/* Social Icons */}
+                                                    {/* <div className="flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300">
                                                 <a
                                                     href="#"
                                                     className="flex rounded-full hover:bg-indigo-50 h-10 w-10"
@@ -71,10 +73,10 @@ function Team() {
                                                     <FaInstagram className="text-orange-400 mx-auto mt-2" />
                                                 </a>
                                             </div> */}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                ))}
+                                    ))}
                             </div>
                         </div>
                     </div>

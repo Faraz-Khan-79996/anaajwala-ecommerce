@@ -16,7 +16,7 @@ function SuggestedProductCard({ product, index }) {
                     product: product,
                     quantity: 1,
                     texture: "fine",
-                })
+                }),
             );
             notify();
         } catch (error) {

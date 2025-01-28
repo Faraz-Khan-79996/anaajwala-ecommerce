@@ -1,9 +1,9 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from "react-router-dom";
-import { loginUser , clearUser  , googleLogin} from "../features/user/userSlice";
+import { loginUser, clearUser, googleLogin } from "../features/user/userSlice";
 
 export default function OAuth() {
     const dispatch = useDispatch();
@@ -33,11 +33,11 @@ export default function OAuth() {
                 email: result.user.email.toLowerCase(),
                 // photo: result.user.photoURL,
                 idToken: await result.user.getIdToken(),
-            }
-            dispatch(googleLogin(data))
+            };
+            dispatch(googleLogin(data));
         } catch (error) {
             console.log("could not sign in with google", error);
-            alert(error.message)
+            alert(error.message);
         }
     };
     return (

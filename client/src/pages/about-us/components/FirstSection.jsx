@@ -1,12 +1,11 @@
 import React from "react";
 import ReadMoreText from "../../../components/ReadMoreText";
 import { useAboutUsContent } from "../../../hooks/useAboutUsContent";
-import Banner from '../../../assets/about-us-images/first-banner-2.jpg'
-import sideImage from '../../../assets/about-us-images/m1.jpg'
+import Banner from "../../../assets/about-us-images/first-banner-2.jpg";
+import sideImage from "../../../assets/about-us-images/m1.jpg";
 
 function FirstSection() {
-
-    const content = useAboutUsContent()
+    const content = useAboutUsContent();
 
     return (
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
@@ -20,7 +19,7 @@ function FirstSection() {
                     Who We Are
                 </h2>
                 <p className="font-normal text-base leading-6 text-gray-600 dark:text-white mt-6">
-                <ReadMoreText text={content.who_we_are} />
+                    <ReadMoreText text={content.who_we_are} />
                 </p>
             </div>
             <div className="lg:mt-14 sm:mt-10 mt-12">

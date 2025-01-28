@@ -7,8 +7,6 @@ export default function SearchBar({ products }) {
     const [results, setResults] = useState([]);
     const [isFocused, setIsFocused] = useState(false);
 
-  
-
     // const fetchData = (value) => {
     //   fetch("/api/product/products")
     //     .then((response) => response.json())
@@ -19,7 +17,6 @@ export default function SearchBar({ products }) {
     //       setResults(filteredResults);
     //     });
     // };
-  
 
     const handleChange = (value) => {
         setInput(value);
