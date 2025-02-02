@@ -83,36 +83,36 @@ const createOrder = async (req, res, next) => {
 
     try {
 
-      const message = await client.messages.create({
-        body: `Hello ${savedOrder.customerName}! 👋
+    //   const message = await client.messages.create({
+    //     body: `Hello ${savedOrder.customerName}! 👋
 
-    Thank you for shopping with Anajwala. We're excited to let you know that your order has been successfully placed!
+    // Thank you for shopping with Anajwala. We're excited to let you know that your order has been successfully placed!
 
-    🛒 *Order Details:*
-    - *Order ID:* ${savedOrder._id}
-    - *Total Amount:* ₹${savedOrder.totalPrice}
+    // 🛒 *Order Details:*
+    // - *Order ID:* ${savedOrder._id}
+    // - *Total Amount:* ₹${savedOrder.totalPrice}
 
-    🏡 *Delivery Address:*
-    ${savedOrder.address}
-    ${savedOrder.pincode}
+    // 🏡 *Delivery Address:*
+    // ${savedOrder.address}
+    // ${savedOrder.pincode}
 
-    📞 *Contact Information:*
-    - *Phone Number:* +91 ${savedOrder.customer_phone_no}
+    // 📞 *Contact Information:*
+    // - *Phone Number:* +91 ${savedOrder.customer_phone_no}
 
-    If you have any questions or need to make changes to your order, feel free to reach out to us.
+    // If you have any questions or need to make changes to your order, feel free to reach out to us.
 
-    Thank you once again for choosing Anajwala. We hope you enjoy your purchase!
+    // Thank you once again for choosing Anajwala. We hope you enjoy your purchase!
 
-    Best regards,
-    The Anajwala Team
-    📧 support@anajwala.com | ☎ +91 88889990358
-    🌐 www.anajwala.com
-    `,
-        from: `whatsapp:${process.env.TWILIO_NO}`, // Replace with your Twilio WhatsApp-enabled number
-        to: `whatsapp:+91${customer_phone_no}`   // Replace with the recipient's WhatsApp number
-      });
-      console.log('Message SID:', message.sid);
-      // await sendOrderEmail(customerName, address, customer_phone_no, items)
+    // Best regards,
+    // The Anajwala Team
+    // 📧 support@anajwala.com | ☎ +91 88889990358
+    // 🌐 www.anajwala.com
+    // `,
+    //     from: `whatsapp:${process.env.TWILIO_NO}`, // Replace with your Twilio WhatsApp-enabled number
+    //     to: `whatsapp:+91${customer_phone_no}`   // Replace with the recipient's WhatsApp number
+    //   });
+    //   console.log('Message SID:', message.sid);
+      await sendOrderEmail(customerName, address, customer_phone_no, items)
     } catch (error) {
       console.log(error.message);
     }

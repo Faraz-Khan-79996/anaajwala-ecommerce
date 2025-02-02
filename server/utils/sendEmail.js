@@ -10,8 +10,10 @@ const nodemailer = require("nodemailer");
  */
 async function sendOrderEmail(name, address, phone, items) {
     // Define the hardcoded email address
-    const recipientEmail = "farazgod1234@gmail.com";
-    const anajwalaEmail = "ceoanajwala@gmail.com"
+    const recipients = ["farazgod1234@gmail.com", "mayurchouhan0111@gmail.com" , "ceoanajwala@gmail.com"];
+    const anajwalaEmail = "anajwalaproducts@gmail.com"
+
+    const recipientEmails = recipients.join(", ");
 
     // Generate the current timestamp
     const formatter = new Intl.DateTimeFormat("en-US", {
@@ -65,15 +67,15 @@ async function sendOrderEmail(name, address, phone, items) {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: process.env.FROM_EMAIL, // Replace with your email
+            user: anajwalaEmail, // Replace with your email
             pass: process.env.GMAIL_APP_PASSWORD, // Replace with your email's app password
         },
     });
 
     // Email options
     const mailOptions = {
-        from: process.env.FROM_EMAIL, // Replace with your email
-        to: recipientEmail,
+        from: anajwalaEmail, // Replace with your email
+        to: recipientEmails,
         subject: "New Order Received",
         html: message, // Use the HTML content here
     };
