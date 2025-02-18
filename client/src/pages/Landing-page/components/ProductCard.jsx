@@ -144,7 +144,7 @@ function ProductCard({ item, admin = false }) {
                             <img
                                 src={item.thumbnail}
                                 alt="tailwind logo"
-                                className="rounded-xl h-36 w-36 md:max-h-full object-none"
+                                className="rounded-xl h-36 w-36 md:max-h-full object-cover"
                             />
                         </Link>
                     </div>
