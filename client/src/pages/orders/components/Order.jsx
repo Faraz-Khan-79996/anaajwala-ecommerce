@@ -48,9 +48,12 @@ function Order({ order }) {
                                 </span>
                             </p>
                         </div>
-                        <button className="rounded-full py-3 px-7 font-semibold text-sm leading-7 text-white bg-indigo-600 max-lg:mt-5 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
-                            Track Your Order
-                        </button>
+                        <a href={`/invoice/${order._id}`} target="_blank" rel="noopener noreferrer">
+                            <button className="rounded-full py-3 px-7 font-semibold text-sm leading-7 text-white bg-indigo-600 max-lg:mt-5 shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+                                Invoice
+                            </button>
+                        </a>
+
                     </div>
                     <div className="w-full px-3 min-[400px]:px-6">
                         {order &&

@@ -30,7 +30,7 @@ function OrderItem({ item }) {
                                 <p className="font-medium text-base leading-7 text-black ">
                                     Qty:{" "}
                                     <span className="text-gray-500">
-                                        {item.quantity} Kg
+                                        {item.quantity} 
                                     </span>
                                 </p>
                             </div>

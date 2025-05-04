@@ -3,6 +3,9 @@ import { format } from "date-fns";
 import axios from "axios";
 
 import OrderDetails from "./OrderDetails";
+import { Button } from "flowbite-react";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
 
 function OrderRows({ orders, status, setOrders }) {
     const [error, setError] = useState(null);
@@ -204,6 +207,17 @@ function OrderRows({ orders, status, setOrders }) {
                                         </td>
                                         <td className="flex justify-center my-5">
                                             <OrderDetails order={order} />
+                                        </td>
+                                        <td>
+                                            <a
+                                                href={`/invoice/${order._id}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <Button>
+                                                    <LiaFileInvoiceDollarSolid />
+                                                </Button>
+                                            </a>
                                         </td>
                                     </tr>
                                 </>

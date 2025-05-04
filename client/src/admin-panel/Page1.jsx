@@ -220,6 +220,9 @@ export default function Page1() {
                                     <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
                                         Description
                                     </td>
+                                    <td className="whitespace-normal py-4 text-sm font-medium text-gray-500 sm:px-3">
+                                        Invoice
+                                    </td>
                                 </tr>
                             </thead>
                             {tab == 1 && (

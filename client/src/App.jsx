@@ -40,6 +40,7 @@ import Home from "./admin-panel/Home.jsx";
 import CreateProduct from "./admin-panel/components/sub-pages/CreateProduct.jsx";
 import NewProfile from "./pages/Profile/NewProfile.jsx";
 import BulkOrdersPage from "./pages/bulkorder-page/BulkOrdersPage.jsx";
+import InvoicePage from "./pages/invoice-page/InvoicePage.jsx";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -84,6 +85,7 @@ function App() {
 
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/invoice/:id" element={<InvoicePage />} />
                 <Route
                     path="/add-contact-number"
                     element={<AddContactNumberPage />}

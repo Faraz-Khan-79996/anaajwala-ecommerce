@@ -170,9 +170,31 @@ const updateOrder = async (req, res, next) => {
   }
 };
 
+/**
+ * Controller method to get an order by ID
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
+const getOrderById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.status(200).json({order , message: 'Order fetched successfully'});
+  } catch (error) {
+    console.error('Error fetching order:', error);
+    next(error);
+  }
+}
 
 module.exports = {
   createOrder,
   getOrder,
-  updateOrder
+  updateOrder,
+  getOrderById
 };
