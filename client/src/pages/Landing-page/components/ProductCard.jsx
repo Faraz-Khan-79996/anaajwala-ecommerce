@@ -11,6 +11,11 @@ function ProductCard({ item, admin = false }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [url, setUrl] = useState(`/product/${item._id}`);
+    const optimizedImageUrl = item.thumbnail.replace(
+        /\/upload\/(?!.*\/upload\/)/,
+        '/upload/q_1/'
+      );
+      
 
     const notify = () =>
         toast.success("Added to cart!", {
@@ -53,7 +58,7 @@ function ProductCard({ item, admin = false }) {
                     <Link to={url}>
                         <img
                             className="w-full h-48 object-cover"
-                            src={item.thumbnail}
+                            src={optimizedImageUrl}
                             alt=".."
                         />
                         <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25"></div>

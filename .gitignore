@@ -1,2 +1,3 @@
 .qdrant-initialized
 .vscode
+server/deployed.env

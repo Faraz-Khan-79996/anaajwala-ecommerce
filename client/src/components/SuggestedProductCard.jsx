@@ -7,6 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function SuggestedProductCard({ product, index }) {
     const dispatch = useDispatch();
+    const optimizedImageUrl = product.thumbnail.replace(
+        /\/upload\/(?!.*\/upload\/)/,
+        '/upload/q_1/'
+      );
 
     const handleAddToCart = () => {
         try {
@@ -40,7 +44,7 @@ function SuggestedProductCard({ product, index }) {
                         <Link to={`/product/${product._id}`}>
                             <img
                                 className="w-full h-[220px]"
-                                src={product.thumbnail}
+                                src={optimizedImageUrl}
                                 alt="Sunset in the mountains"
                             />
                             <div className="absolute bottom-0 left-0 right-0 top-0 bg-gray-900 opacity-25 transition duration-300 hover:bg-transparent" />
