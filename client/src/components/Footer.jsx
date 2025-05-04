@@ -170,7 +170,6 @@ function Footer() {
                             </div>
                             <div className="ml-6">
                                 <a
-                                    href="mailto:help@lorem.com"
                                     className="font-Inter text-[14px] font-medium text-[#fff]"
                                 >
                                     Start Up Cell Idea Lab, SGSITS, Park Road,
@@ -275,7 +274,7 @@ function Footer() {
                 <div className="flex items-center justify-center pb-8 pt-[9px] md:py-8">
                     <p className="text-[10px] font-normal text-white md:text-[12px]">
                         © Copyright
-                        {/* */}2024
+                        {/* */}2025
                         {/* */}, All Rights Reserved by Anajwala. PVT. LTD
                     </p>
                 </div>
