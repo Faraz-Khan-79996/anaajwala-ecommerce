@@ -3,3 +3,4 @@
 server/deployed.env
 temp.txt
 client/.env
+deploy.sh
