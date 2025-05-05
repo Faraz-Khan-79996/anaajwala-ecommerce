@@ -9,6 +9,7 @@ import OTPInput from "otp-input-react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase.js"; // Ensure you configure Firebase auth in a separate file
 import { toast, Toaster } from "react-hot-toast"; // Import toast
+import { endpoints } from "../../config/endpoints.js";
 
 function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
     const [loading, setLoading] = useState(false);
@@ -72,7 +73,7 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
         setLoading(() => true);
         try {
             const { data } = await axios.get(
-                `/api/auth/duplicate-phone/${getValues("phone_no").trim()}`,
+                endpoints.checkDuplicatePhone(getValues("phone_no").trim())
             );
 
             if (data.isPhoneNumberDuplicate) {

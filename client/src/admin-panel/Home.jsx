@@ -3,6 +3,7 @@ import { useInfo } from "../hooks/useInfo.js";
 import axios from "axios";
 import InfoBlocks from "./components/InfoBlocks.jsx";
 import UserTable from "./components/user-table/UserTable.jsx";
+import { endpoints } from "../config/endpoints.js";
 
 function Home() {
     const [data, setData] = useState(null);
@@ -13,7 +14,7 @@ function Home() {
         async function getInfo() {
             try {
                 setLoading((prev) => true);
-                const { data } = await axios.get("/api/site/info");
+                const { data } = await axios.get(endpoints.siteInfo);
                 const res = useInfo(data);
                 // console.log(res);
                 setData(res);

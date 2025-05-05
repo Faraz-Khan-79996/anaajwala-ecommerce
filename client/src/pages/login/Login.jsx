@@ -14,6 +14,7 @@ import { auth } from "../../firebase.js"; // Ensure you configure Firebase auth 
 import { toast, Toaster } from "react-hot-toast"; // Import toast
 import axios from "axios";
 import Logo from "../../assets/NavbarLogo2.jpeg";
+import { endpoints } from "../../config/endpoints.js";
 function Login() {
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState("");
@@ -65,7 +66,7 @@ function Login() {
         setLoading(() => true);
         try {
             const { data } = await axios.get(
-                `/api/auth/duplicate-phone/${getValues("phone_no").trim()}`,
+                endpoints.checkDuplicatePhone(getValues("phone_no").trim())
             );
 
             if (!data.isPhoneNumberDuplicate) {
@@ -86,7 +87,7 @@ function Login() {
             const userCredential = await verificationResult.confirm(otp);
             const idToken = await userCredential.user.getIdToken();
 
-            const { data } = await axios.post(`/api/auth/signin`, {
+            const { data } = await axios.post(endpoints.signInUser, {
                 idToken,
             });
 

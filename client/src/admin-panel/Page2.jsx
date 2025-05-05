@@ -4,6 +4,7 @@ import axios from "axios";
 import { Spinner } from "flowbite-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { endpoints } from "../config/endpoints";
 
 function Page2() {
     const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ function Page2() {
     const onSubmit = async (data) => {
         try {
             setLoading((prev) => true);
-            const response = await axios.post("/api/survey", data);
+            const response = await axios.post(endpoints.postSurveyData, data);
             // console.log("Form submitted successfully:", response.data);
             notifySuccess();
         } catch (error) {

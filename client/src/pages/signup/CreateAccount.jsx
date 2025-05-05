@@ -5,6 +5,7 @@ import { addUser } from "../../features/user/userSlice.js";
 import axios from "axios";
 import { Spinner } from "flowbite-react";
 import { useSearchParams } from "react-router-dom";
+import { endpoints } from "../../config/endpoints.js";
 
 function CreateAccount({ error, setError, phoneNumber }) {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function CreateAccount({ error, setError, phoneNumber }) {
 
         try {
             const { data: response } = await axios.post(
-                "/api/auth/signup",
+                endpoints.signUpUser,
                 {
                     username: data.username.toLowerCase().trim(),
                     phone_no: phoneNumber.trim(),

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
+import { endpoints } from "../../config/endpoints";
 
 const InvoicePage = () => {
     const { id } = useParams();
@@ -22,7 +23,7 @@ const InvoicePage = () => {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const res = await axios.get(`/api/order/${id}`);
+                const res = await axios.get(endpoints.getOrder(id));
                 setOrder(res.data.order);
             } catch (err) {
                 setError("Failed to fetch order. Please try again.");

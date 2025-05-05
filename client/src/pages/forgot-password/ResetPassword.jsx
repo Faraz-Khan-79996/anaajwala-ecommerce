@@ -8,6 +8,7 @@ import { Spinner } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
+import { endpoints } from "../../config/endpoints.js";
 
 function ResetPassword() {
     const user = useSelector((state) => state.user);
@@ -36,7 +37,7 @@ function ResetPassword() {
 
         try {
             const { data: user } = await axios.post(
-                `/api/auth/reset-password/${id}/${token}`,
+                endpoints.resetPassword(id , token),
                 data,
             );
             navigate("/");

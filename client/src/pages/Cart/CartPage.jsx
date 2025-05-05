@@ -13,6 +13,7 @@ import { Spinner } from "flowbite-react";
 import "react-toastify/dist/ReactToastify.css";
 import { clearCart } from "../../features/cart/CartSlice";
 import { useNavigate } from "react-router-dom";
+import { endpoints } from "../../config/endpoints";
 
 function CartPage() {
     const priceRef = useRef(0);
@@ -82,7 +83,7 @@ function CartPage() {
 
         try {
             setLoading((prev) => true);
-            const { data } = await axios.post(`/api/order/create`, payload, {
+            const { data } = await axios.post(endpoints.createOrder, payload, {
                 withCredentials: true,
             });
             console.log(data);

@@ -7,6 +7,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import emptyImage from "../../assets/empty-order.png";
 import Loader from "../../components/Loader";
+import { endpoints } from "../../config/endpoints";
 
 function Orders() {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -21,7 +22,7 @@ function Orders() {
     const getOrders = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.get("/api/user/orders");
+            const { data } = await axios.get(endpoints.getUserOrders);
 
             const completedOrders = data.filter(
                 (order) =>

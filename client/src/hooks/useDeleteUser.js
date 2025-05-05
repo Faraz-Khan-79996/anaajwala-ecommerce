@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { endpoints } from "../config/endpoints";
 
 /**
  * Custom hook to delete a user.
@@ -16,7 +17,7 @@ const useDeleteUser = () => {
         setError(() => null);
 
         try {
-            await axios.delete("/api/user/delete", {
+            await axios.delete(endpoints.deleteUser, {
                 data: { userId, password }, // Pass data in the request body
                 withCredentials: true, // Include credentials if needed
             });

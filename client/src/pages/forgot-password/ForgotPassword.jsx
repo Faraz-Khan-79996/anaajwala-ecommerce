@@ -11,6 +11,7 @@ import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { endpoints } from "../../config/endpoints";
 
 function ForgotPassword() {
     const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ function ForgotPassword() {
         setLoading((prev) => true);
         try {
             const { data: res } = await axios.post(
-                "/api/auth/forgot-password",
+                endpoints.forgotPassword,
                 { username: data.username.toLowerCase() },
             );
             console.log(res);

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { endpoints } from "../../config/endpoints";
 
 const initialState = {
     loading: false,
@@ -14,7 +15,7 @@ const fetchUser = createAsyncThunk(
     "user/fetchUser",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get("/api/user/profile", {
+            const response = await axios.get(endpoints.getUserProfile, {
                 withCredentials: true,
             });
             return response.data;
@@ -56,9 +57,14 @@ const googleLogin = createAsyncThunk(
     async (credentials, { rejectWithValue }) => {
         try {
             const response = await axios.post(
-                "api/auth/google?auth=login",
+                // "api/auth/google?auth=login",
+                endpoints.googleAuth,
                 credentials,
-                { withCredentials: true },
+                { withCredentials: true ,
+                    params: {
+                        auth: "login",
+                    },
+                },
             );
             return response.data.user;
         } catch (error) {
@@ -82,7 +88,7 @@ const signoutUser = createAsyncThunk(
     "user/signoutUser",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.post("/api/auth/signout", null, {
+            const response = await axios.post(endpoints.signoutUser, null, {
                 withCredentials: true,
             });
             return response.data;

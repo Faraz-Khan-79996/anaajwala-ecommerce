@@ -6,6 +6,7 @@ import ErrorComponent from "../../../components/ErrorComponent";
 import ErrorBar from "../../../components/ErrorBar";
 import { useState } from "react";
 import axios from "axios";
+import { endpoints } from "../../../config/endpoints";
 function EditProduct() {
     const { productId } = useParams();
     const { product, loading, error } = useFetchProductById(productId);
@@ -30,7 +31,7 @@ function EditProduct() {
             // console.log(data);
             const imagesArray = data.images.split(",");
             const payLoad = { ...data, images: imagesArray };
-            await axios.put(`/api/product/${product._id}/update`, payLoad, {
+            await axios.put(endpoints.updateProduct(product._id), payLoad, {
                 withCredentials: true,
             });
             window.location.reload();

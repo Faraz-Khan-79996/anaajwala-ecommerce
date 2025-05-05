@@ -1,3 +1,5 @@
 .qdrant-initialized
 .vscode
 server/deployed.env
+temp.txt
+client/.env

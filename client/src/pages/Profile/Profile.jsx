@@ -13,6 +13,7 @@ import { Alert } from "flowbite-react";
 import { HiInformationCircle } from "react-icons/hi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { endpoints } from "../../config/endpoints";
 
 function Profile() {
     const { user: currentUser } = useSelector((state) => state.user);
@@ -46,7 +47,7 @@ function Profile() {
         try {
             setLoading((prev) => true);
             const { data: response } = await axios.post(
-                "/api/user/profile/update",
+                endpoints.updateUserProfile,
                 data,
                 { withCredentials: true },
             );

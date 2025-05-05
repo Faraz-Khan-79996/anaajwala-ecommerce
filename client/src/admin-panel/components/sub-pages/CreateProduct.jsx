@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorBar from "../../../components/ErrorBar";
 import { useState } from "react";
 import axios from "axios";
+import { endpoints } from "../../../config/endpoints";
 function CreateProduct() {
     const [productCreating, setProductCreating] = useState(false);
     const [createError, setCreateError] = useState();
@@ -17,7 +18,7 @@ function CreateProduct() {
             console.log(payLoad);
 
             const { data: responseData } = await axios.post(
-                `/api/product/create`,
+                endpoints.createProduct,
                 payLoad,
                 { withCredentials: true },
             );

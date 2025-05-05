@@ -6,13 +6,14 @@ import OrderDetails from "./OrderDetails";
 import { Button } from "flowbite-react";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
+import { endpoints } from "../../config/endpoints";
 
 function OrderRows({ orders, status, setOrders }) {
     const [error, setError] = useState(null);
 
     const handleStatusChange = async (id, newStatus) => {
         try {
-            const { data } = await axios.post(`/api/order/${id}/update`, {
+            const { data } = await axios.post(endpoints.updateOrder(id), {
                 newStatus,
             });
             console.log("This happened");
@@ -33,7 +34,7 @@ function OrderRows({ orders, status, setOrders }) {
     };
     const handlePaymentStatusChange = async (id, newPaymentStatus) => {
         // Update the status of the specific order
-        const { data } = await axios.post(`/api/order/${id}/update`, {
+        const { data } = await axios.post(endpoints.updateOrder(id), {
             newPaymentStatus,
         });
         const updatedOrders = orders.map((order) =>

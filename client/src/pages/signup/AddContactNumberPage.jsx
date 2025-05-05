@@ -6,6 +6,7 @@ import { addUser } from "../../features/user/userSlice";
 import axios from "axios";
 import { Alert } from "flowbite-react";
 import { HiInformationCircle } from "react-icons/hi";
+import { endpoints } from "../../config/endpoints";
 
 function AddContactNumberPage() {
     const location = useLocation();
@@ -54,7 +55,8 @@ function AddContactNumberPage() {
         try {
             setLoading((prev) => true);
             const { data: response } = await axios.post(
-                `/api/auth/google`,
+                // `/api/auth/google?auth-signup`,
+                endpoints.googleAuth,
                 { phone_no: confirmPhoneNumber, ...data },
                 {
                     params: {

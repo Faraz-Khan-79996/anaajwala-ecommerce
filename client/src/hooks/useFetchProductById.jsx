@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { endpoints } from "../config/endpoints";
 
 /**
  * Custom hook to fetch a product by ID.
@@ -20,7 +21,7 @@ const useFetchProductById = (id) => {
                 setError(null);
 
                 // Replace the URL with your actual API endpoint
-                const response = await axios.get(`/api/product/${id}`);
+                const response = await axios.get(endpoints.getProduct(id));
                 setProduct(response.data);
             } catch (err) {
                 if (err.response && err.response.data) {

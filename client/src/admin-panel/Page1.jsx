@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 // import { AiOutlineMenu } from "react-icons/ai";
 import axios from "axios";
 import OrderRows from "./components/OrderRows";
+import { endpoints } from "../config/endpoints";
 
 export default function Page1() {
     const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ export default function Page1() {
     const getOrders = async () => {
         try {
             setLoading((prev) => true);
-            const { data } = await axios.get("/api/order/orders");
+            const { data } = await axios.get(endpoints.getOrders);
             setOrders(data);
         } catch (error) {
             if (error.response && error.response.data) {
