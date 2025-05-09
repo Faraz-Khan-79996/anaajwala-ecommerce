@@ -24,7 +24,9 @@ export default function Page1() {
     const getOrders = async () => {
         try {
             setLoading((prev) => true);
-            const { data } = await axios.get(endpoints.getOrders);
+            const { data } = await axios.get(endpoints.getOrders , {
+                withCredentials : true,
+            });
             setOrders(data);
         } catch (error) {
             if (error.response && error.response.data) {

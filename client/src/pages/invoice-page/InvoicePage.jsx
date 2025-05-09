@@ -23,7 +23,9 @@ const InvoicePage = () => {
     useEffect(() => {
         const fetchOrder = async () => {
             try {
-                const res = await axios.get(endpoints.getOrder(id));
+                const res = await axios.get(endpoints.getOrder(id),{
+                    withCredentials: true,
+                });
                 setOrder(res.data.order);
             } catch (err) {
                 setError("Failed to fetch order. Please try again.");

@@ -13,7 +13,20 @@ const path = require('path')
 require('dotenv').config()
 const app = express()
 const PORT = process.env.PORT || 3000;
+const cors = require('cors');
 
+app.use(
+    cors({
+      origin: (origin, callback) => {
+        // if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        // } else {
+        //   callback(new Error("Not allowed by CORS"));
+        // }
+      },
+      credentials: true,
+    })
+  );
 let connected = false
 
 async function main() {
@@ -32,8 +45,6 @@ app.use(async(req , res , next)=>{
   }
   next()
 })
-
-const cors = require('cors');
 
 app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.json())

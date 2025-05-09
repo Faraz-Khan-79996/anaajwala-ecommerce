@@ -14,7 +14,9 @@ function Home() {
         async function getInfo() {
             try {
                 setLoading((prev) => true);
-                const { data } = await axios.get(endpoints.siteInfo);
+                const { data } = await axios.get(endpoints.siteInfo , {
+                    withCredentials: true,
+                });
                 const res = useInfo(data);
                 // console.log(res);
                 setData(res);

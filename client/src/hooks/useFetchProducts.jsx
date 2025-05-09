@@ -13,7 +13,9 @@ const useFetchProducts = () => {
                 setLoading(true); // Start loading
                 setError(null); // Reset error state
 
-                const response = await axios.get(endpoints.getProducts);
+                const response = await axios.get(endpoints.getProducts , {
+                    withCredentials: true,
+                });
                 setProducts(response.data); // Update products state
             } catch (err) {
                 if (err.response && err.response.data) {

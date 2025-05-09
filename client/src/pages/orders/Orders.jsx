@@ -22,7 +22,9 @@ function Orders() {
     const getOrders = async () => {
         try {
             setLoading(true);
-            const { data } = await axios.get(endpoints.getUserOrders);
+            const { data } = await axios.get(endpoints.getUserOrders , {
+                withCredentials: true,
+            });
 
             const completedOrders = data.filter(
                 (order) =>

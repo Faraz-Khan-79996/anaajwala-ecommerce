@@ -41,7 +41,9 @@ function Page2() {
     const onSubmit = async (data) => {
         try {
             setLoading((prev) => true);
-            const response = await axios.post(endpoints.postSurveyData, data);
+            const response = await axios.post(endpoints.postSurveyData, data , {
+                withCredentials: true,
+            });
             // console.log("Form submitted successfully:", response.data);
             notifySuccess();
         } catch (error) {

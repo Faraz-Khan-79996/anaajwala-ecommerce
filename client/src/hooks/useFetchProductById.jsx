@@ -21,7 +21,9 @@ const useFetchProductById = (id) => {
                 setError(null);
 
                 // Replace the URL with your actual API endpoint
-                const response = await axios.get(endpoints.getProduct(id));
+                const response = await axios.get(endpoints.getProduct(id),{
+                    withCredentials: true,
+                });
                 setProduct(response.data);
             } catch (err) {
                 if (err.response && err.response.data) {

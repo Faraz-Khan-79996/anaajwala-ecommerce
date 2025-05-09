@@ -66,7 +66,9 @@ function Login() {
         setLoading(() => true);
         try {
             const { data } = await axios.get(
-                endpoints.checkDuplicatePhone(getValues("phone_no").trim())
+                endpoints.checkDuplicatePhone(getValues("phone_no").trim() , {
+                    withCredentials: true,
+                })
             );
 
             if (!data.isPhoneNumberDuplicate) {
@@ -89,6 +91,8 @@ function Login() {
 
             const { data } = await axios.post(endpoints.signInUser, {
                 idToken,
+            },{
+                withCredentials: true,
             });
 
             // console.log(user);

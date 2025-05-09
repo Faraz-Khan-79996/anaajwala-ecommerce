@@ -15,6 +15,8 @@ function OrderRows({ orders, status, setOrders }) {
         try {
             const { data } = await axios.post(endpoints.updateOrder(id), {
                 newStatus,
+            },{
+                withCredentials: true,
             });
             console.log("This happened");
 
@@ -36,6 +38,8 @@ function OrderRows({ orders, status, setOrders }) {
         // Update the status of the specific order
         const { data } = await axios.post(endpoints.updateOrder(id), {
             newPaymentStatus,
+        },{
+            withCredentials: true,
         });
         const updatedOrders = orders.map((order) =>
             order._id === id

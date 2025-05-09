@@ -1,5 +1,11 @@
-// const BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
-const BASE_URL = ""
+let BASE_URL = import.meta.env.VITE_BASE_URL;
+
+if(import.meta.env.VITE_NODE_ENV === "development"){
+    BASE_URL = "http://localhost:3000"
+}
+if(import.meta.env.VITE_NODE_ENV === "production" && !BASE_URL){
+    BASE_URL = ""
+}
 
 export const endpoints = {
 

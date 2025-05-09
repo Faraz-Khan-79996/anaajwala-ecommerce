@@ -73,7 +73,8 @@ function OtpComponent({ setOtpVerified, setPhoneNumber, setError }) {
         setLoading(() => true);
         try {
             const { data } = await axios.get(
-                endpoints.checkDuplicatePhone(getValues("phone_no").trim())
+                endpoints.checkDuplicatePhone(getValues("phone_no").trim()),
+                {withCredentials: true,}
             );
 
             if (data.isPhoneNumberDuplicate) {

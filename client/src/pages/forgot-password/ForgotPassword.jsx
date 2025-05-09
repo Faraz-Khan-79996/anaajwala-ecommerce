@@ -42,6 +42,7 @@ function ForgotPassword() {
             const { data: res } = await axios.post(
                 endpoints.forgotPassword,
                 { username: data.username.toLowerCase() },
+                {withCredentials: true}
             );
             console.log(res);
             notify();
