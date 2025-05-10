@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       // required: true,
-      unique: true,
+    //   unique: true,
     },
     password: {
       type: String,
@@ -72,6 +72,9 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Create a partial index that only enforces uniqueness when email is not null
+userSchema.index({ email: 1 }, { unique: true, partialFilterExpression: { email: { $type: "string" } } });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
